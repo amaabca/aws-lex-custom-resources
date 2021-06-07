@@ -1,7 +1,7 @@
 import LexBot from './bot/lex-bot';
 import LexSlotType from './slot-type/lex-slot-type';
 import LexIntent from './intent/lex-intent';
-import { CustomResourcesStack } from './custom-resources-stack';
+import * as v2 from './v2/index';
 
 import {
   LexIntentAttributes,
@@ -26,7 +26,7 @@ import {
 } from './lex-data-types';
 
 export {
-  CustomResourcesStack,
+  v2,
   LexIntentAttributes,
   LexMessageResponseCard,
   LexIntentCDK,
