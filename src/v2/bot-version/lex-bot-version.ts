@@ -1,14 +1,13 @@
 import * as cdk from '@aws-cdk/core';
-import { CreateBotLocaleCommandInput } from '@aws-sdk/client-lex-models-v2';
-import { LexBotLocaleAttributes } from '../lex-data-types'
+import { LexBotVersionAttributes } from '../lex-data-types'
 
-export default class LexBotLocale extends cdk.Construct {
+export default class LexBotVersion extends cdk.Construct {
   scope: cdk.Stack;
   id: string;
-  props: LexBotLocaleAttributes;
+  props: LexBotVersionAttributes;
 
   // the service token must match the exported service token by the lex-bot stack
-  constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexBotLocaleAttributes) {
+  constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexBotVersionAttributes) {
     super(scope, id);
 
     this.scope = scope;

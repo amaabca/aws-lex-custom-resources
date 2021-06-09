@@ -1,4 +1,4 @@
-import { MessageGroup, InputContext, FulfillmentCodeHookSettings, DialogCodeHookSettings, IntentClosingSetting, IntentConfirmationSetting, KendraConfiguration, OutputContext, SampleUtterance } from "@aws-sdk/client-lex-models-v2";
+import { MessageGroup, InputContext, FulfillmentCodeHookSettings, DialogCodeHookSettings, IntentClosingSetting, IntentConfirmationSetting, KendraConfiguration, OutputContext, SampleUtterance, VoiceSettings, BotVersionLocaleDetails } from "@aws-sdk/client-lex-models-v2";
 
 
 interface LexBotAttributes {
@@ -35,7 +35,26 @@ interface LexIntentAttributes {
   sampleUtterances?: SampleUtterance[]
 }
 
+interface LexBotLocaleAttributes {
+  botId?: string,
+  botName: string,
+  botVersion: string,
+  description?: string,
+  localeId: string,
+  nluIntentConfidenceThreshold: number,
+  voiceSettings?: VoiceSettings
+}
+
+interface LexBotVersionAttributes {
+  botId?: string,
+  botName: string,
+  botVersionLocaleSpecification: { [key: string]: BotVersionLocaleDetails } | undefined,
+  description?: string
+}
+
 export {
   LexBotAttributes,
-  LexIntentAttributes
+  LexIntentAttributes,
+  LexBotLocaleAttributes,
+  LexBotVersionAttributes
 }
