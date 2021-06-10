@@ -11,10 +11,12 @@ import {
   BotVersionLocaleDetails,
   SlotTypeValue,
   SlotValueSelectionSetting,
-  SlotValueElicitationSetting
+  SlotValueElicitationSetting,
+  ConversationLogSettings,
+  BotAliasLocaleSettings,
+  SentimentAnalysisSettings
 } from "@aws-sdk/client-lex-models-v2";
 import { ObfuscationSetting } from "../lex-data-types";
-
 
 export interface LexBotAttributes {
   botName?: string,
@@ -92,4 +94,16 @@ export interface LexSlotAttributes {
   slotTypeId?: string,
   slotTypeName: string,
   valueElicitationSetting: SlotValueElicitationSetting
+}
+
+export interface LexBotAliasAttributes {
+  botId?: string,
+  botName: string,
+  botAliasName: string,
+  botAliasLocaleSettings: { [key: string]: BotAliasLocaleSettings },
+  botVersion?: string, 
+  conversationLogSettings?: ConversationLogSettings,
+  description?: string,
+  sentimentAnalysisSettings?:  SentimentAnalysisSettings,
+  tags?: { [key: string]: string }
 }
