@@ -24,4 +24,8 @@ export default class LexIntent extends cdk.Construct {
       }
     });
   }
+
+  getName(): string {
+    return this.id;
+  }
 }

@@ -15,7 +15,7 @@ export default class LexBotVersion extends cdk.Construct {
     this.props = props;
     this.props.description = `${id} V2 Bot Locale`;
 
-    const _customResource = new cdk.CustomResource(scope, `${id}_Custom_V2_Lex_Intent`, {
+    const _customResource = new cdk.CustomResource(scope, `${id}_Custom_V2_Lex_Bot_Version`, {
       serviceToken: cdk.Fn.importValue(serviceToken),
       properties: {
         props: JSON.stringify(this.props)

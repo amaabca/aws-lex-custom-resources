@@ -1,7 +1,22 @@
-import { MessageGroup, InputContext, FulfillmentCodeHookSettings, DialogCodeHookSettings, IntentClosingSetting, IntentConfirmationSetting, KendraConfiguration, OutputContext, SampleUtterance, VoiceSettings, BotVersionLocaleDetails } from "@aws-sdk/client-lex-models-v2";
+import {
+  InputContext,
+  FulfillmentCodeHookSettings,
+  DialogCodeHookSettings,
+  IntentClosingSetting,
+  IntentConfirmationSetting,
+  KendraConfiguration,
+  OutputContext,
+  SampleUtterance,
+  VoiceSettings,
+  BotVersionLocaleDetails,
+  SlotTypeValue,
+  SlotValueSelectionSetting,
+  SlotValueElicitationSetting
+} from "@aws-sdk/client-lex-models-v2";
+import { ObfuscationSetting } from "../lex-data-types";
 
 
-interface LexBotAttributes {
+export interface LexBotAttributes {
   botName?: string,
   botTags?: {
     [key: string]: string
@@ -17,10 +32,10 @@ interface LexBotAttributes {
   }
 }
 
-interface LexIntentAttributes {
+export interface LexIntentAttributes {
   botId?: string,
   botName: string,
-  botVersion: string,
+  botVersion?: string,
   description?: string,
   dialogCodeHook?: DialogCodeHookSettings,
   fulfillmentCodeHook?: FulfillmentCodeHookSettings
@@ -35,7 +50,7 @@ interface LexIntentAttributes {
   sampleUtterances?: SampleUtterance[]
 }
 
-interface LexBotLocaleAttributes {
+export interface LexBotLocaleAttributes {
   botId?: string,
   botName: string,
   botVersion: string,
@@ -45,16 +60,36 @@ interface LexBotLocaleAttributes {
   voiceSettings?: VoiceSettings
 }
 
-interface LexBotVersionAttributes {
+export interface LexBotVersionAttributes {
   botId?: string,
   botName: string,
   botVersionLocaleSpecification: { [key: string]: BotVersionLocaleDetails } | undefined,
   description?: string
 }
 
-export {
-  LexBotAttributes,
-  LexIntentAttributes,
-  LexBotLocaleAttributes,
-  LexBotVersionAttributes
+export interface LexSlotTypeAttributes {
+  botId?: string,
+  botName: string,
+  botVersion?: string,
+  description?: string,
+  localeId: string,
+  parentSlotTypeSignature?: string,
+  slotTypeName: string,
+  slotTypeValues?: SlotTypeValue[],
+  valueSelectionSetting: SlotValueSelectionSetting
+}
+
+export interface LexSlotAttributes {
+  botId?: string,
+  botName: string,
+  botVersion?: string,
+  description?: string,
+  localeId: string,
+  intentId?: string,
+  intentName: string,
+  obfuscationSetting?: ObfuscationSetting,
+  slotName: string,
+  slotTypeId?: string,
+  slotTypeName: string,
+  valueElicitationSetting: SlotValueElicitationSetting
 }
