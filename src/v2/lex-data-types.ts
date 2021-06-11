@@ -35,8 +35,7 @@ export interface LexBotAttributes {
 }
 
 export interface LexIntentAttributes {
-  botId?: string,
-  botName: string,
+  botId: string,
   botVersion?: string,
   description?: string,
   dialogCodeHook?: DialogCodeHookSettings,
@@ -53,8 +52,7 @@ export interface LexIntentAttributes {
 }
 
 export interface LexBotLocaleAttributes {
-  botId?: string,
-  botName: string,
+  botId: string,
   botVersion: string,
   description?: string,
   localeId: string,
@@ -63,15 +61,13 @@ export interface LexBotLocaleAttributes {
 }
 
 export interface LexBotVersionAttributes {
-  botId?: string,
-  botName: string,
+  botId: string,
   botVersionLocaleSpecification: { [key: string]: BotVersionLocaleDetails } | undefined,
   description?: string
 }
 
 export interface LexSlotTypeAttributes {
-  botId?: string,
-  botName: string,
+  botId: string,
   botVersion?: string,
   description?: string,
   localeId: string,
@@ -82,28 +78,24 @@ export interface LexSlotTypeAttributes {
 }
 
 export interface LexSlotAttributes {
-  botId?: string,
-  botName: string,
+  botId: string,
   botVersion?: string,
   description?: string,
   localeId: string,
-  intentId?: string,
-  intentName: string,
+  intentId: string,
   obfuscationSetting?: ObfuscationSetting,
   slotName: string,
-  slotTypeId?: string,
-  slotTypeName: string,
+  slotTypeId: string,
   valueElicitationSetting: SlotValueElicitationSetting
 }
 
 export interface LexBotAliasAttributes {
-  botId?: string,
-  botName: string,
+  botId: string,
   botAliasName: string,
   botAliasLocaleSettings: { [key: string]: BotAliasLocaleSettings },
-  botVersion?: string, 
+  botVersion?: string,
   conversationLogSettings?: ConversationLogSettings,
   description?: string,
-  sentimentAnalysisSettings?:  SentimentAnalysisSettings,
+  sentimentAnalysisSettings?: SentimentAnalysisSettings,
   tags?: { [key: string]: string }
 }

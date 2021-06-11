@@ -1,15 +1,15 @@
 import * as cdk from '@aws-cdk/core';
-import { CreateBotCommandInput } from '@aws-sdk/client-lex-models-v2';
-import { LexModelsV2Client, ListBotsCommand, BotFilterName, BotFilterOperator } from '@aws-sdk/client-lex-models-v2';
+import { LexBotAttributes } from '../lex-data-types';
 
 
 export default class LexBot extends cdk.Construct {
   scope: cdk.Stack;
   id: string;
-  props: CreateBotCommandInput;
+  props: LexBotAttributes;
+  resource: cdk.CustomResource;
 
   // the service token must match the exported service token by the lex-bot stack
-  constructor(scope: cdk.Stack, id: string, serviceToken: string, props: CreateBotCommandInput) {
+  constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexBotAttributes) {
     super(scope, id);
 
     this.scope = scope;
@@ -19,7 +19,7 @@ export default class LexBot extends cdk.Construct {
     this.props.botName = id;
 
     if (this.validName()) {
-      const _customResource = new cdk.CustomResource(scope, `${id}_Custom_V2_Lex_Bot`, {
+      this.resource = new cdk.CustomResource(scope, `${id}_Custom_V2_Lex_Bot`, {
         serviceToken: cdk.Fn.importValue(serviceToken),
         properties: {
           props: JSON.stringify(this.props)
@@ -36,5 +36,9 @@ export default class LexBot extends cdk.Construct {
 
   getName(): string {
     return this.props.botName!;
+  }
+
+  getResource(): cdk.CustomResource {
+    return this.resource;
   }
 }
