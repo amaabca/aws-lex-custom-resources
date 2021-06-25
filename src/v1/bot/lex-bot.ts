@@ -17,7 +17,7 @@ export default class LexBot extends cdk.Construct {
     this.props.name = id;
 
     if (this.validName()) {
-      const _customResource = new cdk.CustomResource(scope, `${id}_Custom_Lex_Bot`, {
+      new cdk.CustomResource(scope, `${id}_Custom_Lex_Bot`, {
         serviceToken: cdk.Fn.importValue(serviceToken),
         properties: {
           description,

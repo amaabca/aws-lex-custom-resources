@@ -1,12 +1,12 @@
 // v2 imports for custom resource handlers
-import * as v2LexBotHandler from './handlers/lex-bot';
-import * as v2LexBotLocaleHandler from './handlers/lex-bot-locale';
-import * as v2LexBotAliasHandler from './handlers/lex-bot-alias';
-import * as v2LexBotVersionHandler from './handlers/lex-bot-version';
-import * as v2LexIntentHandler from './handlers/lex-intent';
-import * as v2LexIntentPriorityHandler from './handlers/lex-intent-priority';
-import * as v2LexSlotHandler from './handlers/lex-slot';
-import * as v2LexSlotTypeHandler from './handlers/lex-slot-type';
+import v2LexBotHandler = require('./handlers/lex-bot');
+import v2LexBotLocaleHandler = require('./handlers/lex-bot-locale');
+import v2LexBotAliasHandler = require('./handlers/lex-bot-alias');
+import v2LexBotVersionHandler = require('./handlers/lex-bot-version');
+import v2LexIntentHandler = require('./handlers/lex-intent');
+import v2LexIntentPriorityHandler = require('./handlers/lex-intent-priority');
+import v2LexSlotHandler = require('./handlers/lex-slot');
+import v2LexSlotTypeHandler = require('./handlers/lex-slot-type');
 
 import { LexBotAttributes } from './lex-data-types';
 import LexBot from './bot/lex-bot';
@@ -20,14 +20,14 @@ import LexIntentPriority from './intent-priority/lex-intent-priority';
 
 
 const v2Handlers = {
-  v2LexBotHandler: v2LexBotHandler.handler,
-  v2LexBotAliasHandler: v2LexBotAliasHandler.handler,
-  v2LexBotLocaleHandler: v2LexBotLocaleHandler.handler,
-  v2LexBotVersionHandler: v2LexBotVersionHandler.handler,
-  v2LexIntentHandler: v2LexIntentHandler.handler,
-  v2LexIntentPriorityHandler: v2LexIntentPriorityHandler.handler,
-  v2LexSlotHandler: v2LexSlotHandler.handler,
-  v2LexSlotTypeHandler: v2LexSlotTypeHandler.handler
+  v2LexBotHandler: v2LexBotHandler,
+  v2LexBotAliasHandler: v2LexBotAliasHandler,
+  v2LexBotLocaleHandler: v2LexBotLocaleHandler,
+  v2LexBotVersionHandler: v2LexBotVersionHandler,
+  v2LexIntentHandler: v2LexIntentHandler,
+  v2LexIntentPriorityHandler: v2LexIntentPriorityHandler,
+  v2LexSlotHandler: v2LexSlotHandler,
+  v2LexSlotTypeHandler: v2LexSlotTypeHandler
 }
 
 

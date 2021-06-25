@@ -53,7 +53,7 @@ export class CustomResourcesStack extends cdk.Stack {
     }
 
     if (props.v1?.bot) {
-      const _botResource = new CustomResourceBaseStack(this, props.v1.bot.stackName || 'LexBotCustomResourcesStack', props.env!, {
+      new CustomResourceBaseStack(this, props.v1.bot.stackName || 'LexBotCustomResourcesStack', props.env!, {
         exportName: props.v1.bot.exportName || "lexBotProviderServiceToken",
         handler: {
           folder: props.v1.bot.folder || "./lib/handlers/lex-bot",
@@ -71,7 +71,7 @@ export class CustomResourcesStack extends cdk.Stack {
     }
 
     if (props.v1?.intent) {
-      const _intentResource = new CustomResourceBaseStack(this, props.v1.intent.stackName || 'LexIntentCustomResourcesStack', props.env!, {
+      new CustomResourceBaseStack(this, props.v1.intent.stackName || 'LexIntentCustomResourcesStack', props.env!, {
         exportName: props.v1.intent.exportName || "lexIntentProviderServiceToken",
         handler: {
           folder: props.v1.intent.folder || "./lib/handlers/lex-intent",
@@ -89,7 +89,7 @@ export class CustomResourcesStack extends cdk.Stack {
     }
 
     if (props.v1?.slotType) {
-      const _slotTypeResource = new CustomResourceBaseStack(this, props.v1.slotType.stackName || 'LexSlotTypeCustomResourcesStack', props.env!, {
+      new CustomResourceBaseStack(this, props.v1.slotType.stackName || 'LexSlotTypeCustomResourcesStack', props.env!, {
         exportName: props.v1.slotType.exportName || "lexSlotTypeProviderServiceToken",
         handler: {
           folder: props.v1.slotType.folder || "./lib/handlers/lex-slot-type",
@@ -177,14 +177,14 @@ export class CustomResourcesStack extends cdk.Stack {
         resources: [`arn:aws:iam::${props.env!.account}:role/*`]
       }));
 
-      const _lexV2RoleOutput = new cdk.CfnOutput(this, 'LexV2Role', {
+      new cdk.CfnOutput(this, 'LexV2Role', {
         value: handlerRole.roleArn,
         exportName: props.v2.roleOutput || "LexV2Role"
       });
 
 
       if (props.v2.bot) {
-        const _v2BotResource = new CustomResourceBaseStack(this, props.v2.bot.stackName || 'v2LexBotCustomResourcesStack', props.env!, {
+        new CustomResourceBaseStack(this, props.v2.bot.stackName || 'v2LexBotCustomResourcesStack', props.env!, {
           exportName: props.v2.bot.exportName || "v2LexBotProviderServiceToken",
           handler: {
             folder: props.v2.bot.folder || "./lib/handlers/v2/lex-bot",
@@ -201,7 +201,7 @@ export class CustomResourcesStack extends cdk.Stack {
       }
 
       if (props.v2.intent) {
-        const _v2IntentResource = new CustomResourceBaseStack(this, props.v2.intent.stackName || 'v2LexIntentCustomResourcesStack', props.env!, {
+        new CustomResourceBaseStack(this, props.v2.intent.stackName || 'v2LexIntentCustomResourcesStack', props.env!, {
           exportName: props.v2.intent.exportName || "v2LexIntentProviderServiceToken",
           handler: {
             folder: props.v2.intent.folder || "./lib/handlers/v2/lex-intent",
@@ -218,7 +218,7 @@ export class CustomResourcesStack extends cdk.Stack {
       }
 
       if (props.v2.botLocale) {
-        const _v2BotLocaleResource = new CustomResourceBaseStack(this, props.v2.botLocale.stackName || 'v2LexBotLocaleCustomResourcesStack', props.env!, {
+        new CustomResourceBaseStack(this, props.v2.botLocale.stackName || 'v2LexBotLocaleCustomResourcesStack', props.env!, {
           exportName: props.v2.botLocale.exportName || "v2LexBotLocaleProviderServiceToken",
           handler: {
             folder: props.v2.botLocale.folder || "./lib/handlers/v2/lex-bot-locale",
@@ -235,7 +235,7 @@ export class CustomResourcesStack extends cdk.Stack {
       }
 
       if (props.v2.botVersion) {
-        const _v2BotVersionResource = new CustomResourceBaseStack(this, props.v2.botVersion.stackName || 'v2LexBotVersionCustomResourcesStack', props.env!, {
+        new CustomResourceBaseStack(this, props.v2.botVersion.stackName || 'v2LexBotVersionCustomResourcesStack', props.env!, {
           exportName: props.v2.botVersion.exportName || "v2LexBotVersionProviderServiceToken",
           handler: {
             folder: props.v2.botVersion.folder || "./lib/handlers/v2/lex-bot-version",
@@ -252,7 +252,7 @@ export class CustomResourcesStack extends cdk.Stack {
       }
 
       if (props.v2.slotType) {
-        const _v2SlotTypeResource = new CustomResourceBaseStack(this, props.v2.slotType.stackName || 'v2LexSlotTypeCustomResourcesStack', props.env!, {
+        new CustomResourceBaseStack(this, props.v2.slotType.stackName || 'v2LexSlotTypeCustomResourcesStack', props.env!, {
           exportName: props.v2.slotType.exportName || "v2LexSlotTypeProviderServiceToken",
           handler: {
             folder: props.v2.slotType.folder || "./lib/handlers/v2/lex-slot-type",
@@ -269,7 +269,7 @@ export class CustomResourcesStack extends cdk.Stack {
       }
 
       if (props.v2.slot) {
-        const _v2SlotResource = new CustomResourceBaseStack(this, props.v2.slot.stackName || 'v2LexSlotCustomResourcesStack', props.env!, {
+        new CustomResourceBaseStack(this, props.v2.slot.stackName || 'v2LexSlotCustomResourcesStack', props.env!, {
           exportName: props.v2.slot.exportName || "v2LexSlotProviderServiceToken",
           handler: {
             folder: props.v2.slot.folder || "./lib/handlers/v2/lex-slot",
@@ -286,7 +286,7 @@ export class CustomResourcesStack extends cdk.Stack {
       }
 
       if (props.v2.botAlias) {
-        const _v2SBotAliasResource = new CustomResourceBaseStack(this, props.v2.botAlias.stackName || 'v2LexBotAliasCustomResourcesStack', props.env!, {
+        new CustomResourceBaseStack(this, props.v2.botAlias.stackName || 'v2LexBotAliasCustomResourcesStack', props.env!, {
           exportName: props.v2.botAlias.exportName || "v2LexBotAliasProviderServiceToken",
           handler: {
             folder: props.v2.botAlias.folder || "./lib/handlers/v2/lex-bot-alias",
@@ -303,7 +303,7 @@ export class CustomResourcesStack extends cdk.Stack {
       }
 
       if (props.v2.intentPriority) {
-        const _v2SBotIntentPriorityResource = new CustomResourceBaseStack(this, props.v2.intentPriority.stackName || 'v2LexIntentPriorityCustomResourcesStack', props.env!, {
+        new CustomResourceBaseStack(this, props.v2.intentPriority.stackName || 'v2LexIntentPriorityCustomResourcesStack', props.env!, {
           exportName: props.v2.intentPriority.exportName || "v2LexBotIntentPriorityProviderServiceToken",
           handler: {
             folder: props.v2.intentPriority.folder || "./lib/handlers/v2/lex-intent-priority",

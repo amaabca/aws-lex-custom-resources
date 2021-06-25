@@ -1,5 +1,5 @@
 import * as cdk from '@aws-cdk/core';
-import { LexSlotTypeAttributes, LexIntentCDK } from '../lex-data-types';
+import { LexSlotTypeAttributes } from '../lex-data-types';
 
 export default class LexSlotType extends cdk.Construct {
   scope: cdk.Stack;
@@ -16,7 +16,7 @@ export default class LexSlotType extends cdk.Construct {
     this.props.description = `${id} SlotType`;
     this.props.name = id;
 
-    const _customResource = new cdk.CustomResource(scope, `${id}_Custom_Lex_Slot_Type`, {
+    new cdk.CustomResource(scope, `${id}_Custom_Lex_Slot_Type`, {
       serviceToken: cdk.Fn.importValue(serviceToken),
       properties: {
         description: this.props.description,

@@ -25,7 +25,7 @@ export class CustomResourceBaseStack extends cdk.NestedStack {
     this.createHandler();
   }
 
-  createHandler() {
+  createHandler(): void {
     const handlerFunction = new Function(this, `${this.id}-handlerFunc`, {
       runtime: this.props.handler.runtime || Runtime.NODEJS_14_X,
       code: Code.fromAsset(`./${this.props.handler.folder}/`),
@@ -39,7 +39,7 @@ export class CustomResourceBaseStack extends cdk.NestedStack {
       onEventHandler: handlerFunction
     });
 
-    const _cfnOutput = new cdk.CfnOutput(this, `${this.id}-intentProvider`, {
+    new cdk.CfnOutput(this, `${this.id}-intentProvider`, {
       value: lambdaProvider.serviceToken,
       exportName: this.props.exportName
     });

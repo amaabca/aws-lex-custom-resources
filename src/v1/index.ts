@@ -1,6 +1,6 @@
-const v1LexBotHandler = require("./handlers/lex-bot");
-const v1LexIntentHandler = require("./handlers/lex-intent");
-const v1LexSlotTypeHandler = require("./handlers/lex-slot-type");
+import * as v1LexBotHandler from './handlers/lex-bot';
+import * as v1LexIntentHandler from './handlers/lex-intent';
+import * as v1LexSlotTypeHandler from './handlers/lex-slot-type';
 
 const v1Handlers = {
   v1LexBotHandler: v1LexBotHandler.handler,

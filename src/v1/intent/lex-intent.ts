@@ -16,7 +16,7 @@ export default class LexIntent extends cdk.Construct {
     this.props.description = `${id} Intent`;
 
 
-    const _customResource = new cdk.CustomResource(scope, `${id}_Custom_Lex_Intent`, {
+    new cdk.CustomResource(scope, `${id}_Custom_Lex_Intent`, {
       serviceToken: cdk.Fn.importValue(serviceToken),
       properties: {
         description: this.props.description,
