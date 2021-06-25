@@ -12,7 +12,7 @@ The resources created use lambda functions which make the AWS SDK calls to creat
 You'll need to have AWS CDK installed and a valid AWS login configured on your machine. The lambda handlers that come with this library are not required and you can choose to use your own handlers as long as they work as outlined in the documentation for custom resources in AWS CDK (https://docs.aws.amazon.com/cdk/api/latest/docs/custom-resources-readme.html). The steps are generally as follows:
 
 1. Deploy the CustomResourcesStack as its own stack in your AWS account (this will create a stack of lambda functions and iam roles specific to the account which you deploy it in.)
-2. Create your own CDK stack and use the LexBot, LexIntent and LexSlotType CDK constructs as you wish.
+2. Create your own CDK stack and use the LexBot, LexIntent and LexSlotType CDK constructs as you wish. (Please make sure your new CDK project is using the same version of CDK as this library (1.107.0))
 3. Deploy using `cdk deploy --profile <profile>`
 
 *Note: it's usually smart to structure your Lex CDK stack as a collection of nested stacks (bots, intents, slottypes) and then provide structured dependson calls to ensure order of deployment/teardown*
@@ -158,28 +158,12 @@ export class SlotTypeStack extends cdk.NestedStack {
 
 ```
 
-## Library Guide
+# Library Guide
 
-### Classes
+## Lex Version 1 (Deprecated)
 
----
-### `CustomResourcesStack`
-<br/>*extends cdk.Stack*
+## Classes
 
-<br/>**Methods**:
-- `constructor`
-    <br/>params: `scope: cdk.Construct, id: string, env: cdk.Environment`
-
-<br/>**Properties**: None
-
-
-#### **Description:**
-Creates 3 lambda handler functions and 3 provider functions to Lex bots, intents and slot types and exports the providers ARNs to cloudformation with the following export names:
-- lexBotProviderServiceToken
-- lexIntentProviderServiceToken
-- lexSlotTypeProviderServiceToken
-
----
 ### `LexBot`
 <br/>*extends cdk.Construct*
 
@@ -263,3 +247,166 @@ Custom class for creating Lex slot types with provided props and service token.
 ---
 
 For interfaces and enums please see `lex-data-types.ts` which contains definitions for all attributes/enums used by the above classes.
+
+## Lex Version 2
+
+
+
+
+## CDK Resources
+---
+### `CustomResourcesStack`
+<br/>*extends cdk.Stack*
+
+<br/>**Methods**:
+- `constructor`
+    <br/>params: `scope: cdk.Construct, id: string, props: CustomResourcesStackProps`
+    ```ts
+      interface CustomResourceBaseStackProps {
+        enabled: boolean,
+        stackName?: string,
+        exportName?: string,
+        folder?: string,
+        handlerName?: string,
+        timeout?: number,
+        environment?: {
+          [key: string]: string
+        },
+        runtime?: Runtime,
+        role?: {
+          parentResource?: string,
+          childResource?: string,
+          actions?: string[],
+          customRole?: Role
+        }
+      }
+
+      interface CustomResourcesStackProps {
+        env?: cdk.Environment,
+        v1?: {
+          bot?: CustomResourceBaseStackProps,
+          intent?: CustomResourceBaseStackProps,
+          slotType?: CustomResourceBaseStackProps
+        },
+        v2?: {
+          roleOutput?: string,
+          bot?: CustomResourceBaseStackProps,
+          intent?: CustomResourceBaseStackProps,
+          slotType?: CustomResourceBaseStackProps,
+          slot?: CustomResourceBaseStackProps,
+          intentPriority?: CustomResourceBaseStackProps,
+          botLocale?: CustomResourceBaseStackProps,
+          botVersion?: CustomResourceBaseStackProps,
+          botAlias?: CustomResourceBaseStackProps
+        }
+      }
+    ```
+
+<br/>**Properties**: None
+
+
+#### **Description:**
+Creates custom resource lambda handler functions and provider functions for Lex V2 types and exports the providers ARNs to cloudformation with the following (default) export names:
+
+#### V1
+
+- lexBotProviderServiceToken
+- lexIntentProviderServiceToken
+- lexSlotTypeProviderServiceToken
+
+#### V2
+
+- v2LexBotProviderServiceToken
+- v2LexIntentProviderServiceToken
+- v2LexBotLocaleProviderServiceToken
+- v2LexBotVersionProviderServiceToken
+- v2LexSlotTypeProviderServiceToken
+- v2LexSlotProviderServiceToken
+- v2LexBotAliasProviderServiceToken
+- v2LexBotIntentPriorityProviderServiceToken
+
+The stack will use defaulted values for each resource if the CustomResourceBaseStackProps only has `enabled` set to `true`. These defaults change depending on the resource. By default the stack resources look for handler code in /lib/handlers/(v1/v2)/lex-${resource-name-here} and by default look for Node.js handlers. This can be customized as seen in the props above.
+
+
+#### Example Usage:
+
+- Use defaults and create all Lex Custom Resource handlers:
+
+```ts
+  const app = new cdk.App();
+
+  new cdkResources.CustomResourcesStack(app, 'CustomResourceStackTest', {
+    env: {
+      region: 'us-east-1',
+      account: '157153201295'
+    },
+    v1: {
+      bot: {
+        enabled: true
+      },
+      intent: {
+        enabled: true
+      },
+      slotType: {
+        enabled: true
+      }
+    },
+    v2: {
+      bot: {
+        enabled: true
+      },
+      intent: {
+        enabled: true
+      },
+      slot: {
+        enabled: true
+      },
+      intentPriority: {
+        enabled: true
+      },
+      botVersion: {
+        enabled: true
+      },
+      botAlias: {
+        enabled: true
+      },
+      botLocale: {
+        enabled: true
+      },
+      slotType: {
+        enabled: true
+      }
+    }
+  });
+```
+
+- Create using defaults for V2 Bot Slot, and SlotType aswell as customized V2 Intent (Bot, Slot, SlotType and Intent will only be created):
+
+```ts
+new cdkResources.CustomResourcesStack(app, 'CustomResourceStackTest', {
+  env: {
+    region: 'us-east-1',
+    account: '157153201295'
+  },
+  v2: {
+    bot: {
+      enabled: true
+    },
+    intent: {
+      enabled: true,
+      handlerName: 'main.customHandlerFunc', // Assumes we have a main.py file here
+      folder: './lib/customHandlers/intent/',
+      runtime: Runtime.PYTHON_3_8,
+      timeout: 30
+    },
+    slot: {
+      enabled: true
+    },
+    slotType: {
+      enabled: true
+    }
+  }
+});
+```
+
+---

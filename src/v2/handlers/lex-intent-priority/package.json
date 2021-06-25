@@ -1,0 +1,8 @@
+{
+    "name": "v2-lex-intent-priority-handler",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@aws-sdk/client-lex-models-v2": "^3.17.0"
+    }
+}
