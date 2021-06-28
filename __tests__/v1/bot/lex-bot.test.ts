@@ -1,12 +1,11 @@
 import {
   v1
-} from '../index';
+} from '../../../src/';
 import * as cdk from '@aws-cdk/core';
 
 const sampleStack = new cdk.Stack();
 
 test('Test Bot Attributes', () => {
-
   const testSlotType = new v1.LexSlotType(sampleStack, 'TestSlotType', 'testServiceToken', {
     description: "Test slot type",
     enumerationValues: [
