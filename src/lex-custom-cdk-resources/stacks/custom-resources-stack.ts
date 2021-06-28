@@ -56,7 +56,7 @@ export class CustomResourcesStack extends cdk.Stack {
       new CustomResourceBaseStack(this, props.v1.bot.stackName || 'LexBotCustomResourcesStack', props.env!, {
         exportName: props.v1.bot.exportName || "lexBotProviderServiceToken",
         handler: {
-          folder: props.v1.bot.folder || "./lib/handlers/lex-bot",
+          folder: props.v1.bot.folder || `${__dirname}/../../v1/handlers/lex-bot`,
           handlerName: props.v1.bot.handlerName || "index.handler",
           timeout: props.v1.bot.timeout || 120,
           environment: props.v1.bot.environment || handlerEnvConfig,
@@ -74,7 +74,7 @@ export class CustomResourcesStack extends cdk.Stack {
       new CustomResourceBaseStack(this, props.v1.intent.stackName || 'LexIntentCustomResourcesStack', props.env!, {
         exportName: props.v1.intent.exportName || "lexIntentProviderServiceToken",
         handler: {
-          folder: props.v1.intent.folder || "./lib/handlers/lex-intent",
+          folder: props.v1.intent.folder || `${__dirname}/../../v1/handlers/lex-intent`,
           handlerName: props.v1.intent.handlerName || "index.handler",
           timeout: props.v1.intent.timeout || 120,
           environment: props.v1.intent.environment || handlerEnvConfig,
@@ -92,7 +92,7 @@ export class CustomResourcesStack extends cdk.Stack {
       new CustomResourceBaseStack(this, props.v1.slotType.stackName || 'LexSlotTypeCustomResourcesStack', props.env!, {
         exportName: props.v1.slotType.exportName || "lexSlotTypeProviderServiceToken",
         handler: {
-          folder: props.v1.slotType.folder || "./lib/handlers/lex-slot-type",
+          folder: props.v1.slotType.folder || `${__dirname}/../../v1/handlers/lex-slot-type`,
           handlerName: props.v1.slotType.handlerName || "index.handler",
           timeout: props.v1.slotType.timeout || 120,
           environment: props.v1.slotType.environment || handlerEnvConfig,
@@ -187,8 +187,9 @@ export class CustomResourcesStack extends cdk.Stack {
         new CustomResourceBaseStack(this, props.v2.bot.stackName || 'v2LexBotCustomResourcesStack', props.env!, {
           exportName: props.v2.bot.exportName || "v2LexBotProviderServiceToken",
           handler: {
-            folder: props.v2.bot.folder || "./lib/handlers/v2/lex-bot",
-            handlerName: props.v2.bot.handlerName || "index.handler",
+            folder: props.v2.bot.folder || `${__dirname}/../../v2/handlers/lex-bot`,
+            handlerName: props.v2.bot.handlerName || "handler",
+            entry: "index.js",
             timeout: props.v2.bot.timeout || 120,
             environment: props.v2.bot.environment || handlerEnvConfig,
             runtime: props.v2.bot.runtime || Runtime.NODEJS_14_X
@@ -204,8 +205,9 @@ export class CustomResourcesStack extends cdk.Stack {
         new CustomResourceBaseStack(this, props.v2.intent.stackName || 'v2LexIntentCustomResourcesStack', props.env!, {
           exportName: props.v2.intent.exportName || "v2LexIntentProviderServiceToken",
           handler: {
-            folder: props.v2.intent.folder || "./lib/handlers/v2/lex-intent",
-            handlerName: props.v2.intent.handlerName || "index.handler",
+            folder: props.v2.intent.folder || `${__dirname}/../../v2/handlers/lex-intent`,
+            handlerName: props.v2.intent.handlerName || "handler",
+            entry: "index.js",
             timeout: props.v2.intent.timeout || 120,
             environment: props.v2.intent.environment || handlerEnvConfig,
             runtime: props.v2.intent.runtime || Runtime.NODEJS_14_X
@@ -221,8 +223,9 @@ export class CustomResourcesStack extends cdk.Stack {
         new CustomResourceBaseStack(this, props.v2.botLocale.stackName || 'v2LexBotLocaleCustomResourcesStack', props.env!, {
           exportName: props.v2.botLocale.exportName || "v2LexBotLocaleProviderServiceToken",
           handler: {
-            folder: props.v2.botLocale.folder || "./lib/handlers/v2/lex-bot-locale",
-            handlerName: props.v2.botLocale.handlerName || "index.handler",
+            folder: props.v2.botLocale.folder || `${__dirname}/../../v2/handlers/lex-bot-locale`,
+            handlerName: props.v2.botLocale.handlerName || "handler",
+            entry: "index.js",
             timeout: props.v2.botLocale.timeout || 120,
             environment: props.v2.botLocale.environment || handlerEnvConfig,
             runtime: props.v2.botLocale.runtime || Runtime.NODEJS_14_X
@@ -238,8 +241,9 @@ export class CustomResourcesStack extends cdk.Stack {
         new CustomResourceBaseStack(this, props.v2.botVersion.stackName || 'v2LexBotVersionCustomResourcesStack', props.env!, {
           exportName: props.v2.botVersion.exportName || "v2LexBotVersionProviderServiceToken",
           handler: {
-            folder: props.v2.botVersion.folder || "./lib/handlers/v2/lex-bot-version",
-            handlerName: props.v2.botVersion.handlerName || "index.handler",
+            folder: props.v2.botVersion.folder || `${__dirname}/../../v2/handlers/lex-bot-version`,
+            handlerName: props.v2.botVersion.handlerName || "handler",
+            entry: "index.js",
             timeout: props.v2.botVersion.timeout || 120,
             environment: props.v2.botVersion.environment || handlerEnvConfig,
             runtime: props.v2.botVersion.runtime || Runtime.NODEJS_14_X
@@ -255,8 +259,9 @@ export class CustomResourcesStack extends cdk.Stack {
         new CustomResourceBaseStack(this, props.v2.slotType.stackName || 'v2LexSlotTypeCustomResourcesStack', props.env!, {
           exportName: props.v2.slotType.exportName || "v2LexSlotTypeProviderServiceToken",
           handler: {
-            folder: props.v2.slotType.folder || "./lib/handlers/v2/lex-slot-type",
-            handlerName: props.v2.slotType.handlerName || "index.handler",
+            folder: props.v2.slotType.folder || `${__dirname}/../../v2/handlers/lex-slot-type`,
+            handlerName: props.v2.slotType.handlerName || "handler",
+            entry: "index.js",
             timeout: props.v2.slotType.timeout || 120,
             environment: props.v2.slotType.environment || handlerEnvConfig,
             runtime: props.v2.slotType.runtime || Runtime.NODEJS_14_X
@@ -272,8 +277,9 @@ export class CustomResourcesStack extends cdk.Stack {
         new CustomResourceBaseStack(this, props.v2.slot.stackName || 'v2LexSlotCustomResourcesStack', props.env!, {
           exportName: props.v2.slot.exportName || "v2LexSlotProviderServiceToken",
           handler: {
-            folder: props.v2.slot.folder || "./lib/handlers/v2/lex-slot",
-            handlerName: props.v2.slot.handlerName || "index.handler",
+            folder: props.v2.slot.folder || `${__dirname}/../../v2/handlers/lex-slot`,
+            handlerName: props.v2.slot.handlerName || "handler",
+            entry: "index.js",
             timeout: props.v2.slot.timeout || 120,
             environment: props.v2.slot.environment || handlerEnvConfig,
             runtime: props.v2.slot.runtime || Runtime.NODEJS_14_X
@@ -289,8 +295,9 @@ export class CustomResourcesStack extends cdk.Stack {
         new CustomResourceBaseStack(this, props.v2.botAlias.stackName || 'v2LexBotAliasCustomResourcesStack', props.env!, {
           exportName: props.v2.botAlias.exportName || "v2LexBotAliasProviderServiceToken",
           handler: {
-            folder: props.v2.botAlias.folder || "./lib/handlers/v2/lex-bot-alias",
-            handlerName: props.v2.botAlias.handlerName || "index.handler",
+            folder: props.v2.botAlias.folder || `${__dirname}/../../v2/handlers/lex-bot-alias`,
+            handlerName: props.v2.botAlias.handlerName || "handler",
+            entry: "index.js",
             timeout: props.v2.botAlias.timeout || 120,
             environment: props.v2.botAlias.environment || handlerEnvConfig,
             runtime: props.v2.botAlias.runtime || Runtime.NODEJS_14_X
@@ -306,8 +313,9 @@ export class CustomResourcesStack extends cdk.Stack {
         new CustomResourceBaseStack(this, props.v2.intentPriority.stackName || 'v2LexIntentPriorityCustomResourcesStack', props.env!, {
           exportName: props.v2.intentPriority.exportName || "v2LexBotIntentPriorityProviderServiceToken",
           handler: {
-            folder: props.v2.intentPriority.folder || "./lib/handlers/v2/lex-intent-priority",
-            handlerName: props.v2.intentPriority.handlerName || "index.handler",
+            folder: props.v2.intentPriority.folder || `${__dirname}/../../v2/handlers/lex-intent-priority`,
+            handlerName: props.v2.intentPriority.handlerName || "handler",
+            entry: "index.js",
             timeout: props.v2.intentPriority.timeout || 120,
             environment: props.v2.intentPriority.environment || handlerEnvConfig,
             runtime: props.v2.intentPriority.runtime || Runtime.NODEJS_14_X

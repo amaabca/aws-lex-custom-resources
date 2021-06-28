@@ -5,6 +5,7 @@ interface StackProps {
   exportName: string,
   handler: {
     folder: string,
+    entry?: string,
     handlerName: string,
     environment: {
       [key: string]: string
