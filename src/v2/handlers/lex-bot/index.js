@@ -1,12 +1,11 @@
-const {
+import {
   LexModelsV2Client,
   CreateBotCommand,
   DeleteBotCommand,
   UpdateBotCommand
-} = require("@aws-sdk/client-lex-models-v2");
+} from '@aws-sdk/client-lex-models-v2';
 
-
-exports.handler = async (event, context) => {
+const handler = async (event, context) => {
   try {
     console.log(event, context);
     let params = JSON.parse(event.ResourceProperties.props);
@@ -42,12 +41,8 @@ exports.handler = async (event, context) => {
     console.error(err);
     throw new Error(err);
   }
-}
-// Test Case
+};
 
-// {
-//   "RequestType": "Create",
-//   "ResourceProperties": {
-//     "props": "{\"botTags\":{\"Deployer\":\"Zach\"},\"dataPrivacy\":{\"childDirected\":false},\"idleSessionTTLInSeconds\":60,\"roleArn\":\"arn:aws:iam::157153201295:role/LexCustomResourcesStack-v-v2LexBotCustomResourcesS-YWTX9R077C5R\",\"description\":\"V2_Test_Bot V2 Bot\",\"botName\":\"V2_Test_Bot\"}"
-//   }
-// }
+export {
+  handler,
+};
