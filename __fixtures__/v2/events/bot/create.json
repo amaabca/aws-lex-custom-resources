@@ -1,0 +1,13 @@
+{
+  "RequestType": "Create",
+  "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexBotCustomResourcesS-Vr8FgPMcTkXN",
+  "ResponseURL": "https://example.com/cfn",
+  "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexV2StackZS-v2BotStackZSNestedStackv2BotStackZSNestedStackResourceAF6B112A-XJ0JSZHPX5A7/e600db10-d475-11eb-b8cb-12010cdf73d7",
+  "RequestId": "08e6941d-618b-44fe-8dd0-5bc2923561ed",
+  "LogicalResourceId": "V2TestBotCDKZSCustomV2LexBot",
+  "ResourceType": "AWS::CloudFormation::CustomResource",
+  "ResourceProperties": {
+    "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexBotCustomResourcesS-Vr8FgPMcTkXN",
+    "props": "{\"botTags\":{\"Deployer\":\"test@example.com\"},\"dataPrivacy\":{\"childDirected\":false},\"idleSessionTTLInSeconds\":80,\"roleArn\":\"arn:aws:iam::123456789000:role/LexCustomResourcesStack-v2LexCustomLambdaRoleD6144-17UINKA2H29EB\",\"description\":\"V2_Test_Bot_CDK\",\"botName\":\"V2_Test_Bot\"}"
+  }
+}
