@@ -1,6 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import { Provider } from '@aws-cdk/custom-resources';
-import { Function, Runtime, Code } from '@aws-cdk/aws-lambda';
+import { Function, Runtime, Code, IFunction } from '@aws-cdk/aws-lambda';
+import { LogLevel, NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
 import { Role, ServicePrincipal, PolicyStatement, ManagedPolicy } from '@aws-cdk/aws-iam';
 import { BotType, StackProps } from './custom-resource-data-types'
 
@@ -26,17 +27,34 @@ export class CustomResourceBaseStack extends cdk.NestedStack {
   }
 
   createHandler(): void {
-    const handlerFunction = new Function(this, `${this.id}-handlerFunc`, {
-      runtime: this.props.handler.runtime || Runtime.NODEJS_14_X,
-      code: Code.fromAsset(`./${this.props.handler.folder}/`),
-      handler: this.props.handler.handlerName,
-      timeout: cdk.Duration.seconds(this.props.handler.timeout),
-      environment: this.props.handler.environment,
-      role: this.props.type && this.props.type === BotType.V2 ? this.props.role?.customRole!.withoutPolicyUpdates()! : this.createHandlerRole().withoutPolicyUpdates()
-    });
+    if (this.props.type === BotType.V2) {
+      const handlerFunction = new NodejsFunction(this, `${this.id}-handlerFunc`, {
+        runtime: this.props.handler.runtime || Runtime.NODEJS_14_X,
+        entry: `${this.props.handler.folder}/${this.props.handler.entry}`,
+        handler: this.props.handler.handlerName,
+        timeout: cdk.Duration.seconds(this.props.handler.timeout),
+        environment: this.props.handler.environment,
+        role: this.props.role?.customRole!.withoutPolicyUpdates()!
+      });
 
+      this.createProvider(handlerFunction);
+    } else {
+      const handlerFunction = new Function(this, `${this.id}-handlerFunc`, {
+        runtime: this.props.handler.runtime || Runtime.NODEJS_14_X,
+        code: Code.fromAsset(`${this.props.handler.folder}/`),
+        handler: this.props.handler.handlerName,
+        timeout: cdk.Duration.seconds(this.props.handler.timeout),
+        environment: this.props.handler.environment,
+        role: this.createHandlerRole().withoutPolicyUpdates()
+      });
+
+      this.createProvider(handlerFunction);
+    }
+  }
+
+  createProvider(func: Function): void {
     const lambdaProvider = new Provider(this, `${this.id}-handlerProvider`, {
-      onEventHandler: handlerFunction
+      onEventHandler: func
     });
 
     new cdk.CfnOutput(this, `${this.id}-intentProvider`, {
