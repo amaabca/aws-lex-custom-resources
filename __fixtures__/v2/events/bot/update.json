@@ -1,0 +1,18 @@
+{
+  "RequestType": "Update",
+  "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:CustomResourceStackTestZA-v2LexBotCustomResourcesS-lAXUQkcY7EVR",
+  "ResponseURL": "https://example.com/cfn",
+  "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexV2StackZACHTEST-v2BotStackZACHTESTNestedStackv2BotStackZACHTESTNestedStackResource8-19OBX333L3QFG/7f6b71a0-d860-11eb-83b9-0e72790b6507",
+  "RequestId": "cd9c932d-65d6-4ed4-a56d-3347f8144e49",
+  "LogicalResourceId": "V2TestBot",
+  "PhysicalResourceId": "1234",
+  "ResourceType": "AWS::CloudFormation::CustomResource",
+  "ResourceProperties": {
+    "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:CustomResourceStackTestZA-v2LexBotCustomResourcesS-lAXUQkcY7EVR",
+    "props": "{\"botTags\":{\"Deployer\":\"test@example.com\"},\"dataPrivacy\":{\"childDirected\":false},\"idleSessionTTLInSeconds\":100,\"roleArn\":\"arn:aws:iam::123456789000:role/LexCustomResourcesStack-v2LexCustomLambdaRoleD6144-17UINKA2H29EB\",\"description\":\"V2_Test_Bot_CDK\",\"botName\":\"V2_Test_Bot\"}"
+  },
+  "OldResourceProperties": {
+    "ServiceToken": "arn:aws:lambda:us-east-1:157153201295:function:CustomResourceStackTestZA-v2LexBotCustomResourcesS-lAXUQkcY7EVR",
+    "props": "{\"botTags\":{\"Deployer\":\"test1@example.com\"},\"dataPrivacy\":{\"childDirected\":false},\"idleSessionTTLInSeconds\":80,\"roleArn\":\"arn:aws:iam::123456789000:role/LexCustomResourcesStack-v2LexCustomLambdaRoleD6144-17UINKA2H29EB\",\"description\":\"V2_Test_Bot_CDK\",\"botName\":\"V2_Test_Bot\"}"
+  }
+}
