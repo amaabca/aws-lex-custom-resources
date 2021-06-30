@@ -44,8 +44,6 @@ const handler = async (event, context) => {
                     PhysicalResourceId: response.botAliasId
                 };
             default:
-                debugger
-                // console.error(`${event.RequestType} is not supported!`);
                 throw new Error(`${event.RequestType} is not supported!`);
         }
     } catch (err) {
