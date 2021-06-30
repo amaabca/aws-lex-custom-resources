@@ -5,7 +5,7 @@
     "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexV2StackZS-v2BotAliasStackZSNestedStackv2BotAliasStackZSNestedStackResource1B61CE63-EOSR3MBVL15X/0068e950-d397-11eb-ac5d-0abd9caf10fb",
     "RequestId": "197ef097-0878-46ed-91c1-442628fda908",
     "LogicalResourceId": "V2TestBotAliasZSCustomV2LexBotAlias",
-    "PhysicalResourceId": "1234",
+    "PhysicalResourceId": "123",
     "ResourceType": "AWS::CloudFormation::CustomResource",
     "ResourceProperties": {
         "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexBotAliasCustomResou-1Wnych15cNG0",
