@@ -64,8 +64,6 @@ describe('v2-lex-bot-handler', () => {
   });
 
   describe('with an unknown event type', () => {
-    let response: { PhysicalResourceId?: string };
-
     it('throws an error', async () => {
       expect.assertions(1);
       await expect(handler(fixtures.v2.events.bot.unknown, {})).rejects.toEqual(
