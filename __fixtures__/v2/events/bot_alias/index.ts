@@ -1,9 +1,11 @@
 import create from './create.json';
 import update from './update.json';
-import delete from './delete.json';
+import deleteEvent from './delete.json';
+import unknown from './unknown.json';
 
 export default {
   create,
   update,
-  delete,
+  delete: deleteEvent,
+  unknown,
 };

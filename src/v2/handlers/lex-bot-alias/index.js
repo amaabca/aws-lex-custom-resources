@@ -33,21 +33,24 @@ const handler = async (event, context) => {
                     PhysicalResourceId: response.botAliasId
                 };
             case "Update":
+                debugger
                 params.botAliasId = event.PhysicalResourceId;
                 const updateCommand = new UpdateBotAliasCommand(params);
                 response = await client.send(updateCommand);
+                debugger
                 console.log(response);
 
                 return {
                     PhysicalResourceId: response.botAliasId
                 };
             default:
-                console.error(`${event.RequestType} is not supported!`);
+                debugger
+                // console.error(`${event.RequestType} is not supported!`);
                 throw new Error(`${event.RequestType} is not supported!`);
         }
     } catch (err) {
         console.error(err);
-        throw new Error(err);
+        throw err;
     }
 };
 
