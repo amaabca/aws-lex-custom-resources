@@ -1,0 +1,18 @@
+{
+    "RequestType": "Update",
+    "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexBotAliasCustomResou-1Wnych15cNG0",
+    "ResponseURL": "https://example.com/cfn",
+    "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexStackDarko-v2BotAliasStackNestedStackv2BotAliasStackNestedStackResourceC42C1651-1JNWM9IBJX950/50f6b360-ca33-11eb-abd5-0e7fefd377cd",
+    "RequestId": "cc273e4b-a02e-4cab-98a2-584267633e8f",
+    "LogicalResourceId": "V2TestBotAliasDarkoCustomV2LexBotAlias",
+    "PhysicalResourceId": "82bd8dcd-9d11-4001-902d-d77ebd417d56",
+    "ResourceType": "AWS::CloudFormation::CustomResource",
+    "ResourceProperties": {
+        "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexBotAliasCustomResou-1Wnych15cNG0",
+        "props": "{\"botName\":\"V2_Test_Bot_CDK_Darko\",\"botVersion\":\"1\",\"botAliasName\":\"V2_Test_Bot_Alias_Darko\",\"botAliasLocaleSettings\":{\"en_US\":{\"enabled\":true}},\"description\":\"V2_Test_Bot_Alias_Darko V2 Bot Alias\"}"
+    },
+    "OldResourceProperties": {
+        "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexBotAliasCustomResou-1Wnych15cNG0",
+        "props": "{\"botName\":\"V2_Test_Bot_CDK_Darko\",\"botVersion\":\"1\",\"botAliasName\":\"V2_Test_Bot_Alias_Second_Darko\",\"botAliasLocaleSettings\":{\"en_US\":{\"enabled\":true}},\"description\":\"V2_Test_Bot_Alias_Darko V2 Bot Alias\"}"
+    }
+}
