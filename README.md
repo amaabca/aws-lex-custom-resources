@@ -436,7 +436,7 @@ Creates custom resource lambda handler functions and provider functions for Lex 
 - v2LexBotAliasProviderServiceToken
 - v2LexBotIntentPriorityProviderServiceToken
 
-The stack will use defaulted values for each resource if the CustomResourceBaseStackProps only has `enabled` set to `true`. These defaults change depending on the resource. By default the stack resources look for handler code in /lib/handlers/(v1/v2)/lex-${resource-name-here} and by default look for Node.js handlers. This can be customized as seen in the props above.
+The stack will use defaulted values for each resource if the CustomResourceBaseStackProps only has `enabled` set to `true`. These defaults change depending on the resource. By default the stack resources use handler code that is included in the library. The handlers for v1 rely on the AWS SDK and it is auto supplied by lambda, the v2 handlers run esbuild and bundle up the packages automatically. This can be customized as seen in the props above.
 
 
 #### Example Usage:
