@@ -1,45 +1,45 @@
 import nock from 'nock';
-import { handler } from '../../../../src/v2/handlers/lex-bot/index.js';
+import { handler } from '../../../../src/v2/handlers/lex-slot/index.js';
 import fixtures from '../../../../__fixtures__';
 
-describe('v2-lex-bot-handler', () => {
+describe('v2-lex-slot-handler', () => {
   describe('with a create event', () => {
-    let scope: nock.Scope;
     let response: { PhysicalResourceId?: string };
+    let scope: nock.Scope;
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots')
-        .reply(202, '{"botId":"123"}');
-      response = await handler(fixtures.v2.events.bot.create, {});
+        .put('/bots/BOT_ID/botversions/DRAFT/botlocales/en_US/intents/INTENT_ID/slots')
+        .reply(200, '{"slotId":"SLOT_ID"}');
+      response = await handler(fixtures.v2.events.slot.create, {});
     });
 
-    it('creates a bot via the SDK', () => {
+    it('creates a slot via the SDK', () => {
       expect(scope.isDone()).toBe(true);
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('123');
+      expect(response.PhysicalResourceId).toBe('SLOT_ID');
     });
   });
 
   describe('with an update event', () => {
-    let scope: nock.Scope;
     let response: { PhysicalResourceId?: string };
+    let scope: nock.Scope;
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots/BOT_ID')
-        .reply(202, '{"botId":"BOT_ID"}');
-      response = await handler(fixtures.v2.events.bot.update, {});
+        .put('/bots/BOT_ID/botversions/DRAFT/botlocales/en_US/intents/INTENT_ID/slots/SLOT_ID')
+        .reply(200, '{"slotId":"SLOT_ID"}');
+      response = await handler(fixtures.v2.events.slot.update, {});
     });
 
-    it('updates a bot via the SDK', () => {
+    it('updates a slot via the SDK', () => {
       expect(scope.isDone()).toBe(true);
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('BOT_ID');
+      expect(response.PhysicalResourceId).toBe('SLOT_ID');
     });
   });
 
@@ -49,24 +49,24 @@ describe('v2-lex-bot-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .delete('/bots/BOT_ID')
-        .reply(202, '{"botId":"BOT_ID"}');
-      response = await handler(fixtures.v2.events.bot.delete, {});
+        .delete('/bots/BOT_ID/botversions/DRAFT/botlocales/en_US/intents/INTENT_ID/slots/SLOT_ID')
+        .reply(204, '');
+      response = await handler(fixtures.v2.events.slot.delete, {});
     });
 
-    it('deletes a bot via the SDK', () => {
+    it('deletes a slot via the SDK', () => {
       expect(scope.isDone()).toBe(true);
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('BOT_ID');
+      expect(response.PhysicalResourceId).toBe('SLOT_ID');
     });
   });
 
   describe('with an unknown event type', () => {
     it('throws an error', async () => {
       expect.assertions(1);
-      await expect(handler(fixtures.v2.events.bot.unknown, {})).rejects.toEqual(
+      await expect(handler(fixtures.v2.events.slot.unknown, {})).rejects.toEqual(
         new Error('WAFFLE is not supported!')
       );
     });

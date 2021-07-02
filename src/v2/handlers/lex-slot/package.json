@@ -2,6 +2,7 @@
     "name": "v2-lex-slot-handler",
     "version": "0.1.0",
     "private": true,
+    "type": "module",
     "dependencies": {
         "@aws-sdk/client-lex-models-v2": "^3.17.0"
     }
