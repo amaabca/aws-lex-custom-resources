@@ -17,8 +17,10 @@ const handler = async (event, context) => {
 
   switch (event.RequestType) {
     case 'Create': {
-      params.botVersion = params.botVersion || 'DRAFT';
-      const createCommand = new CreateSlotCommand(params);
+      const createCommand = new CreateSlotCommand({
+        ...params,
+        botVersion: params.botVersion || 'DRAFT'
+      });
       const response = await client.send(createCommand);
 
       return {
@@ -26,9 +28,11 @@ const handler = async (event, context) => {
       };
     }
     case 'Delete': {
-      params.botVersion = params.botVersion || 'DRAFT';
-      params.slotId = event.PhysicalResourceId;
-      const deleteCommand = new DeleteSlotCommand(params);
+      const deleteCommand = new DeleteSlotCommand({
+        ...params,
+        slotId: event.PhysicalResourceId,
+        botVersion: params.botVersion || 'DRAFT'
+      });
       const response = await client.send(deleteCommand);
 
       return {
@@ -36,9 +40,11 @@ const handler = async (event, context) => {
       };
     }
     case 'Update': {
-      params.botVersion = params.botVersion || 'DRAFT';
-      params.slotId = event.PhysicalResourceId;
-      const updateCommand = new UpdateSlotCommand(params);
+      const updateCommand = new UpdateSlotCommand({
+        ...params,
+        slotId: event.PhysicalResourceId,
+        botVersion: params.botVersion || 'DRAFT'
+      });
       const response = await client.send(updateCommand);
 
       return {
