@@ -1,0 +1,13 @@
+{
+  "RequestType": "WAFFLE",
+  "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexSlotTypeCustomResou-o1Nqxysydzuz",
+  "ResponseURL": "https://example.com/cfn",
+  "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexV2Stack-v2BotStackNestedStackv2BotStackNestedStackResource5D6BADFA-E5IV8MFL0GRZ/a6c1ba90-d9ee-11eb-9cc1-0e258982388f",
+  "RequestId": "1250be60-ef87-4085-86cf-bd5fd3b1e91e",
+  "LogicalResourceId": "PetSlotType",
+  "ResourceType": "AWS::CloudFormation::CustomResource",
+  "ResourceProperties": {
+    "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexSlotTypeCustomResou-o1Nqxysydzuz",
+    "props": "{\"botId\":\"BOT_ID\",\"localeId\":\"en_US\",\"slotTypeName\":\"PetType\",\"valueSelectionSetting\":{\"resolutionStrategy\":\"TopResolution\"},\"slotTypeValues\":[{\"sampleValue\":{\"value\":\"dog\"},\"synonyms\":[{\"value\":\"canine\"}]},{\"sampleValue\":{\"value\":\"cat\"},\"synonyms\":[{\"value\":\"feline\"}]}],\"description\":\"Pet Types\"}"
+  }
+}
