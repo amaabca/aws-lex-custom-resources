@@ -4,8 +4,8 @@
   "ResponseURL": "https://example.com/cfn",
   "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexV2StackZACHTEST-v2BotStackZACHTESTNestedStackv2BotStackZACHTESTNestedStackResource8-19OBX333L3QFG/7f6b71a0-d860-11eb-83b9-0e72790b6507",
   "RequestId": "cd9c932d-65d6-4ed4-a56d-3347f8144e49",
-  "LogicalResourceId": "V2TestBot",
-  "PhysicalResourceId": "1234",
+  "LogicalResourceId": "MyBot",
+  "PhysicalResourceId": "BOT_ID",
   "ResourceType": "AWS::CloudFormation::CustomResource",
   "ResourceProperties": {
     "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:CustomResourceStackTestZA-v2LexBotCustomResourcesS-lAXUQkcY7EVR",

@@ -4,6 +4,9 @@ export default async () => {
   // globally disable HTTP requests in the test suite
   nock.disableNetConnect();
 
+  // tell our code to not log to STDOUT
+  process.env.TEST = 'true';
+
   // setup some fake AWS credentials
   process.env.AWS_ACCESS_KEY_ID = 'aws_access_key_id';
   process.env.AWS_SECRET_ACCESS_KEY = 'aws_secret_access_key';

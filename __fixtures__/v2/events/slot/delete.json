@@ -1,0 +1,14 @@
+{
+  "RequestType": "Delete",
+  "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexSlotCustomResources-tXOahldxqOyQ",
+  "ResponseURL": "https://example.com/cfn",
+  "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexV2Stack-v2BotStackNestedStackv2BotStackNestedStackResource5D6BADFA-E5IV8MFL0GRZ/a6c1ba90-d9ee-11eb-9cc1-0e258982388f",
+  "RequestId": "a4db26c7-f89e-4dde-b1fb-60bdf515e44e",
+  "LogicalResourceId": "AgeSlot",
+  "PhysicalResourceId": "SLOT_ID",
+  "ResourceType": "AWS::CloudFormation::CustomResource",
+  "ResourceProperties": {
+    "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexSlotCustomResources-tXOahldxqOyQ",
+    "props": "{\"botId\":\"BOT_ID\",\"localeId\":\"en_US\",\"slotTypeId\":\"AMAZON.Number\",\"intentId\":\"INTENT_ID\",\"slotName\":\"Age\",\"valueElicitationSetting\":{\"slotConstraint\":\"Required\",\"promptSpecification\":{\"maxRetries\":2,\"messageGroups\":[{\"message\":{\"plainTextMessage\":{\"value\":\"What is your age?\"}}}]}},\"description\":\"Age Slot\"}"
+  }
+}
