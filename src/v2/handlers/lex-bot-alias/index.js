@@ -12,6 +12,7 @@ const client = new LexModelsV2Client({
 });
 
 const handler = async (event, context) => {
+  logger.info(JSON.stringify(event));
   let params = JSON.parse(event.ResourceProperties.props);
 
   switch (event.RequestType) {

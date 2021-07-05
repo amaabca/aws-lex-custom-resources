@@ -1,55 +1,61 @@
-const {
+import {
   LexModelsV2Client,
   DeleteBotLocaleCommand,
   UpdateBotLocaleCommand,
   CreateBotLocaleCommand
-} = require("@aws-sdk/client-lex-models-v2");
+} from '@aws-sdk/client-lex-models-v2';
+
+const logger = process.env.TEST ? { info: (c) => {} } : console;
+const client = new LexModelsV2Client({
+  region: process.env.REGION || 'us-east-1',
+  logger: logger
+});
 
 const handler = async (event, context) => {
-  try {
-    console.log(event, context);
-    let params = JSON.parse(event.ResourceProperties.props);
-    const client = new LexModelsV2Client({ region: process.env.REGION || "us-east-1" });
+  logger.info(JSON.stringify(event));
+  let params = JSON.parse(event.ResourceProperties.props);
 
-    let response = {};
+  switch (event.RequestType) {
+    case "Create": {
+      const createCommand = new CreateBotLocaleCommand({
+        ...params,
+        botVersion: params.botVersion || "DRAFT"
+      });
+      const response = await client.send(createCommand);
 
-    switch (event.RequestType) {
-      case "Create":
-        params.botVersion = params.botVersion || "DRAFT";
-        delete params.botName;
-        const createCommand = new CreateBotLocaleCommand(params);
-        response = await client.send(createCommand);
-        console.log(response);
-
-        return {
-          PhysicalResourceId: response.localeId
-        };
-      case "Delete":
-        params.botVersion = params.botVersion || "DRAFT";
-        params.localeId = event.PhysicalResourceId;
-        const deleteCommand = new DeleteBotLocaleCommand(params);
-        response = await client.send(deleteCommand);
-        console.log(response);
-
-        return {
-          PhysicalResourceId: response.localeId
-        };
-      case "Update": // to be adjusted
-        params.localeId = event.PhysicalResourceId;
-        const updateCommand = new UpdateBotLocaleCommand(params);
-        response = await client.send(updateCommand);
-        console.log(response);
-
-        return {
-          PhysicalResourceId: response.localeId
-        };
-
-        default:
-          throw new Error(`${event.RequestType} is not supported!`);
-      }
-    } catch (err) {
-      throw err;
+      return {
+        PhysicalResourceId: response.localeId
+      };
     }
+    case "Delete": {
+      const deleteCommand = new DeleteBotLocaleCommand({
+        ...params,
+        botVersion: params.botVersion || "DRAFT",
+        localeId: event.PhysicalResourceId
+      });
+      const response = await client.send(deleteCommand);
+
+      return {
+        PhysicalResourceId: response.localeId
+      };
+    }
+    case "Update": { // to be adjusted
+      const updateCommand = new UpdateBotLocaleCommand({
+        ...params,
+        localeId: event.PhysicalResourceId
+      });
+      const response = await client.send(updateCommand);
+
+      return {
+        PhysicalResourceId: response.localeId
+      };
+    }
+    default: {
+      throw new Error(`${event.RequestType} is not supported!`);
+    }
+  }
 };
 
-exports.handler = handler;
+export {
+  handler,
+};
