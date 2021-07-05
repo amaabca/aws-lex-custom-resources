@@ -1,0 +1,13 @@
+{
+  "RequestType": "Create",
+  "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexBotCustomResourcesS-Vr8FgPMcTkXN",
+  "ResponseURL": "https://example.com/cfn",
+  "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexV2StackZS-v2BotStackZSNestedStackv2BotStackZSNestedStackResourceAF6B112A-XJ0JSZHPX5A7/e600db10-d475-11eb-b8cb-12010cdf73d7",
+  "RequestId": "08e6941d-618b-44fe-8dd0-5bc2923561ed",
+  "LogicalResourceId": "V2TestBotCDKZSCustomV2LexIntentPriority",
+  "ResourceType": "AWS::CloudFormation::CustomResource",
+  "ResourceProperties": {
+    "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexBotCustomResourcesS-Vr8FgPMcTkXN",
+    "props": "{\"botId\":\"PV9UMAT2FI\",\"localeId\":\"en_US\",\"intentId\":\"WLHH5JOT4T\",\"intentName\":\"V2_TireService_Intent_CDK_ZS\",\"slotPriorities\":[{\"slotId\":\"UM3E9R68QK\",\"priority\":1},{\"slotId\":\"VL5WUTY7BQ\",\"priority\":2},{\"slotId\":\"YBSGTVSJKV\",\"priority\":3},{\"slotId\":\"DF0WND3HTW\",\"priority\":5},{\"slotId\":\"H5QL6MJP6C\",\"priority\":4}]}"
+  }
+}

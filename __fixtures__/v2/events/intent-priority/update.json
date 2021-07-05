@@ -1,0 +1,18 @@
+{
+  "RequestType": "Update",
+  "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:CustomResourceStackTestZA-v2LexBotCustomResourcesS-lAXUQkcY7EVR",
+  "ResponseURL": "https://example.com/cfn",
+  "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexV2StackZACHTEST-v2BotStackZACHTESTNestedStackv2BotStackZACHTESTNestedStackResource8-19OBX333L3QFG/7f6b71a0-d860-11eb-83b9-0e72790b6507",
+  "RequestId": "cd9c932d-65d6-4ed4-a56d-3347f8144e49",
+  "LogicalResourceId": "V2TestBot",
+  "PhysicalResourceId": "1234",
+  "ResourceType": "AWS::CloudFormation::CustomResource",
+  "ResourceProperties": {
+    "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:CustomResourceStackTestZA-v2LexBotCustomResourcesS-lAXUQkcY7EVR",
+    "props": "{\"botId\":\"PV9UMAT2FI\",\"localeId\":\"en_US\",\"intentId\":\"WLHH5JOT4T\",\"intentName\":\"V2_TireService_Intent_CDK_ZS_Update\",\"slotPriorities\":[{\"slotId\":\"UM3E9R68QK\",\"priority\":1},{\"slotId\":\"VL5WUTY7BQ\",\"priority\":2},{\"slotId\":\"YBSGTVSJKV\",\"priority\":4},{\"slotId\":\"DF0WND3HTW\",\"priority\":5},{\"slotId\":\"H5QL6MJP6C\",\"priority\":3}]}"
+  },
+  "OldResourceProperties": {
+    "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:CustomResourceStackTestZA-v2LexBotCustomResourcesS-lAXUQkcY7EVR",
+    "props": "{\"botId\":\"PV9UMAT2FI\",\"localeId\":\"en_US\",\"intentId\":\"WLHH5JOT4T\",\"intentName\":\"V2_TireService_Intent_CDK_ZS\",\"slotPriorities\":[{\"slotId\":\"UM3E9R68QK\",\"priority\":1},{\"slotId\":\"VL5WUTY7BQ\",\"priority\":2},{\"slotId\":\"YBSGTVSJKV\",\"priority\":3},{\"slotId\":\"DF0WND3HTW\",\"priority\":5},{\"slotId\":\"H5QL6MJP6C\",\"priority\":4}]}"
+  }
+}
