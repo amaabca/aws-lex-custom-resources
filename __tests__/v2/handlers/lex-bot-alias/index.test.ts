@@ -2,10 +2,6 @@ import nock from 'nock';
 import { handler } from '../../../../src/v2/handlers/lex-bot-alias/index.js';
 import fixtures from '../../../../__fixtures__';
 
-nock.emitter.on('no match', req => {
-  const r = req;
-})
-
 describe('v2-lex-bot-alias-handler', () => {
   describe('with a create event', () => {
     let scope: nock.Scope;
