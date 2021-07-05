@@ -33,11 +33,9 @@ const handler = async (event, context) => {
                     PhysicalResourceId: response.botAliasId
                 };
             case "Update":
-                debugger
                 params.botAliasId = event.PhysicalResourceId;
                 const updateCommand = new UpdateBotAliasCommand(params);
                 response = await client.send(updateCommand);
-                debugger
                 console.log(response);
 
                 return {
