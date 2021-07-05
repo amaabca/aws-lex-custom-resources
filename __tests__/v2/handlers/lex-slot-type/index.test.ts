@@ -54,7 +54,7 @@ describe('v2-lex-slot-type-handler', () => {
       response = await handler(fixtures.v2.events.slotType.delete, {});
     });
 
-    it('updates a slot type via the SDK', () => {
+    it('deletes a slot type via the SDK', () => {
       expect(scope.isDone()).toBe(true);
     });
 
