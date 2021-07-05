@@ -29,7 +29,7 @@ const handler = async (event, context) => {
         response = await client.send(deleteCommand);
         console.log(response);
         return {
-          PhysicalResourceId: response.intentId
+          PhysicalResourceId: event.PhysicalResourceId // delete doesnt return the id anymore so we will just return the id we had originally here
         };
       case "Update":
         params.botVersion = params.botVersion || "DRAFT";
@@ -41,12 +41,10 @@ const handler = async (event, context) => {
           PhysicalResourceId: response.intentId
         };
       default:
-        console.error(`${event.RequestType} is not supported!`);
-        throw new Error(`${event.RequestType} is not supported!`);
+        throw new Error(`Event request type unknown!`);
     }
   } catch (err) {
-    console.error(err);
-    throw new Error(err);
+    throw err;
   }
 };
 
