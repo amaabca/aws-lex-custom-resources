@@ -5,40 +5,49 @@ import {
   UpdateBotCommand
 } from '@aws-sdk/client-lex-models-v2';
 
-const handler = async (event, context) => {
-  try {
-    console.log(event, context);
-    let params = JSON.parse(event.ResourceProperties.props);
-    const client = new LexModelsV2Client({ region: process.env.REGION || 'us-east-1' });
+const logger = process.env.TEST ? { info: (c) => {} } : console;
+const client = new LexModelsV2Client({
+  region: process.env.REGION || 'us-east-1',
+  logger: logger
+});
 
-    if (event.RequestType === 'Create') {
+const handler = async (event, context) => {
+  logger.info(JSON.stringify(event));
+  let params = JSON.parse(event.ResourceProperties.props);
+
+  switch (event.RequestType) {
+    case 'Create': {
       const command = new CreateBotCommand(params);
-      let createResponse = await client.send(command);
-      console.log(createResponse);
+      const response = await client.send(command);
+
       return {
-        PhysicalResourceId: createResponse.botId
+        PhysicalResourceId: response.botId
       };
-    } else if (event.RequestType === 'Delete') {
-      const deleteCommand = new DeleteBotCommand({ botId: event.PhysicalResourceId });
-      let deleteResponse = await client.send(deleteCommand);
-      console.log(deleteResponse);
-      return {
-        PhysicalResourceId: deleteResponse.botId
-      };
-    } else if (event.RequestType === 'Update') {
-      params.botId = event.PhysicalResourceId;
-      const updateCommand = new UpdateBotCommand(params);
-      let updateResponse = await client.send(updateCommand);
-      console.log(updateResponse);
-      return {
-        PhysicalResourceId: updateResponse.botId
-      };
-    } else {
-      throw new Error('Event request type unknown!');
     }
-  } catch (err) {
-    console.error(err);
-    throw err;
+    case 'Delete': {
+      const deleteCommand = new DeleteBotCommand({
+        botId: event.PhysicalResourceId
+      });
+      const response = await client.send(deleteCommand);
+
+      return {
+        PhysicalResourceId: response.botId
+      };
+    }
+    case 'Update': {
+      const updateCommand = new UpdateBotCommand({
+        ...params,
+        botId: event.PhysicalResourceId
+      });
+      const response = await client.send(updateCommand);
+
+      return {
+        PhysicalResourceId: response.botId
+      };
+    }
+    default: {
+      throw new Error(`${event.RequestType} is not supported!`);
+    }
   }
 };
 

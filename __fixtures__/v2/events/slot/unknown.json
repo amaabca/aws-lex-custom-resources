@@ -1,0 +1,13 @@
+{
+  "RequestType": "WAFFLE",
+  "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexSlotCustomResources-tXOahldxqOyQ",
+  "ResponseURL": "https://example.com/cfn",
+  "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexV2Stack-v2BotStackNestedStackv2BotStackNestedStackResource5D6BADFA-E5IV8MFL0GRZ/a6c1ba90-d9ee-11eb-9cc1-0e258982388f",
+  "RequestId": "259af5d2-0b5f-4f83-96bc-bc011468738c",
+  "LogicalResourceId": "NameSlot",
+  "ResourceType": "AWS::CloudFormation::CustomResource",
+  "ResourceProperties": {
+    "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexSlotCustomResources-tXOahldxqOyQ",
+    "props": "{\"botId\":\"BOT_ID\",\"localeId\":\"en_US\",\"slotTypeId\":\"AMAZON.FirstName\",\"intentId\":\"INTENT_ID\",\"priority\":1,\"slotName\":\"Name\",\"valueElicitationSetting\":{\"slotConstraint\":\"Required\",\"promptSpecification\":{\"maxRetries\":2,\"messageGroups\":[{\"message\":{\"plainTextMessage\":{\"value\":\"What is your name?\"}}}]}},\"description\":\"Name Slot\"}"
+  }
+}
