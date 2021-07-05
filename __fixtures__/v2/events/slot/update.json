@@ -1,0 +1,18 @@
+{
+  "RequestType": "Update",
+  "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexSlotCustomResources-tXOahldxqOyQ",
+  "ResponseURL": "https://example.com/cfn",
+  "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexV2StackZS-v2BotStackZSNestedStackv2BotStackZSNestedStackResourceAF6B112A-BOAQWMU7VRYW/f25878d0-d2b5-11eb-b2a5-0addedaaaadd",
+  "RequestId": "1bc56202-b593-4b0f-a8d4-f1e2d7949216",
+  "LogicalResourceId": "AgeSlot",
+  "PhysicalResourceId": "SLOT_ID",
+  "ResourceType": "AWS::CloudFormation::CustomResource",
+  "ResourceProperties": {
+    "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexSlotCustomResources-tXOahldxqOyQ",
+    "props": "{\"botId\":\"BOT_ID\",\"localeId\":\"en_US\",\"slotTypeId\":\"AMAZON.NUMBER\",\"intentId\":\"INTENT_ID\",\"slotName\":\"Age\",\"valueElicitationSetting\":{\"slotConstraint\":\"Required\",\"promptSpecification\":{\"maxRetries\":2,\"messageGroups\":[{\"message\":{\"plainTextMessage\":{\"value\":\"What is your age?\"}}}]}},\"description\":\"Age\"}"
+  },
+  "OldResourceProperties": {
+    "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexSlotCustomResources-tXOahldxqOyQ",
+    "props": "{\"botId\":\"BOT_ID\",\"localeId\":\"en_US\",\"slotTypeId\":\"AMAZON.NUMBER\",\"intentId\":\"INTENT_ID\",\"slotName\":\"Age\",\"valueElicitationSetting\":{\"slotConstraint\":\"Required\",\"promptSpecification\":{\"maxRetries\":2,\"messageGroups\":[{\"message\":{\"plainTextMessage\":{\"value\":\"What is your age?\"}}}]}},\"description\":\"Age Slot\"}"
+  }
+}
