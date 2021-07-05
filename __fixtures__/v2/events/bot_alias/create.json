@@ -1,0 +1,13 @@
+{
+    "RequestType": "Create",
+    "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexBotAliasCustomResou-1Wnych15cNG0",
+    "ResponseURL": "https://example.com/cfn",
+    "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexV2StackZS-v2BotAliasStackZSNestedStackv2BotAliasStackZSNestedStackResource1B61CE63-EOSR3MBVL15X/0068e950-d397-11eb-ac5d-0abd9caf10fb",
+    "RequestId": "b11a1a8a-d14e-48f5-a555-ef66778c63ae",
+    "LogicalResourceId": "V2TestBotAliasZSCustomV2LexBotAlias",
+    "ResourceType": "AWS::CloudFormation::CustomResource",
+    "ResourceProperties": {
+        "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexBotAliasCustomResou-1Wnych15cNG0",
+        "props": "{\"botId\":\"123\",\"botVersion\":\"1\",\"botAliasName\":\"V2TestBotAliasZS\",\"botAliasLocaleSettings\":{\"en_US\":{\"enabled\":true,\"codeHookSpecification\":{\"lambdaCodeHook\":{\"lambdaARN\":\"arn:aws:lambda:us-east-1:1234567890005:function:LexV2StackZS-v2LambdaStackZSNeste-MadMaxZS8785E9EE-IN09vLeM0ato\",\"codeHookInterfaceVersion\":\"1\"}}}},\"description\":\"V2_Test_Bot_AliasZS V2 Bot Alias\"}"
+    }
+}
