@@ -2,10 +2,10 @@
   "RequestType": "WAFFLE",
   "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexBotCustomResourcesS-Vr8FgPMcTkXN",
   "ResponseURL": "https://example.com/cfn",
-  "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexV2StackJesse-v2BotStackJesseNestedStackv2BotStackNestedStackResource2D5A2D2E-1QC5AJK7CCZJZ/a5df3160-d8ff-11eb-bd56-1230d186eea1",
+  "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexV2Stack-v2BotStackNestedStackv2BotStackNestedStackResource2D5A2D2E-1QC5AJK7CCZJZ/a5df3160-d8ff-11eb-bd56-1230d186eea1",
   "RequestId": "e28a1bb8-f5ae-4fcd-b304-c71b0aa32c27",
-  "LogicalResourceId": "V2TestBotCDKCustomV2LexBot",
-  "PhysicalResourceId": "1234",
+  "LogicalResourceId": "MyBot",
+  "PhysicalResourceId": "BOT_ID",
   "ResourceType": "AWS::CloudFormation::CustomResource",
   "ResourceProperties": {
     "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexBotCustomResourcesS-Vr8FgPMcTkXN",
