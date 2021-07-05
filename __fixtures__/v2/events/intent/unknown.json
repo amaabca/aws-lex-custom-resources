@@ -1,0 +1,13 @@
+{
+    "RequestType": "WAFFLE",
+    "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexBotCustomResourcesS-Vr8FgPMcTkXN",
+    "ResponseURL": "https://example.com/cfn",
+    "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexV2StackZS-v2BotStackZSNestedStackv2BotStackZSNestedStackResourceAF6B112A-XJ0JSZHPX5A7/e600db10-d475-11eb-b8cb-12010cdf73d7",
+    "RequestId": "08e6941d-618b-44fe-8dd0-5bc2923561ed",
+    "LogicalResourceId": "V2TestBotCDKZSCustomV2LexIntent",
+    "ResourceType": "AWS::CloudFormation::CustomResource",
+    "ResourceProperties": {
+        "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexIntentCustomResourcesS-Vr8FgPMcTkXN",
+        "props": "{\"botId\":\"E2MGJRZBQA\",\"intentName\":\"TireService\",\"localeId\":\"en_US\",\"botVersion\":\"DRAFT\",\"sampleUtterances\":[{\"utterance\":\"My car has a flat tire\"},{\"utterance\":\"My truck has a flat tire\"},{\"utterance\":\"My van has a flat tire\"},{\"utterance\":\"I need a flat tire replaced\"},{\"utterance\":\"I need a flat tire replacement\"},{\"utterance\":\"I need you to replace my flat tire\"},{\"utterance\":\"I need you to replace my tire\"},{\"utterance\":\"I have a flat tire\"},{\"utterance\":\"I'd like a flat tire replacement\"},{\"utterance\":\"I'd like my flat tire replaced\"},{\"utterance\":\"I'd like you to replace my flat tire\"},{\"utterance\":\"I've got a flat\"},{\"utterance\":\"Can you replace my flat tire\"},{\"utterance\":\"A tire is flat\"},{\"utterance\":\"Replace my flat tire\"},{\"utterance\":\"Replace a flat tire\"},{\"utterance\":\"No air in tire\"},{\"utterance\":\"Flat tire\"},{\"utterance\":\"Flat tire service\"},{\"utterance\":\"Tire service\"}],\"dialogCodeHook\":{\"enabled\":true},\"fulfillmentCodeHook\":{\"enabled\":true},\"description\":\"An intent for servicing tires!\"}"
+    }
+}
