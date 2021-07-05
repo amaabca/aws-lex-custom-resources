@@ -44,15 +44,12 @@ const handler = async (event, context) => {
           PhysicalResourceId: response.localeId
         };
 
-      default:
-        console.error(`${event.RequestType} is not supported!`);
-        throw new Error(`${event.RequestType} is not supported!`);
+        default:
+          throw new Error(`${event.RequestType} is not supported!`);
+      }
+    } catch (err) {
+      throw err;
     }
-  } catch (err) {
-    console.error(err);
-    throw new Error(err);
-  }
 };
-
 
 exports.handler = handler;
