@@ -1,57 +1,62 @@
-const {
-    LexModelsV2Client,
-    UpdateSlotTypeCommand,
-    CreateSlotTypeCommand,
-    DeleteSlotTypeCommand,
-} = require("@aws-sdk/client-lex-models-v2");
+import {
+  LexModelsV2Client,
+  UpdateSlotTypeCommand,
+  CreateSlotTypeCommand,
+  DeleteSlotTypeCommand,
+} from '@aws-sdk/client-lex-models-v2';
+
+const logger = process.env.TEST ? { info: (c) => {} } : console;
+const client = new LexModelsV2Client({
+  region: process.env.REGION || 'us-east-1',
+  logger: logger
+});
 
 const handler = async (event, context) => {
-    try {
-        console.log(event, context);
-        let params = JSON.parse(event.ResourceProperties.props);
-        const client = new LexModelsV2Client({ region: process.env.REGION || "us-east-1" });
+  logger.info(JSON.stringify(event));
+  let params = JSON.parse(event.ResourceProperties.props);
 
+  switch (event.RequestType) {
+    case 'Create': {
+      const createCommand = new CreateSlotTypeCommand({
+        ...params,
+        botVersion: params.botVersion || 'DRAFT'
+      });
+      const response = await client.send(createCommand);
 
-        let response = {};
-
-        switch (event.RequestType) {
-            case "Create":
-                params.botVersion = params.botVersion || "DRAFT";
-                const createCommand = new CreateSlotTypeCommand(params);
-                response = await client.send(createCommand);
-                console.log(response);
-
-                return {
-                    PhysicalResourceId: response.slotTypeId
-                };
-            case "Delete":
-                params.botVersion = params.botVersion || "DRAFT";
-                params.slotTypeId = event.PhysicalResourceId;
-                const deleteCommand = new DeleteSlotTypeCommand(params);
-                response = await client.send(deleteCommand);
-                console.log(response);
-
-                return {
-                    PhysicalResourceId: response.slotTypeId
-                };
-            case "Update":
-                params.botVersion = params.botVersion || "DRAFT";
-                params.slotTypeId = event.PhysicalResourceId;
-                const updateCommand = new UpdateSlotTypeCommand(params);
-                response = await client.send(updateCommand);
-                console.log(response);
-
-                return {
-                    PhysicalResourceId: response.slotTypeId
-                };
-            default:
-                console.error(`${event.RequestType} is not supported!`);
-                throw new Error(`${event.RequestType} is not supported!`);
-        }
-    } catch (err) {
-        console.error(err);
-        throw new Error(err);
+      return {
+        PhysicalResourceId: response.slotTypeId
+      };
     }
+    case 'Delete': {
+      const deleteCommand = new DeleteSlotTypeCommand({
+        ...params,
+        botVersion: params.botVersion || 'DRAFT',
+        slotTypeId: event.PhysicalResourceId,
+      });
+      const response = await client.send(deleteCommand);
+
+      return {
+        PhysicalResourceId: event.PhysicalResourceId
+      };
+    }
+    case 'Update': {
+      const updateCommand = new UpdateSlotTypeCommand({
+        ...params,
+        botVersion: params.botVersion || 'DRAFT',
+        slotTypeId: event.PhysicalResourceId,
+      });
+      const response = await client.send(updateCommand);
+
+      return {
+        PhysicalResourceId: response.slotTypeId
+      };
+    }
+    default: {
+      throw new Error(`${event.RequestType} is not supported!`);
+    }
+  }
 };
 
-exports.handler = handler;
+export {
+  handler,
+};

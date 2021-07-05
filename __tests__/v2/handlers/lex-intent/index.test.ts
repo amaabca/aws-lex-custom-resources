@@ -1,20 +1,25 @@
 import nock from 'nock';
-import { handler } from '../../../../src/v2/handlers/lex-bot/index.js';
+import { handler } from '../../../../src/v2/handlers/lex-intent/index.js';
 import fixtures from '../../../../__fixtures__';
 
-describe('v2-lex-bot-handler', () => {
+nock.emitter.on('no match', req => {
+  const r = req;
+  console.error(r);
+})
+
+describe('v2-lex-intent-handler', () => {
   describe('with a create event', () => {
     let scope: nock.Scope;
     let response: { PhysicalResourceId?: string };
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots')
-        .reply(202, '{"botId":"123"}');
-      response = await handler(fixtures.v2.events.bot.create, {});
+        .put('/bots/E2MGJRZBQA/botversions/DRAFT/botlocales/en_US/intents')
+        .reply(200, () => '{"intentId":"123"}');
+      response = await handler(fixtures.v2.events.intent.create, {});
     });
 
-    it('creates a bot via the SDK', () => {
+    it('creates a intent via the SDK', () => {
       expect(scope.isDone()).toBe(true);
     });
 
@@ -29,9 +34,9 @@ describe('v2-lex-bot-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots/BOT_ID')
-        .reply(202, '{"botId":"BOT_ID"}');
-      response = await handler(fixtures.v2.events.bot.update, {});
+        .put('/bots/E2MGJRZBQA/botversions/DRAFT/botlocales/en_US/intents/1234')
+        .reply(200, '{"intentId":"1234"}');
+      response = await handler(fixtures.v2.events.intent.update, {});
     });
 
     it('updates a bot via the SDK', () => {
@@ -39,7 +44,7 @@ describe('v2-lex-bot-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('BOT_ID');
+      expect(response.PhysicalResourceId).toBe('1234');
     });
   });
 
@@ -49,9 +54,9 @@ describe('v2-lex-bot-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .delete('/bots/BOT_ID')
-        .reply(202, '{"botId":"BOT_ID"}');
-      response = await handler(fixtures.v2.events.bot.delete, {});
+        .delete('/bots/E2MGJRZBQA/botversions/DRAFT/botlocales/en_US/intents/1234')
+        .reply(200, '{"intentId":"1234"}');
+      response = await handler(fixtures.v2.events.intent.delete, {});
     });
 
     it('deletes a bot via the SDK', () => {
@@ -59,16 +64,25 @@ describe('v2-lex-bot-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('BOT_ID');
+      console.error(response);
+      expect(response.PhysicalResourceId).toBe('1234');
     });
   });
 
   describe('with an unknown event type', () => {
     it('throws an error', async () => {
       expect.assertions(1);
-      await expect(handler(fixtures.v2.events.bot.unknown, {})).rejects.toEqual(
-        new Error('WAFFLE is not supported!')
+      await expect(handler(fixtures.v2.events.intent.unknown, {})).rejects.toEqual(
+        new Error('Event request type unknown!')
       );
+    });
+  });
+
+  describe('with an internal error', () => {
+    it('throws an error', async () => {
+      expect.assertions(1);
+      // Error: TypeError: Cannot read property 'props' of undefined
+      await expect(handler({}, {})).rejects.toBeInstanceOf(TypeError);
     });
   });
 });

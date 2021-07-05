@@ -39,7 +39,7 @@ const handler = async (event, context) => {
         logger.info(response);
 
         return {
-          PhysicalResourceId: response.intentId
+          PhysicalResourceId: event.PhysicalResourceId // delete doesnt return the id anymore so we will just return the id we had originally here
         };
       case "Update":
         const updateCommand = new UpdateIntentCommand({
@@ -54,10 +54,10 @@ const handler = async (event, context) => {
           PhysicalResourceId: response.intentId
         };
       default:
-        throw new Error(`${event.RequestType} is not supported!`);
+        throw new Error(`Event request type unknown!`);
     }
   } catch (err) {
-    throw new Error(err);
+    throw err;
   }
 };
 
