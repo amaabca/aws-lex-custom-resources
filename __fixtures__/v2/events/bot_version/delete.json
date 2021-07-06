@@ -1,0 +1,14 @@
+{
+  "RequestType": "Delete",
+  "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexBotVersionCustomRes-Royzoq6Y22kX",
+  "ResponseURL": "https://example.com/cfn",
+  "StackId": "arn:aws:cloudformation:us-east-1:123456789000:stack/LexV2StackZS-v2BotVersionStackZSNestedStackv2BotVersionStackZSNestedStackResource141FB-1KGX1GF7JIBL7/4095ef30-d3a3-11eb-a33d-0a4ced5e22b5",
+  "RequestId": "20e51a4d-809e-466e-8c9d-e964940fe027",
+  "LogicalResourceId": "V2TestBotVersionZSCustomV2LexBotVersion",
+  "PhysicalResourceId": "123123",
+  "ResourceType": "AWS::CloudFormation::CustomResource",
+  "ResourceProperties": {
+    "ServiceToken": "arn:aws:lambda:us-east-1:123456789000:function:LexCustomResourcesStack-v-v2LexBotVersionCustomRes-Royzoq6Y22kX",
+    "props": "{\"botId\":\"123\",\"botVersionLocaleSpecification\":{\"en_US\":{\"sourceBotVersion\":\"DRAFT\"}},\"description\":\"V2_Test_Bot_Version_ZS V2 Bot Locale\"}"
+  }
+}
