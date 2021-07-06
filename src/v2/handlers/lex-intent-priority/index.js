@@ -1,29 +1,38 @@
-const {
+import {
   LexModelsV2Client,
   UpdateIntentCommand
-} = require("@aws-sdk/client-lex-models-v2");
+} from "@aws-sdk/client-lex-models-v2";
+const logger = process.env.TEST ? { info: (c) => { } } : console;
+const client = new LexModelsV2Client({
+  region: process.env.REGION || "us-east-1",
+  logger
+});
+
 
 const handler = async (event, context) => {
   try {
-    console.log(event, context);
+    logger.info(JSON.stringify(event));
     let params = JSON.parse(event.ResourceProperties.props);
-    const client = new LexModelsV2Client({ region: process.env.REGION || "us-east-1" });
-
-    let response = {};
 
     if (event.RequestType === "Create" || event.RequestType === "Update") {
-      params.botVersion = params.botVersion || "DRAFT";
-      const updateCommand = new UpdateIntentCommand(params);
-      response = await client.send(updateCommand);
-      console.log(response);
+      const updateCommand = new UpdateIntentCommand({
+        ...params,
+        botVersion: params.botVersion || "DRAFT"
+      });
+      const response = await client.send(updateCommand);
+      logger.info(response);
 
+      return {
+        PhysicalResourceId: `${response.intentId}-priority`
+      };
     } else {
       return {};
     }
   } catch (err) {
-    console.error(err);
     throw new Error(err);
   }
 };
 
-exports.handler = handler;
+export {
+  handler
+};

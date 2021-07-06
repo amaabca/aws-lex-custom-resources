@@ -4,12 +4,14 @@ import bot_locale from './bot_locale';
 import intent from './intent';
 import slot from './slot';
 import slotType from './slot-type';
+import intentPriority from './intent-priority';
 
 export default {
   bot,
   bot_alias,
   bot_locale,
   intent,
+  intentPriority,
   slot,
-  slotType,
+  slotType
 };
