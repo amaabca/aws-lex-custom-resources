@@ -18,114 +18,6 @@ You'll need to have AWS CDK installed and a valid AWS login configured on your m
 3. Deploy using `cdk deploy --profile <profile>`
 
 # Library Guide
-
-## Lex Version 1 (Deprecated)
-
-## Classes
-
-### `LexBot`
-<br/>*extends cdk.Construct*
-
-```ts
-interface LexBotAttributes {
-  serviceToken?: string,
-  name?: string,
-  enableModelImprovements?: boolean,
-  intents: LexIntentCDK[],
-  clarificationPrompt: LexPrompt,
-  abortStatement: LexPrompt,
-  idleSessionTTLInSeconds: number,
-  voiceId?: LexVoice,
-  childDirected: boolean,
-  createVersion?: boolean,
-  locale: string,
-  detectSentiment?: boolean,
-  nluIntentConfidenceThreshold?: number
-}
-```
-
-<br/>**Methods**:
-
-```ts
-constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexBotAttributes);
-validName(): boolean
-
-```
-
-#### **Description:**
-Custom class for creating Lex bots with provided props and service token.
-
----
-### `LexIntent`
-<br/>*extends cdk.Construct*
-
-```ts
-interface LexIntentAttributes {
-  name?: string,
-  checksum?: string,
-  conclusionStatement?: LexPrompt,
-  confirmationPrompt?: LexPrompt,
-  createVersion?: boolean,
-  description?: string,
-  dialogCodeHook?: DialogCodeHook,
-  followUpPrompt?: {
-    prompt: LexPrompt,
-    rejectionStatement: LexPrompt
-  },
-  fulfillmentActivity?: FulfillmentActivity,
-  inputContexts?: { name: string }[],
-  kendraConfiguration?: KendraConfig,
-  outputContexts?: { name: string, timeToLiveInSeconds: number, turnsToLive: number }[],
-  parentIntentSignature?: string,
-  rejectionStatement?: LexPrompt,
-  sampleUtterances?: string[],
-  slots: LexSlot[]
-}
-
-```
-
-<br/>**Methods**:
-
-```ts
-  constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexIntentAttributes);
-  toCDK(version?: string): LexIntentCDK;
-```
-
-
-#### **Description:**
-Custom class for creating Lex intents with provided props and service token.
-
----
-### `LexSlotType`
-<br/>*extends cdk.Construct*
-
-```ts
-  interface LexSlotTypeAttributes {
-    name?: string,
-    description?: string,
-    checksum?: string,
-    createVersion?: boolean,
-    enumerationValues: LexSlotTypeEnumerationValue[],
-    parentSlotTypeSignature?: string,
-    slotTypeConfigurations?: SlotTypeConfiguration[],
-    valueSelectionStrategy?: ValueSelectionStrategy
-  }
-```
-
-<br/>**Methods**:
-
-```ts
-  constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexSlotTypeAttributes);
-  slotTypeName(): string;
-```
-
-#### **Description:**
-Custom class for creating Lex slot types with provided props and service token.
-
----
-
-For interfaces and enums please see `/v1/lex-data-types.ts` which contains definitions for all attributes/enums used by the above classes.
-
 ## Lex Version 2
 
 ---
@@ -394,11 +286,6 @@ For interfaces and enums please see `/v2/lex-data-types.ts` which contains defin
 
       interface CustomResourcesStackProps {
         env?: cdk.Environment,
-        v1?: {
-          bot?: CustomResourceBaseStackProps,
-          intent?: CustomResourceBaseStackProps,
-          slotType?: CustomResourceBaseStackProps
-        },
         v2?: {
           roleOutput?: string,
           bot?: CustomResourceBaseStackProps,
@@ -418,13 +305,6 @@ For interfaces and enums please see `/v2/lex-data-types.ts` which contains defin
 
 #### **Description:**
 Creates custom resource lambda handler functions and provider functions for Lex V2 types and exports the providers ARNs to cloudformation with the following (default) export names:
-
-#### V1
-
-- lexBotProviderServiceToken
-- lexIntentProviderServiceToken
-- lexSlotTypeProviderServiceToken
-
 #### V2
 
 - v2LexBotProviderServiceToken
@@ -436,7 +316,7 @@ Creates custom resource lambda handler functions and provider functions for Lex 
 - v2LexBotAliasProviderServiceToken
 - v2LexBotIntentPriorityProviderServiceToken
 
-The stack will use defaulted values for each resource if the CustomResourceBaseStackProps only has `enabled` set to `true`. These defaults change depending on the resource. By default the stack resources use handler code that is included in the library. The handlers for v1 rely on the AWS SDK and it is auto supplied by lambda, the v2 handlers run esbuild and bundle up the packages automatically. This can be customized as seen in the props above.
+The stack will use defaulted values for each resource if the CustomResourceBaseStackProps only has `enabled` set to `true`. These defaults change depending on the resource. By default the stack resources use handler code that is included in the library. The v2 handlers run esbuild and bundle up the packages automatically. This can be customized as seen in the props above.
 
 
 #### Example Usage:
@@ -450,17 +330,6 @@ The stack will use defaulted values for each resource if the CustomResourceBaseS
     env: {
       region: 'us-east-1',
       account: '12345'
-    },
-    v1: {
-      bot: {
-        enabled: true
-      },
-      intent: {
-        enabled: true
-      },
-      slotType: {
-        enabled: true
-      }
     },
     v2: {
       bot: {

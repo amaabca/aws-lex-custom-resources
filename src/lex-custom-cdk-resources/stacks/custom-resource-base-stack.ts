@@ -17,12 +17,6 @@ export class CustomResourceBaseStack extends cdk.NestedStack {
     this.props = props;
     this.id = id;
 
-    if (this.props.type && this.props.type === BotType.V2 && !this.props.role?.customRole) {
-      throw new Error("Must provide a custom IAM role for Lex V2 resources in props.role.customRole field!");
-    } else if ((!this.props.type || this.props.type === BotType.V1) && !this.props.role?.parentResource && !this.props.role?.childResource) {
-      throw new Error("Must provide a parentResource and a childResource for Lex V1 resources in props.role fields!");
-    }
-
     this.createHandler();
   }
 
@@ -35,17 +29,6 @@ export class CustomResourceBaseStack extends cdk.NestedStack {
         timeout: cdk.Duration.seconds(this.props.handler.timeout),
         environment: this.props.handler.environment,
         role: this.props.role?.customRole!.withoutPolicyUpdates()!
-      });
-
-      this.createProvider(handlerFunction);
-    } else {
-      const handlerFunction = new Function(this, `${this.id}-handlerFunc`, {
-        runtime: this.props.handler.runtime || Runtime.NODEJS_14_X,
-        code: Code.fromAsset(`${this.props.handler.folder}/`),
-        handler: this.props.handler.handlerName,
-        timeout: cdk.Duration.seconds(this.props.handler.timeout),
-        environment: this.props.handler.environment,
-        role: this.createHandlerRole().withoutPolicyUpdates()
       });
 
       this.createProvider(handlerFunction);
