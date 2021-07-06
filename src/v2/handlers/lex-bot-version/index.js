@@ -4,7 +4,7 @@ import {
   CreateBotVersionCommand
 } from '@aws-sdk/client-lex-models-v2';
 
-const logger = process.env.TEST ? { info: (c) => {} } : console;
+const logger = process.env.TEST ? { info: (c) => { } } : console;
 const client = new LexModelsV2Client({
   region: process.env.REGION || 'us-east-1',
   logger: logger
@@ -16,9 +16,7 @@ const handler = async (event, context) => {
 
   switch (event.RequestType) {
     case "Create": {
-      const createCommand = new CreateBotVersionCommand({
-        ...params
-      });
+      const createCommand = new CreateBotVersionCommand(params);
       const response = await client.send(createCommand);
 
       return {

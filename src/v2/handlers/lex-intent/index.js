@@ -61,4 +61,6 @@ const handler = async (event, context) => {
   }
 };
 
-exports.handler = handler;
+export {
+  handler
+};
