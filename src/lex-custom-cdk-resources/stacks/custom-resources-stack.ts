@@ -25,11 +25,6 @@ interface CustomResourceBaseStackProps {
 
 interface CustomResourcesStackProps {
   env?: cdk.Environment,
-  v1?: {
-    bot?: CustomResourceBaseStackProps,
-    intent?: CustomResourceBaseStackProps,
-    slotType?: CustomResourceBaseStackProps
-  },
   v2?: {
     roleOutput?: string,
     bot?: CustomResourceBaseStackProps,
@@ -51,61 +46,6 @@ export class CustomResourcesStack extends cdk.Stack {
       RETRIES: "40",
       WAIT_TIME: "2000"
     }
-
-    if (props.v1?.bot) {
-      new CustomResourceBaseStack(this, props.v1.bot.stackName || 'LexBotCustomResourcesStack', props.env!, {
-        exportName: props.v1.bot.exportName || "lexBotProviderServiceToken",
-        handler: {
-          folder: props.v1.bot.folder || `${__dirname}/../../v1/handlers/lex-bot`,
-          handlerName: props.v1.bot.handlerName || "index.handler",
-          timeout: props.v1.bot.timeout || 120,
-          environment: props.v1.bot.environment || handlerEnvConfig,
-          runtime: props.v1.bot.runtime || Runtime.NODEJS_14_X
-        },
-        role: {
-          parentResource: props.v1.bot.role?.parentResource || "lex",
-          childResource: props.v1.bot.role?.childResource || "bot",
-          actions: props.v1.bot.role?.actions || ["lex:PutBot", "lex:DeleteBot", "lex:GetBot"]
-        }
-      });
-    }
-
-    if (props.v1?.intent) {
-      new CustomResourceBaseStack(this, props.v1.intent.stackName || 'LexIntentCustomResourcesStack', props.env!, {
-        exportName: props.v1.intent.exportName || "lexIntentProviderServiceToken",
-        handler: {
-          folder: props.v1.intent.folder || `${__dirname}/../../v1/handlers/lex-intent`,
-          handlerName: props.v1.intent.handlerName || "index.handler",
-          timeout: props.v1.intent.timeout || 120,
-          environment: props.v1.intent.environment || handlerEnvConfig,
-          runtime: props.v1.intent.runtime || Runtime.NODEJS_14_X
-        },
-        role: {
-          parentResource: props.v1.intent.role?.parentResource || "lex",
-          childResource: props.v1.intent.role?.childResource || "intent",
-          actions: props.v1.intent.role?.actions || ["lex:PutIntent", "lex:DeleteIntent", "lex:GetIntent"]
-        }
-      })
-    }
-
-    if (props.v1?.slotType) {
-      new CustomResourceBaseStack(this, props.v1.slotType.stackName || 'LexSlotTypeCustomResourcesStack', props.env!, {
-        exportName: props.v1.slotType.exportName || "lexSlotTypeProviderServiceToken",
-        handler: {
-          folder: props.v1.slotType.folder || `${__dirname}/../../v1/handlers/lex-slot-type`,
-          handlerName: props.v1.slotType.handlerName || "index.handler",
-          timeout: props.v1.slotType.timeout || 120,
-          environment: props.v1.slotType.environment || handlerEnvConfig,
-          runtime: props.v1.slotType.runtime || Runtime.NODEJS_14_X
-        },
-        role: {
-          parentResource: props.v1.slotType.role?.parentResource || "lex",
-          childResource: props.v1.slotType.role?.childResource || "slottype",
-          actions: props.v1.slotType.role?.actions || ["lex:GetSlotType", "lex:PutSlotType", "lex:DeleteSlotType"]
-        }
-      })
-    }
-
 
     if (props.v2) {
       //V2 Role here
