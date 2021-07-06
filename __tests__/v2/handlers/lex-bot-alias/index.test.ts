@@ -8,10 +8,10 @@ describe('v2-lex-bot-alias-handler', () => {
     let response: { PhysicalResourceId?: string };
 
     beforeAll(async () => {
-       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
+      scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
         .put('/bots/123/botaliases')
         .reply(200, '{"botAliasId":"123123"}');
-      response = await handler(fixtures.v2.events.bot_alias.create, {});
+      response = await handler(fixtures.v2.events.botAlias.create, {});
     });
 
     it('creates a bot-alias via the SDK', () => {
@@ -28,10 +28,10 @@ describe('v2-lex-bot-alias-handler', () => {
     let response: { PhysicalResourceId?: string };
 
     beforeAll(async () => {
-       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
+      scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
         .put('/bots/123/botaliases/123123')
         .reply(200, '{"botAliasId":"123123"}');
-      response = await handler(fixtures.v2.events.bot_alias.update, {});
+      response = await handler(fixtures.v2.events.botAlias.update, {});
     });
 
     it('updates a bot-alias via the SDK', () => {
@@ -48,10 +48,10 @@ describe('v2-lex-bot-alias-handler', () => {
     let response: { PhysicalResourceId?: string };
 
     beforeAll(async () => {
-       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
+      scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
         .delete('/bots/123/botaliases/123123')
         .reply(200, '{"botAliasId":"123123"}');
-      response = await handler(fixtures.v2.events.bot_alias.delete, {});
+      response = await handler(fixtures.v2.events.botAlias.delete, {});
     });
 
     it('delete a bot-alias via the SDK', () => {
@@ -66,7 +66,7 @@ describe('v2-lex-bot-alias-handler', () => {
   describe('with an unknown event type', () => {
     it('throws an error', async () => {
       expect.assertions(1);
-      await expect(handler(fixtures.v2.events.bot_alias.unknown, {})).rejects.toEqual(
+      await expect(handler(fixtures.v2.events.botAlias.unknown, {})).rejects.toEqual(
         new Error('WAFFLE is not supported!')
       );
     });

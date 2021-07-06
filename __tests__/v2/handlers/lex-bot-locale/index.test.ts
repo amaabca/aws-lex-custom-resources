@@ -8,10 +8,10 @@ describe('v2-lex-bot-locale-handler', () => {
     let response: { PhysicalResourceId?: string };
 
     beforeAll(async () => {
-       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
+      scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
         .put('/bots/123/botversions/1/botlocales')
         .reply(202, '{"localeId":"123123"}');
-      response = await handler(fixtures.v2.events.bot_locale.create, {});
+      response = await handler(fixtures.v2.events.botLocale.create, {});
     });
 
     it('creates a bot-locale via the SDK', () => {
@@ -28,12 +28,12 @@ describe('v2-lex-bot-locale-handler', () => {
     let response: { PhysicalResourceId?: string };
 
     beforeAll(async () => {
-       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
+      scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
         .put('/bots/123/botversions/1/botlocales/en_US')
         .reply(200, '{"localeId":"123123"}');
-      response = await handler(fixtures.v2.events.bot_locale.update, {});
+      response = await handler(fixtures.v2.events.botLocale.update, {});
     });
-  
+
     it('updates a bot-locale via the SDK', () => {
       expect(scope.isDone()).toBe(true);
     });
@@ -48,10 +48,10 @@ describe('v2-lex-bot-locale-handler', () => {
     let response: { PhysicalResourceId?: string };
 
     beforeAll(async () => {
-       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
+      scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
         .delete('/bots/123/botversions/1/botlocales/en_US')
         .reply(202, '{"localeId":"123123"}');
-      response = await handler(fixtures.v2.events.bot_locale.delete, {});
+      response = await handler(fixtures.v2.events.botLocale.delete, {});
     });
 
     it('delete a bot-locale via the SDK', () => {
@@ -66,7 +66,7 @@ describe('v2-lex-bot-locale-handler', () => {
   describe('with an unknown event type', () => {
     it('throws an error', async () => {
       expect.assertions(1);
-      await expect(handler(fixtures.v2.events.bot_locale.unknown, {})).rejects.toEqual(
+      await expect(handler(fixtures.v2.events.botLocale.unknown, {})).rejects.toEqual(
         new Error('WAFFLE is not supported!')
       );
     });
