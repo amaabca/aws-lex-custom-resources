@@ -2,7 +2,7 @@ import {
   LexModelsV2Client,
   DeleteBotVersionCommand,
   CreateBotVersionCommand
-} from "@aws-sdk/client-lex-models-v2";
+} from '@aws-sdk/client-lex-models-v2';
 
 const logger = process.env.TEST ? { info: (c) => { } } : console;
 const client = new LexModelsV2Client({
@@ -11,45 +11,40 @@ const client = new LexModelsV2Client({
 });
 
 const handler = async (event, context) => {
-  try {
-    logger.info(event);
-    let params = JSON.parse(event.ResourceProperties.props);
+  logger.info(JSON.stringify(event));
+  let params = JSON.parse(event.ResourceProperties.props);
 
-    switch (event.RequestType) {
-      case "Create": {
-        const createCommand = new CreateBotVersionCommand(params);
-        const response = await client.send(createCommand);
-        logger.info(response);
+  switch (event.RequestType) {
+    case "Create": {
+      const createCommand = new CreateBotVersionCommand(params);
+      const response = await client.send(createCommand);
 
-        return {
-          PhysicalResourceId: response.botVersion
-        };
-      }
-      case "Delete": {
-        const deleteCommand = new DeleteBotVersionCommand({
-          ...params,
-          botVersion: event.PhysicalResourceId
-        });
-        const response = await client.send(deleteCommand);
-        logger.info(response);
-
-        return {
-          PhysicalResourceId: response.botVersion
-        };
-      }
-      case "Update": { // No update event for this resource
-        return {
-          PhysicalResourceId: event.PhysicalResourceId
-        };
-      }
-      default:
-        throw new Error(`${event.RequestType} is not supported!`);
+      return {
+        PhysicalResourceId: response.botVersion
+      };
     }
-  } catch (err) {
-    throw new Error(err);
+    case "Delete": {
+      const deleteCommand = new DeleteBotVersionCommand({
+        ...params,
+        botVersion: event.PhysicalResourceId
+      });
+      const response = await client.send(deleteCommand);
+
+      return {
+        PhysicalResourceId: response.botVersion
+      };
+    }
+    case "Update": { // No update event for this resource
+      return {
+        PhysicalResourceId: event.PhysicalResourceId
+      };
+    }
+    default: {
+      throw new Error(`${event.RequestType} is not supported!`);
+    }
   }
 };
 
 export {
-  handler
-}
+  handler,
+};
