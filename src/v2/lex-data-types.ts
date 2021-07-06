@@ -17,7 +17,12 @@ import {
   SentimentAnalysisSettings,
   SlotPriority
 } from "@aws-sdk/client-lex-models-v2";
-import { ObfuscationSetting } from "../v1/lex-data-types";
+
+enum ObfuscationSetting {
+  NONE = "NONE",
+  DEFAULT = "DEFAULT_OBFUSCATION"
+}
+
 
 export interface LexBotAttributes {
   botName?: string,
