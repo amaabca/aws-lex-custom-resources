@@ -7,5 +7,5 @@ export default {
   create,
   delete: deleteEvent,
   unknown,
-  update
+  update,
 };

@@ -1,5 +1,6 @@
-import LexBotVersion from '../../../src/v2/bot-version/lex-bot-version';
 import * as cdk from '@aws-cdk/core';
+
+import LexBotVersion from '../../../src/v2/bot-version/lex-bot-version';
 
 describe('Lex v2 Bot Version class', () => {
   describe('Create a new instance of the bot-version class', () => {
@@ -9,12 +10,12 @@ describe('Lex v2 Bot Version class', () => {
     beforeAll(async () => {
       sampleStack = new cdk.Stack();
       instance = new LexBotVersion(sampleStack, 'SampleBotVersion', 'sampleServiceToken', {
-        botId: "SampleBotID",
+        botId: 'SampleBotID',
         botVersionLocaleSpecification: {
           'en-US': {
-            sourceBotVersion: "DRAFT"
-          }
-        }
+            sourceBotVersion: 'DRAFT',
+          },
+        },
       });
     });
 

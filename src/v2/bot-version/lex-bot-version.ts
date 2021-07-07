@@ -19,8 +19,8 @@ export default class LexBotVersion extends cdk.Construct {
     this.resource = new cdk.CustomResource(scope, `${id}_Custom_V2_Lex_Bot_Version`, {
       serviceToken: cdk.Fn.importValue(serviceToken),
       properties: {
-        props: JSON.stringify(this.props)
-      }
+        props: JSON.stringify(this.props),
+      },
     });
   }
 

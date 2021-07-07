@@ -3,9 +3,9 @@ import botAlias from './bot-alias';
 import botLocale from './bot-locale';
 import botVersion from './bot-version';
 import intent from './intent';
+import intentPriority from './intent-priority';
 import slot from './slot';
 import slotType from './slot-type';
-import intentPriority from './intent-priority';
 
 export default {
   bot,
@@ -15,5 +15,5 @@ export default {
   intent,
   intentPriority,
   slot,
-  slotType
+  slotType,
 };

@@ -1,5 +1,6 @@
-import LexIntent from '../../../src/v2/intent/lex-intent';
 import * as cdk from '@aws-cdk/core';
+
+import LexIntent from '../../../src/v2/intent/lex-intent';
 
 describe('Lex v2 Intent class', () => {
   describe('Create a new instance of the intent class', () => {
@@ -9,9 +10,9 @@ describe('Lex v2 Intent class', () => {
     beforeAll(async () => {
       sampleStack = new cdk.Stack();
       instance = new LexIntent(sampleStack, 'SampleIntent', 'sampleServiceToken', {
-        botId: "sampleBotID",
-        intentName: "SampleIntent",
-        localeId: 'en-US'
+        botId: 'sampleBotID',
+        intentName: 'SampleIntent',
+        localeId: 'en-US',
       });
     });
 
@@ -20,7 +21,7 @@ describe('Lex v2 Intent class', () => {
     });
 
     it('Gets the correct name', () => {
-      expect(instance.getName()).toBe("SampleIntent");
+      expect(instance.getName()).toBe('SampleIntent');
     });
 
     it('Gets the cfn resource properly', () => {

@@ -1,4 +1,5 @@
 import * as cdk from '@aws-cdk/core';
+
 import { LexIntentPriorityAttributes } from '../lex-data-types';
 
 export default class LexIntentPriority extends cdk.Construct {
@@ -18,8 +19,8 @@ export default class LexIntentPriority extends cdk.Construct {
     this.resource = new cdk.CustomResource(scope, `${id}_Custom_V2_Lex_IntentPriority`, {
       serviceToken: cdk.Fn.importValue(serviceToken),
       properties: {
-        props: JSON.stringify(this.props)
-      }
+        props: JSON.stringify(this.props),
+      },
     });
   }
 

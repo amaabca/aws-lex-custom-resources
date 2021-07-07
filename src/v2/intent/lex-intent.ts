@@ -20,8 +20,8 @@ export default class LexIntent extends cdk.Construct {
     this.resource = new cdk.CustomResource(scope, `${id}_Custom_V2_Lex_Intent`, {
       serviceToken: cdk.Fn.importValue(serviceToken),
       properties: {
-        props: JSON.stringify(this.props)
-      }
+        props: JSON.stringify(this.props),
+      },
     });
   }
 
