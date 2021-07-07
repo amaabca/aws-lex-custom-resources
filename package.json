@@ -1,20 +1,16 @@
 {
   "name": "@amaabca/aws-lex-custom-resources",
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.0.0",
+  "description": "AWS Lex infrastructure as code via the CDK",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "license": "MIT",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint . --ext .ts",
     "test": "jest",
-    "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
-    "preversion": "npm run lint",
-    "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand"
   },
   "repository": {
     "type": "git",
@@ -49,12 +45,11 @@
     "lib/**/*"
   ],
   "dependencies": {
-    "@aws-cdk/aws-iam": "1.107.0",
-    "@aws-cdk/aws-lambda": "1.107.0",
-    "@aws-cdk/aws-lambda-nodejs": "1.107.0",
-    "@aws-cdk/core": "1.107.0",
-    "@aws-cdk/custom-resources": "1.107.0",
-    "@aws-sdk/client-lex-models-v2": "^3.17.0",
-    "aws-sdk": "^2.903.0"
+    "@aws-cdk/aws-iam": "^1.111.0",
+    "@aws-cdk/aws-lambda": "^1.111.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.111.0",
+    "@aws-cdk/core": "^1.111.0",
+    "@aws-cdk/custom-resources": "^1.111.0",
+    "@aws-sdk/client-lex-models-v2": "^3.17.0"
   }
 }
