@@ -26,7 +26,6 @@
     "CDK"
   ],
   "author": "Alberta Motor Association",
-  "license": "ISC",
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
@@ -45,6 +44,7 @@
     "lib/**/*"
   ],
   "dependencies": {
+    "@aws-cdk/assert": "^1.111.0",
     "@aws-cdk/aws-iam": "^1.111.0",
     "@aws-cdk/aws-lambda": "^1.111.0",
     "@aws-cdk/aws-lambda-nodejs": "^1.111.0",

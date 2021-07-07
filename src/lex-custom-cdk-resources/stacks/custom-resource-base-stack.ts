@@ -1,9 +1,8 @@
 import * as cdk from '@aws-cdk/core';
 import { Provider } from '@aws-cdk/custom-resources';
-import { Function, Runtime, Code, IFunction } from '@aws-cdk/aws-lambda';
-import { LogLevel, NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
-import { Role, ServicePrincipal, PolicyStatement, ManagedPolicy } from '@aws-cdk/aws-iam';
-import { BotType, StackProps } from './custom-resource-data-types'
+import { Function, Runtime, Code } from '@aws-cdk/aws-lambda';
+import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
+import { StackProps } from './custom-resource-data-types'
 
 
 export class CustomResourceBaseStack extends cdk.NestedStack {
@@ -21,14 +20,25 @@ export class CustomResourceBaseStack extends cdk.NestedStack {
   }
 
   createHandler(): void {
-    if (this.props.type === BotType.V2) {
+    if (this.props.handler.runtime && this.props.handler.runtime != Runtime.NODEJS_14_X) {
+      const handlerFunction = new Function(this, `${this.id}-handlerFunc`, {
+        runtime: this.props.handler.runtime!,
+        handler: this.props.handler.handlerName,
+        code: this.props.handler.code,
+        timeout: cdk.Duration.seconds(this.props.handler.timeout),
+        environment: this.props.handler.environment,
+        role: this.props.role!.withoutPolicyUpdates()!
+      });
+
+      this.createProvider(handlerFunction);
+    } else {
       const handlerFunction = new NodejsFunction(this, `${this.id}-handlerFunc`, {
         runtime: this.props.handler.runtime || Runtime.NODEJS_14_X,
         entry: `${this.props.handler.folder}/${this.props.handler.entry}`,
         handler: this.props.handler.handlerName,
         timeout: cdk.Duration.seconds(this.props.handler.timeout),
         environment: this.props.handler.environment,
-        role: this.props.role?.customRole!.withoutPolicyUpdates()!
+        role: this.props.role!.withoutPolicyUpdates()!
       });
 
       this.createProvider(handlerFunction);
@@ -44,19 +54,5 @@ export class CustomResourceBaseStack extends cdk.NestedStack {
       value: lambdaProvider.serviceToken,
       exportName: this.props.exportName
     });
-  }
-
-  createHandlerRole(): Role {
-    const handlerRole = new Role(this, `${this.id}-handlerFuncRole`, {
-      assumedBy: new ServicePrincipal('lambda.amazonaws.com').grantPrincipal
-    });
-
-    handlerRole.addToPolicy(new PolicyStatement({
-      resources: [`arn:aws:${this.props.role!.parentResource}:${this.env.region}:${this.env.account}:${this.props.role!.childResource}:*`],
-      actions: this.props.role!.actions!
-    }));
-
-    handlerRole.addManagedPolicy(ManagedPolicy.fromAwsManagedPolicyName("service-role/AWSLambdaBasicExecutionRole"));
-    return handlerRole;
   }
 }
