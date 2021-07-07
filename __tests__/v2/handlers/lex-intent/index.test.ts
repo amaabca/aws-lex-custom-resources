@@ -64,7 +64,6 @@ describe('v2-lex-intent-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      console.error(response);
       expect(response.PhysicalResourceId).toBe('1234');
     });
   });
