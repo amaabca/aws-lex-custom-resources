@@ -1,7 +1,7 @@
 import LexSlot from '../../../src/v2/slot/lex-slot';
 import {
-  SlotConstraint
-} from "@aws-sdk/client-lex-models-v2";
+  SlotConstraint,
+} from '@aws-sdk/client-lex-models-v2';
 import * as cdk from '@aws-cdk/core';
 
 describe('Lex v2 Slot class', () => {
@@ -12,15 +12,15 @@ describe('Lex v2 Slot class', () => {
     beforeAll(async () => {
       sampleStack = new cdk.Stack();
       instance = new LexSlot(sampleStack, 'SampleSlot', 'sampleServiceToken', {
-        botId: "SampleBotID",
-        intentId: "SampleIntentID",
-        localeId: "en-US",
-        slotName: "Sampleslot",
-        slotTypeId: "SomeCustomSlotType",
+        botId: 'SampleBotID',
+        intentId: 'SampleIntentID',
+        localeId: 'en-US',
+        slotName: 'Sampleslot',
+        slotTypeId: 'SomeCustomSlotType',
         valueElicitationSetting: {
-          slotConstraint: SlotConstraint.Required
+          slotConstraint: SlotConstraint.Required,
         },
-        priority: 1
+        priority: 1,
       });
     });
 

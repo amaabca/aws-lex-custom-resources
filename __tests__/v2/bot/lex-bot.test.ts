@@ -10,10 +10,10 @@ describe('Lex v2 Bot class', () => {
       sampleStack = new cdk.Stack();
       instance = new LexBot(sampleStack, 'SampleBot', 'sampleServiceToken', {
         dataPrivacy: {
-          childDirected: false
+          childDirected: false,
         },
         idleSessionTTLInSeconds: 80,
-        roleArn: 'sampleRoleArn'
+        roleArn: 'sampleRoleArn',
       });
     });
 
@@ -26,7 +26,7 @@ describe('Lex v2 Bot class', () => {
     });
 
     it('Gets the correct name', () => {
-      expect(instance.getName()).toBe("SampleBot");
+      expect(instance.getName()).toBe('SampleBot');
     });
 
     it('Gets the cfn resource properly', () => {
@@ -36,17 +36,17 @@ describe('Lex v2 Bot class', () => {
 
   describe('Lex v2 bot class with incorrect name', () => {
     it('Expect it to throw an error', () => {
-      let sampleStack = new cdk.Stack();
+      const sampleStack = new cdk.Stack();
 
       expect(() => {
         new LexBot(sampleStack, 'SampleBot-123!*', 'sampleServiceToken', {
           dataPrivacy: {
-            childDirected: false
+            childDirected: false,
           },
           idleSessionTTLInSeconds: 80,
-          roleArn: 'sampleRoleArn'
-        })
+          roleArn: 'sampleRoleArn',
+        });
       }).toThrow();
-    })
-  })
+    });
+  });
 });

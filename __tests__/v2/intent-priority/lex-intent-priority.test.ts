@@ -9,20 +9,20 @@ describe('Lex v2 Intent Priority class', () => {
     beforeAll(async () => {
       sampleStack = new cdk.Stack();
       instance = new LexIntentPriority(sampleStack, 'SampleIntentPriority', 'sampleServiceToken', {
-        botId: "SampleBotID",
-        localeId: "en-US",
-        intentId: "SampleIntentID",
-        intentName: "SampleIntentName",
+        botId: 'SampleBotID',
+        localeId: 'en-US',
+        intentId: 'SampleIntentID',
+        intentName: 'SampleIntentName',
         slotPriorities: [
           {
             priority: 1,
-            slotId: "FirstSlot"
+            slotId: 'FirstSlot',
           },
           {
             priority: 2,
-            slotId: "SecondSlot"
+            slotId: 'SecondSlot',
           },
-        ]
+        ],
       });
     });
 
