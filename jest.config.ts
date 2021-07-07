@@ -2,6 +2,12 @@ import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
   collectCoverage: true,
+  coverageThreshold: {
+    global: {
+      lines: 100,
+      statements: 100
+    }
+  },
   errorOnDeprecated: true,
   verbose: true,
   globalSetup: '<rootDir>/__tests__/setup.ts',

@@ -50,7 +50,7 @@ export class CustomResourceBaseStack extends cdk.NestedStack {
       onEventHandler: func
     });
 
-    new cdk.CfnOutput(this, `${this.id}-intentProvider`, {
+    new cdk.CfnOutput(this, `${this.id}-Provider`, {
       value: lambdaProvider.serviceToken,
       exportName: this.props.exportName
     });
