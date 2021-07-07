@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import * as cdk from '@aws-cdk/core';
-import { LexBotAttributes } from '../lex-data-types';
 
+import { LexBotAttributes } from '../lex-data-types';
 
 export default class LexBot extends cdk.Construct {
   scope: cdk.Stack;
@@ -22,16 +23,16 @@ export default class LexBot extends cdk.Construct {
       this.resource = new cdk.CustomResource(scope, `${id}_Custom_V2_Lex_Bot`, {
         serviceToken: cdk.Fn.importValue(serviceToken),
         properties: {
-          props: JSON.stringify(this.props)
-        }
+          props: JSON.stringify(this.props),
+        },
       });
     } else {
-      throw new Error("Bot names must only contain letters, numbers and non repeating underscores");
+      throw new Error('Bot names must only contain letters, numbers and non repeating underscores');
     }
   }
 
   validName(): boolean {
-    return new RegExp("^[A-Za-z0-9]+(_[A-Za-z0-9]+)*$").test(this.id);
+    return new RegExp('^[A-Za-z0-9]+(_[A-Za-z0-9]+)*$').test(this.id);
   }
 
   getName(): string {

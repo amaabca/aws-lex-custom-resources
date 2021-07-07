@@ -1,11 +1,11 @@
 import {
-  expect as expectCDK,
   countResources,
-  countResourcesLike
+  countResourcesLike,
+  expect as expectCDK,
 } from '@aws-cdk/assert';
 import * as cdk from '@aws-cdk/core';
-import { CustomResourcesStack } from '../../src/lex-custom-cdk-resources';
 
+import { CustomResourcesStack } from '../../src/lex-custom-cdk-resources';
 
 describe('CDK Custom Resources Stack', () => {
   describe('Can create the default stack', () => {
@@ -17,34 +17,34 @@ describe('CDK Custom Resources Stack', () => {
       stack = new CustomResourcesStack(app, 'SampleCustomResourcesStack', {
         env: {
           region: 'us-east-1',
-          account: '1234567890'
+          account: '1234567890',
         },
         v2: {
           bot: {
-            enabled: true
+            enabled: true,
           },
           botAlias: {
-            enabled: true
+            enabled: true,
           },
           botVersion: {
-            enabled: true
+            enabled: true,
           },
           botLocale: {
-            enabled: true
+            enabled: true,
           },
           intent: {
-            enabled: true
+            enabled: true,
           },
           intentPriority: {
-            enabled: true
+            enabled: true,
           },
           slot: {
-            enabled: true
+            enabled: true,
           },
           slotType: {
-            enabled: true
-          }
-        }
+            enabled: true,
+          },
+        },
       });
     });
 
@@ -53,63 +53,65 @@ describe('CDK Custom Resources Stack', () => {
     });
 
     it('Stack contains IAM Policy for Lex V2', () => {
-      expectCDK(stack).to(countResourcesLike('AWS::IAM::Policy', 1, {
-        PolicyDocument: {
-          Statement: [
-            {
-              Action: [
-                "lex:BuildBotLocale",
-                "lex:CreateBot",
-                "lex:CreateBotAlias",
-                "lex:CreateBotChannel",
-                "lex:CreateBotLocale",
-                "lex:CreateBotVersion",
-                "lex:CreateIntent",
-                "lex:CreateResourcePolicy",
-                "lex:CreateSlot",
-                "lex:CreateSlotType",
-                "lex:DeleteBot",
-                "lex:DeleteBotAlias",
-                "lex:DeleteBotChannel",
-                "lex:DeleteBotLocale",
-                "lex:DeleteBotVersion",
-                "lex:DeleteIntent",
-                "lex:DeleteResourcePolicy",
-                "lex:DeleteSlot",
-                "lex:DeleteSlotType",
-                "lex:DescribeBot",
-                "lex:DescribeBotAlias",
-                "lex:DescribeBotChannel",
-                "lex:DescribeBotLocale",
-                "lex:DescribeBotVersion",
-                "lex:DescribeIntent",
-                "lex:DescribeResourcePolicy",
-                "lex:DescribeSlot",
-                "lex:DescribeSlotType",
-                "lex:ListBotAliases",
-                "lex:ListBotChannels",
-                "lex:ListBotLocales",
-                "lex:ListBotVersions",
-                "lex:ListBots",
-                "lex:ListIntents",
-                "lex:ListSlotTypes",
-                "lex:ListSlots",
-                "lex:ListTagsForResource",
-                "lex:TagResource",
-                "lex:UntagResource",
-                "lex:UpdateBot",
-                "lex:UpdateBotAlias",
-                "lex:UpdateBotLocale",
-                "lex:UpdateExport",
-                "lex:UpdateIntent",
-                "lex:UpdateResourcePolicy",
-                "lex:UpdateSlot",
-                "lex:UpdateSlotType",
-              ]
-            }
-          ]
-        }
-      }));
+      expectCDK(stack).to(
+        countResourcesLike('AWS::IAM::Policy', 1, {
+          PolicyDocument: {
+            Statement: [
+              {
+                Action: [
+                  'lex:BuildBotLocale',
+                  'lex:CreateBot',
+                  'lex:CreateBotAlias',
+                  'lex:CreateBotChannel',
+                  'lex:CreateBotLocale',
+                  'lex:CreateBotVersion',
+                  'lex:CreateIntent',
+                  'lex:CreateResourcePolicy',
+                  'lex:CreateSlot',
+                  'lex:CreateSlotType',
+                  'lex:DeleteBot',
+                  'lex:DeleteBotAlias',
+                  'lex:DeleteBotChannel',
+                  'lex:DeleteBotLocale',
+                  'lex:DeleteBotVersion',
+                  'lex:DeleteIntent',
+                  'lex:DeleteResourcePolicy',
+                  'lex:DeleteSlot',
+                  'lex:DeleteSlotType',
+                  'lex:DescribeBot',
+                  'lex:DescribeBotAlias',
+                  'lex:DescribeBotChannel',
+                  'lex:DescribeBotLocale',
+                  'lex:DescribeBotVersion',
+                  'lex:DescribeIntent',
+                  'lex:DescribeResourcePolicy',
+                  'lex:DescribeSlot',
+                  'lex:DescribeSlotType',
+                  'lex:ListBotAliases',
+                  'lex:ListBotChannels',
+                  'lex:ListBotLocales',
+                  'lex:ListBotVersions',
+                  'lex:ListBots',
+                  'lex:ListIntents',
+                  'lex:ListSlotTypes',
+                  'lex:ListSlots',
+                  'lex:ListTagsForResource',
+                  'lex:TagResource',
+                  'lex:UntagResource',
+                  'lex:UpdateBot',
+                  'lex:UpdateBotAlias',
+                  'lex:UpdateBotLocale',
+                  'lex:UpdateExport',
+                  'lex:UpdateIntent',
+                  'lex:UpdateResourcePolicy',
+                  'lex:UpdateSlot',
+                  'lex:UpdateSlotType',
+                ],
+              },
+            ],
+          },
+        }),
+      );
     });
 
     it('Stack contains IAM Role for Lex V2', () => {

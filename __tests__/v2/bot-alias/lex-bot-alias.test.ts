@@ -1,5 +1,6 @@
-import LexBotAlias from '../../../src/v2/bot-alias/lex-bot-alias';
 import * as cdk from '@aws-cdk/core';
+
+import LexBotAlias from '../../../src/v2/bot-alias/lex-bot-alias';
 
 describe('Lex v2 Bot Alias class', () => {
   describe('Create a new instance of the bot-alias class', () => {
@@ -9,20 +10,20 @@ describe('Lex v2 Bot Alias class', () => {
     beforeAll(async () => {
       sampleStack = new cdk.Stack();
       instance = new LexBotAlias(sampleStack, 'SampleBotAlias', 'sampleServiceToken', {
-        botId: "SampleBotID",
-        botVersion: "DRAFT",
-        botAliasName: "SampleBotAlias",
+        botId: 'SampleBotID',
+        botVersion: 'DRAFT',
+        botAliasName: 'SampleBotAlias',
         botAliasLocaleSettings: {
           'en-US': {
             codeHookSpecification: {
               lambdaCodeHook: {
-                lambdaARN: "SOMELAMBDAARN",
-                codeHookInterfaceVersion: "$LATEST"
-              }
+                lambdaARN: 'SOMELAMBDAARN',
+                codeHookInterfaceVersion: '$LATEST',
+              },
             },
-            enabled: true
-          }
-        }
+            enabled: true,
+          },
+        },
       });
     });
 
