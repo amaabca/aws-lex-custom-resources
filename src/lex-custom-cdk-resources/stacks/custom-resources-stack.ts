@@ -1,7 +1,6 @@
 import * as cdk from '@aws-cdk/core';
 import { CustomResourceBaseStack } from './custom-resource-base-stack';
 import { Role, ServicePrincipal, PolicyStatement, ManagedPolicy } from '@aws-cdk/aws-iam';
-import { BotType } from './custom-resource-data-types';
 import { Runtime } from '@aws-cdk/aws-lambda';
 
 interface CustomResourceBaseStackProps {
@@ -133,10 +132,7 @@ export class CustomResourcesStack extends cdk.Stack {
             environment: props.v2.bot.environment || handlerEnvConfig,
             runtime: props.v2.bot.runtime || Runtime.NODEJS_14_X
           },
-          role: {
-            customRole: handlerRole
-          },
-          type: BotType.V2
+          role: handlerRole
         });
       }
 
@@ -151,10 +147,7 @@ export class CustomResourcesStack extends cdk.Stack {
             environment: props.v2.intent.environment || handlerEnvConfig,
             runtime: props.v2.intent.runtime || Runtime.NODEJS_14_X
           },
-          role: {
-            customRole: handlerRole
-          },
-          type: BotType.V2
+          role: handlerRole
         });
       }
 
@@ -169,10 +162,7 @@ export class CustomResourcesStack extends cdk.Stack {
             environment: props.v2.botLocale.environment || handlerEnvConfig,
             runtime: props.v2.botLocale.runtime || Runtime.NODEJS_14_X
           },
-          role: {
-            customRole: handlerRole
-          },
-          type: BotType.V2
+          role: handlerRole
         });
       }
 
@@ -187,10 +177,7 @@ export class CustomResourcesStack extends cdk.Stack {
             environment: props.v2.botVersion.environment || handlerEnvConfig,
             runtime: props.v2.botVersion.runtime || Runtime.NODEJS_14_X
           },
-          role: {
-            customRole: handlerRole
-          },
-          type: BotType.V2
+          role: handlerRole
         });
       }
 
@@ -205,10 +192,7 @@ export class CustomResourcesStack extends cdk.Stack {
             environment: props.v2.slotType.environment || handlerEnvConfig,
             runtime: props.v2.slotType.runtime || Runtime.NODEJS_14_X
           },
-          role: {
-            customRole: handlerRole
-          },
-          type: BotType.V2
+          role: handlerRole
         });
       }
 
@@ -223,10 +207,7 @@ export class CustomResourcesStack extends cdk.Stack {
             environment: props.v2.slot.environment || handlerEnvConfig,
             runtime: props.v2.slot.runtime || Runtime.NODEJS_14_X
           },
-          role: {
-            customRole: handlerRole
-          },
-          type: BotType.V2
+          role: handlerRole
         });
       }
 
@@ -241,10 +222,7 @@ export class CustomResourcesStack extends cdk.Stack {
             environment: props.v2.botAlias.environment || handlerEnvConfig,
             runtime: props.v2.botAlias.runtime || Runtime.NODEJS_14_X
           },
-          role: {
-            customRole: handlerRole
-          },
-          type: BotType.V2
+          role: handlerRole
         });
       }
 
@@ -259,10 +237,7 @@ export class CustomResourcesStack extends cdk.Stack {
             environment: props.v2.intentPriority.environment || handlerEnvConfig,
             runtime: props.v2.intentPriority.runtime || Runtime.NODEJS_14_X
           },
-          role: {
-            customRole: handlerRole
-          },
-          type: BotType.V2
+          role: handlerRole
         });
       }
     }

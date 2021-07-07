@@ -4,8 +4,9 @@ import { Runtime } from "@aws-cdk/aws-lambda";
 interface StackProps {
   exportName: string,
   handler: {
-    folder: string,
+    folder?: string,
     entry?: string,
+    code?: any,
     handlerName: string,
     environment: {
       [key: string]: string
@@ -13,21 +14,10 @@ interface StackProps {
     timeout: number,
     runtime?: Runtime
   },
-  role?: {
-    parentResource?: string,
-    childResource?: string,
-    actions?: string[],
-    customRole?: Role
-  },
-  type?: BotType
+  role?: Role
 }
 
-
-enum BotType {
-  V2 = "V2"
-}
 
 export {
-  StackProps,
-  BotType
+  StackProps
 }
