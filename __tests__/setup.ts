@@ -1,5 +1,6 @@
 import nock from 'nock';
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default async () => {
   // globally disable HTTP requests in the test suite
   nock.disableNetConnect();

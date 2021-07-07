@@ -5,5 +5,5 @@ import update from './update.json';
 export default {
   create,
   unknown,
-  update
+  update,
 };

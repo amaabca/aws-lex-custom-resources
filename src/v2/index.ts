@@ -27,7 +27,7 @@ const v2Handlers = {
   v2LexIntentHandler: v2LexIntentHandler,
   v2LexIntentPriorityHandler: v2LexIntentPriorityHandler,
   v2LexSlotHandler: v2LexSlotHandler,
-  v2LexSlotTypeHandler: v2LexSlotTypeHandler
+  v2LexSlotTypeHandler: v2LexSlotTypeHandler,
 }
 
 
@@ -41,5 +41,5 @@ export {
   LexSlot,
   LexSlotType,
   LexBotAlias,
-  v2Handlers as handlers
+  v2Handlers as handlers,
 }

@@ -1,9 +1,14 @@
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import {
+  Function,
+  Runtime,
+} from '@aws-cdk/aws-lambda';
+import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
 import * as cdk from '@aws-cdk/core';
 import { Provider } from '@aws-cdk/custom-resources';
-import { Function, Runtime, Code } from '@aws-cdk/aws-lambda';
-import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
-import { StackProps } from './custom-resource-data-types'
 
+import { StackProps } from './custom-resource-data-types';
 
 export class CustomResourceBaseStack extends cdk.NestedStack {
   env: cdk.Environment;
@@ -27,7 +32,7 @@ export class CustomResourceBaseStack extends cdk.NestedStack {
         code: this.props.handler.code,
         timeout: cdk.Duration.seconds(this.props.handler.timeout),
         environment: this.props.handler.environment,
-        role: this.props.role!.withoutPolicyUpdates()!
+        role: this.props.role!.withoutPolicyUpdates()!,
       });
 
       this.createProvider(handlerFunction);
@@ -38,7 +43,7 @@ export class CustomResourceBaseStack extends cdk.NestedStack {
         handler: this.props.handler.handlerName,
         timeout: cdk.Duration.seconds(this.props.handler.timeout),
         environment: this.props.handler.environment,
-        role: this.props.role!.withoutPolicyUpdates()!
+        role: this.props.role!.withoutPolicyUpdates()!,
       });
 
       this.createProvider(handlerFunction);
@@ -47,12 +52,12 @@ export class CustomResourceBaseStack extends cdk.NestedStack {
 
   createProvider(func: Function): void {
     const lambdaProvider = new Provider(this, `${this.id}-handlerProvider`, {
-      onEventHandler: func
+      onEventHandler: func,
     });
 
     new cdk.CfnOutput(this, `${this.id}-intentProvider`, {
       value: lambdaProvider.serviceToken,
-      exportName: this.props.exportName
+      exportName: this.props.exportName,
     });
   }
 }

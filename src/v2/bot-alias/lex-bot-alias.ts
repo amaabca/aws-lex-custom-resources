@@ -18,8 +18,8 @@ export default class LexBotAlias extends cdk.Construct {
     new cdk.CustomResource(scope, `${id}_Custom_V2_Lex_Bot_Alias`, {
       serviceToken: cdk.Fn.importValue(serviceToken),
       properties: {
-        props: JSON.stringify(this.props)
-      }
+        props: JSON.stringify(this.props),
+      },
     });
   }
 }

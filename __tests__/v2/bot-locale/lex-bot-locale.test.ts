@@ -1,5 +1,6 @@
-import LexBotLocale from '../../../src/v2/bot-locale/lex-bot-locale';
 import * as cdk from '@aws-cdk/core';
+
+import LexBotLocale from '../../../src/v2/bot-locale/lex-bot-locale';
 
 describe('Lex v2 Bot Locale class', () => {
   describe('Create a new instance of the bot-locale class', () => {
@@ -9,10 +10,10 @@ describe('Lex v2 Bot Locale class', () => {
     beforeAll(async () => {
       sampleStack = new cdk.Stack();
       instance = new LexBotLocale(sampleStack, 'SampleBotLocale', 'sampleServiceToken', {
-        botId: "SampleBotID",
-        localeId: "en-US",
-        botVersion: "DRAFT",
-        nluIntentConfidenceThreshold: 0.5
+        botId: 'SampleBotID',
+        localeId: 'en-US',
+        botVersion: 'DRAFT',
+        nluIntentConfidenceThreshold: 0.5,
       });
     });
 

@@ -8,13 +8,13 @@ const config: Config.InitialOptions = {
   transform: { '^.+\\.(t|j)s$': 'ts-jest' },
   testRegex: '/__tests__/*',
   testPathIgnorePatterns: [
-    '<rootDir>/__tests__/setup.ts'
+    '<rootDir>/__tests__/setup.ts',
   ],
   moduleFileExtensions: [
     'ts',
     'js',
-    'json'
-  ]
+    'json',
+  ],
 };
 
 export default config;

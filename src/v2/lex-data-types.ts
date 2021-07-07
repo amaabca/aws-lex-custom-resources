@@ -15,12 +15,12 @@ import {
   ConversationLogSettings,
   BotAliasLocaleSettings,
   SentimentAnalysisSettings,
-  SlotPriority
-} from "@aws-sdk/client-lex-models-v2";
+  SlotPriority,
+} from '@aws-sdk/client-lex-models-v2';
 
 enum ObfuscationSetting {
-  NONE = "NONE",
-  DEFAULT = "DEFAULT_OBFUSCATION"
+  NONE = 'NONE',
+  DEFAULT = 'DEFAULT_OBFUSCATION'
 }
 
 
