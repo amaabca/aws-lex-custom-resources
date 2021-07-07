@@ -47,7 +47,6 @@ describe('CDK Custom Resources Base Stack', () => {
     });
 
     it('Succeeds in building custom handler', () => {
-      console.log(nestedStack);
       expectCDK(nestedStack).to(countResources("AWS::Lambda::Function", 2));
     });
   });
