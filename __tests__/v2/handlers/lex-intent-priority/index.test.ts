@@ -10,8 +10,8 @@ describe('v2-lex-bot-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots/PV9UMAT2FI/botversions/DRAFT/botlocales/en_US/intents/WLHH5JOT4T')
-        .reply(200, '{"intentId": "WLHH5JOT4T"}');
+        .put('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID')
+        .reply(200, '{"intentId": "INTENT_ID"}');
       response = await handler(fixtures.v2.events.intentPriority.create, {});
     });
 
@@ -20,7 +20,7 @@ describe('v2-lex-bot-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('WLHH5JOT4T-priority');
+      expect(response.PhysicalResourceId).toBe('INTENT_ID-priority');
     });
   });
 
@@ -30,8 +30,8 @@ describe('v2-lex-bot-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots/PV9UMAT2FI/botversions/DRAFT/botlocales/en_US/intents/WLHH5JOT4T')
-        .reply(200, '{"intentId": "WLHH5JOT4T"}');
+        .put('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID')
+        .reply(200, '{"intentId": "INTENT_ID"}');
       response = await handler(fixtures.v2.events.intentPriority.update, {});
     });
 
@@ -40,18 +40,16 @@ describe('v2-lex-bot-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('WLHH5JOT4T-priority');
+      expect(response.PhysicalResourceId).toBe('INTENT_ID-priority');
     });
   });
 
   describe('with an unknown event type', () => {
-    let scope: nock.Scope;
     let response: { PhysicalResourceId?: string };
 
     beforeAll(async () => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots/PV9UMAT2FI/botversions/DRAFT/botlocales/en_US/intents/WLHH5JOT4T')
+      nock('https://models-v2-lex.us-east-1.amazonaws.com/')
+        .put('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID')
         .reply(200);
       response = await handler(fixtures.v2.events.intentPriority.unknown, {});
     });

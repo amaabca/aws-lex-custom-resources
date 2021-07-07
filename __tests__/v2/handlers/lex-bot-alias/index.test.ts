@@ -9,8 +9,8 @@ describe('v2-lex-bot-alias-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots/123/botaliases')
-        .reply(200, '{"botAliasId":"123123"}');
+        .put('/bots/BOT_ID/botaliases')
+        .reply(200, '{"botAliasId":"BOT_ALIAS_ID"}');
       response = await handler(fixtures.v2.events.botAlias.create, {});
     });
 
@@ -19,7 +19,7 @@ describe('v2-lex-bot-alias-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('123123');
+      expect(response.PhysicalResourceId).toBe('BOT_ALIAS_ID');
     });
   });
 
@@ -29,8 +29,8 @@ describe('v2-lex-bot-alias-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots/123/botaliases/123123')
-        .reply(200, '{"botAliasId":"123123"}');
+        .put('/bots/BOT_ID/botaliases/BOT_ALIAS_ID')
+        .reply(200, '{"botAliasId":"BOT_ALIAS_ID"}');
       response = await handler(fixtures.v2.events.botAlias.update, {});
     });
 
@@ -39,7 +39,7 @@ describe('v2-lex-bot-alias-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('123123');
+      expect(response.PhysicalResourceId).toBe('BOT_ALIAS_ID');
     });
   });
 
@@ -49,8 +49,8 @@ describe('v2-lex-bot-alias-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .delete('/bots/123/botaliases/123123')
-        .reply(200, '{"botAliasId":"123123"}');
+        .delete('/bots/BOT_ID/botaliases/BOT_ALIAS_ID')
+        .reply(200, '{"botAliasId":"BOT_ALIAS_ID"}');
       response = await handler(fixtures.v2.events.botAlias.delete, {});
     });
 
@@ -59,7 +59,7 @@ describe('v2-lex-bot-alias-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('123123');
+      expect(response.PhysicalResourceId).toBe('BOT_ALIAS_ID');
     });
   });
 

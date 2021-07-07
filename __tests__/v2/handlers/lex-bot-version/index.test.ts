@@ -9,8 +9,8 @@ describe('v2-lex-bot-version-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots/123/botversions')
-        .reply(200, '{"botVersion":"123123"}');
+        .put('/bots/BOT_ID/botversions')
+        .reply(202, '{"botVersion":"BOT_VERSION_ID"}');
       response = await handler(fixtures.v2.events.botVersion.create, {});
     });
 
@@ -19,27 +19,20 @@ describe('v2-lex-bot-version-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('123123');
+      expect(response.PhysicalResourceId).toBe('BOT_VERSION_ID');
     });
   });
 
+  // NOTE: updating a bot version is a no-op, it returns the same id.
   describe('with an update event', () => {
-    let scope: nock.Scope;
     let response: { PhysicalResourceId?: string };
 
     beforeAll(async () => {
-      scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots/123/botaliases/123123')
-        .reply(200, '{"botAliasId":"123123"}');
       response = await handler(fixtures.v2.events.botVersion.update, {});
     });
 
-    it('updates a bot-version via the SDK', () => {
-      expect(scope.isDone()).toBe(false);
-    });
-
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('123123');
+      expect(response.PhysicalResourceId).toBe('BOT_VERSION_ID');
     });
   });
 
@@ -49,8 +42,8 @@ describe('v2-lex-bot-version-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .delete('/bots/123/botversions/123123')
-        .reply(200, '{"botVersion":"123123"}');
+        .delete('/bots/BOT_ID/botversions/BOT_VERSION_ID')
+        .reply(200, '{"botVersion":"BOT_VERSION_ID"}');
       response = await handler(fixtures.v2.events.botVersion.delete, {});
     });
 
@@ -59,7 +52,7 @@ describe('v2-lex-bot-version-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('123123');
+      expect(response.PhysicalResourceId).toBe('BOT_VERSION_ID');
     });
   });
 

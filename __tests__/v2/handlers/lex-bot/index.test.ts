@@ -10,7 +10,7 @@ describe('v2-lex-bot-handler', () => {
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
         .put('/bots')
-        .reply(202, '{"botId":"123"}');
+        .reply(202, '{"botId":"BOT_ID"}');
       response = await handler(fixtures.v2.events.bot.create, {});
     });
 
@@ -19,7 +19,7 @@ describe('v2-lex-bot-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('123');
+      expect(response.PhysicalResourceId).toBe('BOT_ID');
     });
   });
 

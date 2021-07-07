@@ -34,7 +34,7 @@ const handler = async (event, context) => {
         PhysicalResourceId: response.botVersion
       };
     }
-    case "Update": { // No update event for this resource
+    case "Update": { // we can't update a version, just do a no-op
       return {
         PhysicalResourceId: event.PhysicalResourceId
       };

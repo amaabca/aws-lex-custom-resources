@@ -1,0 +1,14 @@
+{
+  "RequestType": "Delete",
+  "ServiceToken": "arn:partition:service:region:account-id:resource-type/resource-id",
+  "ResponseURL": "https://example.com/cfn",
+  "StackId": "arn:partition:service:region:account-id:resource-type/resource-id",
+  "RequestId": "e28a1bb8-f5ae-4fcd-b304-c71b0aa32c27",
+  "LogicalResourceId": "MyBot",
+  "PhysicalResourceId": "BOT_ID",
+  "ResourceType": "AWS::CloudFormation::CustomResource",
+  "ResourceProperties": {
+    "ServiceToken": "arn:partition:service:region:account-id:resource-type/resource-id",
+    "props": "{\"botTags\":{\"Deployer\":\"test@example.com\"},\"dataPrivacy\":{\"childDirected\":false},\"idleSessionTTLInSeconds\":80,\"roleArn\":\"arn:aws:iam::123456789000:role/role\",\"description\":\"TEST\",\"botName\":\"V2_Test_Bot_CDK\"}"
+  }
+}

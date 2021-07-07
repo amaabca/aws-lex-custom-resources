@@ -2,11 +2,6 @@ import nock from 'nock';
 import { handler } from '../../../../src/v2/handlers/lex-intent/index.js';
 import fixtures from '../../../../__fixtures__';
 
-nock.emitter.on('no match', req => {
-  const r = req;
-  console.error(r);
-})
-
 describe('v2-lex-intent-handler', () => {
   describe('with a create event', () => {
     let scope: nock.Scope;
@@ -14,8 +9,8 @@ describe('v2-lex-intent-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots/E2MGJRZBQA/botversions/DRAFT/botlocales/en_US/intents')
-        .reply(200, () => '{"intentId":"123"}');
+        .put('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents')
+        .reply(200, () => '{"intentId":"INTENT_ID"}');
       response = await handler(fixtures.v2.events.intent.create, {});
     });
 
@@ -24,7 +19,7 @@ describe('v2-lex-intent-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('123');
+      expect(response.PhysicalResourceId).toBe('INTENT_ID');
     });
   });
 
@@ -34,8 +29,8 @@ describe('v2-lex-intent-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots/E2MGJRZBQA/botversions/DRAFT/botlocales/en_US/intents/1234')
-        .reply(200, '{"intentId":"1234"}');
+        .put('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID')
+        .reply(200, '{"intentId":"INTENT_ID"}');
       response = await handler(fixtures.v2.events.intent.update, {});
     });
 
@@ -44,7 +39,7 @@ describe('v2-lex-intent-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('1234');
+      expect(response.PhysicalResourceId).toBe('INTENT_ID');
     });
   });
 
@@ -54,8 +49,8 @@ describe('v2-lex-intent-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .delete('/bots/E2MGJRZBQA/botversions/DRAFT/botlocales/en_US/intents/1234')
-        .reply(200, '{"intentId":"1234"}');
+        .delete('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID')
+        .reply(200, '{"intentId":"INTENT_ID"}');
       response = await handler(fixtures.v2.events.intent.delete, {});
     });
 
@@ -64,7 +59,7 @@ describe('v2-lex-intent-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('1234');
+      expect(response.PhysicalResourceId).toBe('INTENT_ID');
     });
   });
 

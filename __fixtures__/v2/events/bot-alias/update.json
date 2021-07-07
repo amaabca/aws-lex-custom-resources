@@ -1,0 +1,18 @@
+{
+  "RequestType": "Update",
+  "ServiceToken": "arn:partition:service:region:account-id:resource-type/resource-id",
+  "ResponseURL": "https://example.com/cfn",
+  "StackId": "arn:partition:service:region:account-id:resource-type/resource-id",
+  "RequestId": "cc273e4b-a02e-4cab-98a2-584267633e8f",
+  "LogicalResourceId": "BotAlias",
+  "PhysicalResourceId": "BOT_ALIAS_ID",
+  "ResourceType": "AWS::CloudFormation::CustomResource",
+  "ResourceProperties": {
+    "ServiceToken": "arn:partition:service:region:account-id:resource-type/resource-id",
+    "props": "{\"botId\":\"BOT_ID\",\"botName\":\"MyBot\",\"botVersion\":\"1\",\"botAliasName\":\"BotAlias\",\"botAliasLocaleSettings\":{\"BOT_LOCALE_ID\":{\"enabled\":true}},\"description\":\"Bot Alias\"}"
+  },
+  "OldResourceProperties": {
+    "ServiceToken": "arn:partition:service:region:account-id:resource-type/resource-id",
+    "props": "{\"botId\":\"BOT_ID\",\"botName\":\"MyBot\",\"botVersion\":\"1\",\"botAliasName\":\"BotAlias\",\"botAliasLocaleSettings\":{\"BOT_LOCALE_ID\":{\"enabled\":true}},\"description\":\"My Bot Alias\"}"
+  }
+}

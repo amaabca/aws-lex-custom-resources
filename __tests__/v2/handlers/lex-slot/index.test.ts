@@ -9,7 +9,7 @@ describe('v2-lex-slot-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots/BOT_ID/botversions/DRAFT/botlocales/en_US/intents/INTENT_ID/slots')
+        .put('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID/slots')
         .reply(200, '{"slotId":"SLOT_ID"}');
       response = await handler(fixtures.v2.events.slot.create, {});
     });
@@ -29,7 +29,7 @@ describe('v2-lex-slot-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots/BOT_ID/botversions/DRAFT/botlocales/en_US/intents/INTENT_ID/slots/SLOT_ID')
+        .put('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID/slots/SLOT_ID')
         .reply(200, '{"slotId":"SLOT_ID"}');
       response = await handler(fixtures.v2.events.slot.update, {});
     });
@@ -49,7 +49,7 @@ describe('v2-lex-slot-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .delete('/bots/BOT_ID/botversions/DRAFT/botlocales/en_US/intents/INTENT_ID/slots/SLOT_ID')
+        .delete('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID/slots/SLOT_ID')
         .reply(204, '');
       response = await handler(fixtures.v2.events.slot.delete, {});
     });

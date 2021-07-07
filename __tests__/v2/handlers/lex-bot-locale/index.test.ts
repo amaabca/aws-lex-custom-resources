@@ -9,8 +9,8 @@ describe('v2-lex-bot-locale-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots/123/botversions/1/botlocales')
-        .reply(202, '{"localeId":"123123"}');
+        .put('/bots/BOT_ID/botversions/1/botlocales')
+        .reply(202, '{"localeId":"BOT_LOCALE_ID"}');
       response = await handler(fixtures.v2.events.botLocale.create, {});
     });
 
@@ -19,7 +19,7 @@ describe('v2-lex-bot-locale-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('123123');
+      expect(response.PhysicalResourceId).toBe('BOT_LOCALE_ID');
     });
   });
 
@@ -29,8 +29,8 @@ describe('v2-lex-bot-locale-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .put('/bots/123/botversions/1/botlocales/en_US')
-        .reply(200, '{"localeId":"123123"}');
+        .put('/bots/BOT_ID/botversions/1/botlocales/BOT_LOCALE_ID')
+        .reply(200, '{"localeId":"BOT_LOCALE_ID"}');
       response = await handler(fixtures.v2.events.botLocale.update, {});
     });
 
@@ -39,7 +39,7 @@ describe('v2-lex-bot-locale-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('123123');
+      expect(response.PhysicalResourceId).toBe('BOT_LOCALE_ID');
     });
   });
 
@@ -49,8 +49,8 @@ describe('v2-lex-bot-locale-handler', () => {
 
     beforeAll(async () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
-        .delete('/bots/123/botversions/1/botlocales/en_US')
-        .reply(202, '{"localeId":"123123"}');
+        .delete('/bots/BOT_ID/botversions/1/botlocales/BOT_LOCALE_ID')
+        .reply(202, '{"localeId":"BOT_LOCALE_ID"}');
       response = await handler(fixtures.v2.events.botLocale.delete, {});
     });
 
@@ -59,7 +59,7 @@ describe('v2-lex-bot-locale-handler', () => {
     });
 
     it('returns the PhysicalResourceId', () => {
-      expect(response.PhysicalResourceId).toBe('123123');
+      expect(response.PhysicalResourceId).toBe('BOT_LOCALE_ID');
     });
   });
 

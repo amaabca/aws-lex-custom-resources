@@ -1,0 +1,18 @@
+{
+  "RequestType": "Update",
+  "ServiceToken": "arn:partition:service:region:account-id:resource-type/resource-id",
+  "ResponseURL": "https://example.com/cfn",
+  "StackId": "aarn:partition:service:region:account-id:resource-type/resource-id",
+  "RequestId": "cd9c932d-65d6-4ed4-a56d-3347f8144e49",
+  "LogicalResourceId": "IntentPriority",
+  "PhysicalResourceId": "INTENT_ID",
+  "ResourceType": "AWS::CloudFormation::CustomResource",
+  "ResourceProperties": {
+    "ServiceToken": "arn:partition:service:region:account-id:resource-type/resource-id",
+    "props": "{\"botId\":\"BOT_ID\",\"localeId\":\"BOT_LOCALE_ID\",\"intentId\":\"INTENT_ID\",\"intentName\":\"Intent Name\",\"slotPriorities\":[{\"slotId\":\"SLOT_ID_1\",\"priority\":1},{\"slotId\":\"SLOT_ID_2\",\"priority\":2},{\"slotId\":\"SLOT_ID_3\",\"priority\":3},{\"slotId\":\"SLOT_ID_4\",\"priority\":4},{\"slotId\":\"SLOT_ID_5\",\"priority\":5}]}"
+  },
+  "OldResourceProperties": {
+    "ServiceToken": "arn:partition:service:region:account-id:resource-type/resource-id",
+    "props": "{\"botId\":\"BOT_ID\",\"localeId\":\"BOT_LOCALE_ID\",\"intentId\":\"INTENT_ID\",\"intentName\":\"Intent Name\",\"slotPriorities\":[{\"slotId\":\"SLOT_ID_1\",\"priority\":1},{\"slotId\":\"SLOT_ID_2\",\"priority\":2},{\"slotId\":\"SLOT_ID_3\",\"priority\":3},{\"slotId\":\"SLOT_ID_4\",\"priority\":5},{\"slotId\":\"SLOT_ID_5\",\"priority\":4}]}"
+  }
+}
