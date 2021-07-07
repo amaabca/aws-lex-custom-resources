@@ -4,7 +4,7 @@
   "description": "AWS Lex infrastructure as code via the CDK",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
