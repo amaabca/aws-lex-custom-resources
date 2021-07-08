@@ -67,7 +67,7 @@ describe('v2-lex-intent-handler', () => {
     it('throws an error', async () => {
       expect.assertions(1);
       await expect(handler(fixtures.v2.events.intent.unknown, {})).rejects.toEqual(
-        new Error('Event request type unknown!')
+        new Error('WAFFLE is not supported!')
       );
     });
   });

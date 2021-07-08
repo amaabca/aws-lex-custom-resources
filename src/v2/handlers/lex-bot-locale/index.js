@@ -5,7 +5,7 @@ import {
   CreateBotLocaleCommand
 } from '@aws-sdk/client-lex-models-v2';
 
-const logger = process.env.TEST ? { info: (c) => {} } : console;
+const logger = process.env.TEST ? { info: (c) => { } } : console;
 const client = new LexModelsV2Client({
   region: process.env.REGION || 'us-east-1',
   logger: logger
@@ -39,7 +39,7 @@ const handler = async (event, context) => {
         PhysicalResourceId: response.localeId
       };
     }
-    case "Update": { // to be adjusted
+    case "Update": {
       const updateCommand = new UpdateBotLocaleCommand({
         ...params,
         localeId: event.PhysicalResourceId
