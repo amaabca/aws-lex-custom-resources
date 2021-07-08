@@ -1,0 +1,15 @@
+import nock from 'nock';
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export default async () => {
+  // globally disable HTTP requests in the test suite
+  nock.disableNetConnect();
+
+  // tell our code to not log to STDOUT
+  process.env.TEST = 'true';
+
+  // setup some fake AWS credentials
+  process.env.AWS_ACCESS_KEY_ID = 'aws_access_key_id';
+  process.env.AWS_SECRET_ACCESS_KEY = 'aws_secret_access_key';
+  process.env.AWS_REGION = 'us-west-2';
+};

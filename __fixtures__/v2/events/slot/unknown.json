@@ -1,0 +1,13 @@
+{
+  "RequestType": "WAFFLE",
+  "ServiceToken": "arn:partition:service:region:account-id:resource-type/resource-id",
+  "ResponseURL": "https://example.com/cfn",
+  "StackId": "arn:partition:service:region:account-id:resource-type/resource-id",
+  "RequestId": "259af5d2-0b5f-4f83-96bc-bc011468738c",
+  "LogicalResourceId": "NameSlot",
+  "ResourceType": "AWS::CloudFormation::CustomResource",
+  "ResourceProperties": {
+    "ServiceToken": "arn:partition:service:region:account-id:resource-type/resource-id",
+    "props": "{\"botId\":\"BOT_ID\",\"localeId\":\"BOT_LOCALE_ID\",\"slotTypeId\":\"AMAZON.FirstName\",\"intentId\":\"INTENT_ID\",\"priority\":1,\"slotName\":\"Name\",\"valueElicitationSetting\":{\"slotConstraint\":\"Required\",\"promptSpecification\":{\"maxRetries\":2,\"messageGroups\":[{\"message\":{\"plainTextMessage\":{\"value\":\"What is your name?\"}}}]}},\"description\":\"Name Slot\"}"
+  }
+}

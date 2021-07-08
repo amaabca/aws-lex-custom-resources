@@ -11,255 +11,382 @@ The resources created use lambda functions which make the AWS SDK calls to creat
 ### How do I use it?
 You'll need to have AWS CDK installed and a valid AWS login configured on your machine. The lambda handlers that come with this library are not required and you can choose to use your own handlers as long as they work as outlined in the documentation for custom resources in AWS CDK (https://docs.aws.amazon.com/cdk/api/latest/docs/custom-resources-readme.html). The steps are generally as follows:
 
-1. Deploy the CustomResourcesStack as its own stack in your AWS account (this will create a stack of lambda functions and iam roles specific to the account which you deploy it in.)
-2. Create your own CDK stack and use the LexBot, LexIntent and LexSlotType CDK constructs as you wish.
+1. Create a new CDK app using `cdk init app --language typescript`
+2. Install this library `npm i @amaabca/aws-lex-custom-resources`
+3. Deploy the CustomResourcesStack as its own stack in your new CDK app. Be sure to specify the AWS region and AWS account (this will create a stack of lambda functions and iam roles specific to the account which you deploy it in.) See `CustomResourcesStack` at the bottom of the readme under CDK resources.
+4. In a new or existing CDK project, create your own CDK stack and use the V1 or V2 constructs as you wish. (Please make sure your new CDK project is using the same version of CDK as this library (1.107.0))
 3. Deploy using `cdk deploy --profile <profile>`
 
-*Note: it's usually smart to structure your Lex CDK stack as a collection of nested stacks (bots, intents, slottypes) and then provide structured dependson calls to ensure order of deployment/teardown*
+# Library Guide
+## Lex Version 2
 
-### Example CDK Stack
+---
+### `LexBot`
+<br/>*extends cdk.Construct*
 
 ```ts
-import * as cdk from '@aws-cdk/core';
-
-//each of these is a nested stack where we are using our custom resources
-import { BotStack } from './nested/bot-stack';
-import { IntentsStack } from './nested/intents-stack';
-import { SlotTypeStack } from './nested/slot-type-stack';
-
-export class BaseStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props: cdk.StackProps) {
-    super(scope, id, props);
-
-    try {
-
-      // the servicetokens are the export names we give to our lambda functions declared in the CustomResourceStack deployed before this. Can also be another custom lambda you declare yourself if you wish
-
-      const slotTypeStack = new SlotTypeStack(this, `${id}-SlotTypeStack`, {
-        lexSlotTypeServiceToken: "lexSlotTypeProviderServiceToken"
-      });
-
-      const intentStack = new IntentsStack(this, `${id}-IntentStack`, {
-        lexIntentServiceToken: "lexIntentProviderServiceToken",
-      });
-
-      const botStack = new BotStack(this, `${id}-BotStack`, {
-          lexBotServiceToken: 'lexBotProviderServiceToken',
-      });
-
-      // Add dependencies here to ensure order
-      botStack.addDependency(intentStack);
-      botStack.addDependency(slotTypeStack);
-      intentStack.addDependency(lambdaStack);
-      intentStack.addDependency(slotTypeStack);
-    } catch (err) {
-      console.error(err);
+  interface LexBotAttributes {
+    botName?: string,
+    botTags?: {
+      [key: string]: string
+    },
+    dataPrivacy: {
+      childDirected: boolean
+    },
+    description?: string,
+    idleSessionTTLInSeconds: number,
+    roleArn: string,
+    testBotAliasTags?: {
+      [key: string]: string
     }
   }
-}
-
 ```
 
-Now here is an example of one of the nested stacks (they are all pretty similar so will only show one for brevity)
+<br/>**Methods**:
 
 ```ts
-import * as cdk from '@aws-cdk/core';
-import { LexSlotType, ValueSelectionStrategy } from 'awlexs';
-
-interface LexStackProps {
-  lexSlotTypeServiceToken: string
-}
-
-export class SlotTypeStack extends cdk.NestedStack {
-  props: LexStackProps
-
-  constructor(scope: cdk.Construct, id: string, props: LexStackProps) {
-    super(scope, id);
-    this.props = props;
-
-    const yesNo = new LexSlotType(this, 'YesNoSlotType', props.lexSlotTypeServiceToken, {
-      valueSelectionStrategy: ValueSelectionStrategy.TOP_RESOLUTION,
-      enumerationValues: [
-        {
-          value: "YES",
-          synonyms: [
-            "Yep",
-            "Yes",
-            "I Would",
-            "I Think So",
-            "Indeed",
-            "Alright",
-            "Yes Please",
-            "Yes Thanks",
-            "Yes Thank You",
-            "Yeah",
-            "Yah",
-            "Yup",
-            "Affirmative",
-            "Please",
-            "Okie Dokie",
-            "Right",
-            "Absolutely",
-            "Surely",
-            "Sure",
-            "Sure Thing",
-            "Certainly",
-            "Very Well",
-            "Of Course",
-            "Okay",
-            "OK",
-            "Always",
-            "Uh Huh",
-            "You Got It",
-            "You've Got It",
-            "Definitely",
-            "Correct"
-          ]
-        },
-        {
-          value: "NO",
-          synonyms: [
-            "Absolutely Not",
-            "No",
-            "Nope",
-            "Nah",
-            "No Way",
-            "Never",
-            "I Don't",
-            "I Don't Think So",
-            "I Do Not",
-            "No Thank You",
-            "No Thanks",
-            "Negative",
-            "Nay",
-            "I Wouldn't",
-            "I Would Not",
-            "Of Course Not",
-            "Not Really",
-            "Hardly",
-            "Not For Me",
-            "I'll Pass",
-            "Pass",
-            "Not Today",
-            "Not Interested",
-            "I'm Not Interested",
-            "I Don't Want It",
-            "I Don't Want To",
-            "I Would Rather Not",
-            "I'd Rather Not",
-            "Thanks But No Thanks",
-            "Not Correct"
-          ]
-        }
-      ]
-    });
-  }
-}
-
+  constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexBotAttributes);
+  validName(): boolean;
+  getName(): string;
+  getResource(): cdk.CustomResource;
 ```
 
-## Library Guide
+#### **Description:**
+Custom class for creating v2 Lex bots with provided props and service token.
 
-### Classes
+---
 
+### `LexBotAlias`
+<br/>*extends cdk.Construct*
+
+```ts
+  interface LexBotAliasAttributes {
+    botId: string,
+    botAliasName: string,
+    botAliasLocaleSettings: { [key: string]: BotAliasLocaleSettings },
+    botVersion?: string,
+    conversationLogSettings?: ConversationLogSettings,
+    description?: string,
+    sentimentAnalysisSettings?: SentimentAnalysisSettings,
+    tags?: { [key: string]: string }
+  }
+```
+
+<br/>**Methods**:
+
+```ts
+  constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexBotAliasAttributes);
+```
+
+#### **Description:**
+Custom class for creating v2 Lex bot aliases with provided props and service token.
+
+---
+
+### `LexBotLocale`
+<br/>*extends cdk.Construct*
+
+```ts
+  interface LexBotLocaleAttributes {
+    botId: string,
+    botVersion: string,
+    description?: string,
+    localeId: string,
+    nluIntentConfidenceThreshold: number,
+    voiceSettings?: VoiceSettings
+  }
+```
+
+<br/>**Methods**:
+
+```ts
+    constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexBotLocaleAttributes);
+    getResource(): cdk.CustomResource;
+```
+
+#### **Description:**
+Custom class for creating v2 Lex bot locales (languages) with provided props and service token.
+
+---
+
+### `LexBotVersion`
+<br/>*extends cdk.Construct*
+
+```ts
+  interface LexBotVersionAttributes {
+    botId: string,
+    botVersionLocaleSpecification: { [key: string]: BotVersionLocaleDetails } | undefined,
+    description?: string
+  }
+```
+
+<br/>**Methods**:
+
+```ts
+    constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexBotVersionAttributes);
+    getResource(): cdk.CustomResource;
+```
+
+#### **Description:**
+Custom class for creating v2 Lex bot versions with provided props and service token.
+
+---
+
+### `LexIntent`
+<br/>*extends cdk.Construct*
+
+```ts
+  interface LexIntentAttributes {
+    botId: string,
+    botVersion?: string,
+    description?: string,
+    dialogCodeHook?: DialogCodeHookSettings,
+    fulfillmentCodeHook?: FulfillmentCodeHookSettings
+    inputContexts?: InputContext[],
+    intentClosingSetting?: IntentClosingSetting,
+    intentConfirmationSetting?: IntentConfirmationSetting,
+    intentName: string,
+    kendraConfiguration?: KendraConfiguration,
+    localeId: string,
+    outputContexts?: OutputContext[],
+    parentIntentSignature?: string,
+    sampleUtterances?: SampleUtterance[]
+  }
+```
+
+<br/>**Methods**:
+
+```ts
+    constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexIntentAttributes);
+    getName(): string;
+    getResource(): cdk.CustomResource;
+```
+
+#### **Description:**
+Custom class for creating v2 Lex intents with provided props and service token.
+
+---
+
+### `LexIntentPriority`
+<br/>*extends cdk.Construct*
+
+```ts
+  interface LexIntentPriorityAttributes {
+    botId: string,
+    botVersion?: string,
+    intentId: string,
+    intentName: string,
+    localeId: string,
+    slotPriorities: SlotPriority[]
+  }
+```
+
+<br/>**Methods**:
+
+```ts
+    constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexIntentPriorityAttributes);
+    getResource(): cdk.CustomResource;
+```
+
+#### **Description:**
+Custom class for creating v2 Lex intent priorities (SDK call to update Intents with proper slot priorities as this cannot be done on intent creation) with provided props and service token.
+
+---
+
+### `LexSlot`
+<br/>*extends cdk.Construct*
+
+```ts
+  interface LexSlotAttributes {
+    botId: string,
+    botVersion?: string,
+    description?: string,
+    localeId: string,
+    intentId: string,
+    obfuscationSetting?: ObfuscationSetting,
+    slotName: string,
+    slotTypeId: string,
+    valueElicitationSetting: SlotValueElicitationSetting,
+    priority: number
+  }
+```
+
+<br/>**Methods**:
+
+```ts
+    constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexSlotAttributes);
+    getResource(): cdk.CustomResource;
+```
+
+#### **Description:**
+Custom class for creating v2 Lex slots with provided props and service token.
+
+---
+
+### `LexSlotType`
+<br/>*extends cdk.Construct*
+
+```ts
+  interface LexSlotTypeAttributes {
+    botId: string,
+    botVersion?: string,
+    description?: string,
+    localeId: string,
+    parentSlotTypeSignature?: string,
+    slotTypeName: string,
+    slotTypeValues?: SlotTypeValue[],
+    valueSelectionSetting: SlotValueSelectionSetting
+  }
+```
+
+<br/>**Methods**:
+
+```ts
+    constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexSlotAttributes);
+    getResource(): cdk.CustomResource;
+    getName(): string;
+```
+
+#### **Description:**
+Custom class for creating v2 Lex slot types with provided props and service token.
+
+---
+
+For interfaces and enums please see `/v2/lex-data-types.ts` which contains definitions for all attributes/enums used by the above classes.
+
+
+
+## CDK Resources
 ---
 ### `CustomResourcesStack`
 <br/>*extends cdk.Stack*
 
 <br/>**Methods**:
 - `constructor`
-    <br/>params: `scope: cdk.Construct, id: string, env: cdk.Environment`
+    <br/>params: `scope: cdk.Construct, id: string, props: CustomResourcesStackProps`
+    ```ts
+      interface CustomResourceBaseStackProps {
+        enabled: boolean,
+        stackName?: string,
+        exportName?: string,
+        folder?: string,
+        handlerName?: string,
+        timeout?: number,
+        environment?: {
+          [key: string]: string
+        },
+        runtime?: Runtime,
+        role?: {
+          parentResource?: string,
+          childResource?: string,
+          actions?: string[],
+          customRole?: Role
+        }
+      }
+
+      interface CustomResourcesStackProps {
+        env?: cdk.Environment,
+        v2?: {
+          roleOutput?: string,
+          bot?: CustomResourceBaseStackProps,
+          intent?: CustomResourceBaseStackProps,
+          slotType?: CustomResourceBaseStackProps,
+          slot?: CustomResourceBaseStackProps,
+          intentPriority?: CustomResourceBaseStackProps,
+          botLocale?: CustomResourceBaseStackProps,
+          botVersion?: CustomResourceBaseStackProps,
+          botAlias?: CustomResourceBaseStackProps
+        }
+      }
+    ```
 
 <br/>**Properties**: None
 
 
 #### **Description:**
-Creates 3 lambda handler functions and 3 provider functions to Lex bots, intents and slot types and exports the providers ARNs to cloudformation with the following export names:
-- lexBotProviderServiceToken
-- lexIntentProviderServiceToken
-- lexSlotTypeProviderServiceToken
+Creates custom resource lambda handler functions and provider functions for Lex V2 types and exports the providers ARNs to cloudformation with the following (default) export names:
+#### V2
+
+- v2LexBotProviderServiceToken
+- v2LexIntentProviderServiceToken
+- v2LexBotLocaleProviderServiceToken
+- v2LexBotVersionProviderServiceToken
+- v2LexSlotTypeProviderServiceToken
+- v2LexSlotProviderServiceToken
+- v2LexBotAliasProviderServiceToken
+- v2LexBotIntentPriorityProviderServiceToken
+
+The stack will use defaulted values for each resource if the CustomResourceBaseStackProps only has `enabled` set to `true`. These defaults change depending on the resource. By default the stack resources use handler code that is included in the library. The v2 handlers run esbuild and bundle up the packages automatically. This can be customized as seen in the props above.
+
+
+#### Example Usage:
+
+- Use defaults and create all Lex Custom Resource handlers:
+
+```ts
+  const app = new cdk.App();
+
+  new cdkResources.CustomResourcesStack(app, 'CustomResourceStackTest', {
+    env: {
+      region: 'us-east-1',
+      account: '12345'
+    },
+    v2: {
+      bot: {
+        enabled: true
+      },
+      intent: {
+        enabled: true
+      },
+      slot: {
+        enabled: true
+      },
+      intentPriority: {
+        enabled: true
+      },
+      botVersion: {
+        enabled: true
+      },
+      botAlias: {
+        enabled: true
+      },
+      botLocale: {
+        enabled: true
+      },
+      slotType: {
+        enabled: true
+      }
+    }
+  });
+```
+
+- Create using defaults for V2 Bot Slot, and SlotType aswell as customized V2 Intent (Bot, Slot, SlotType and Intent will only be created):
+
+```ts
+new cdkResources.CustomResourcesStack(app, 'CustomResourceStackTest', {
+  env: {
+    region: 'us-east-1',
+    account: '12345'
+  },
+  v2: {
+    bot: {
+      enabled: true
+    },
+    intent: {
+      enabled: true,
+      handlerName: 'main.customHandlerFunc', // Assumes we have a main.py file here
+      folder: './lib/customHandlers/intent/',
+      runtime: Runtime.PYTHON_3_8,
+      timeout: 30
+    },
+    slot: {
+      enabled: true
+    },
+    slotType: {
+      enabled: true
+    }
+  }
+});
+```
 
 ---
-### `LexBot`
-<br/>*extends cdk.Construct*
-
-<br/>**Methods**:
-- `constructor`
-    <br/>params: `scope: cdk.Stack, id: string, serviceToken: string, props: LexBotAttributes`
-
-- `validName`
-    <br/>params: None
-    <br/>returns: boolean
-    <br/>description: Uses a regular expression to check for valid bot name
-
-<br/>**Properties**:
-- `scope`
-    <br/>type: cdk.Stack
-    <br/>description: the scope for this construct to be created in
-- `id`
-    <br/>type: string
-    <br/>description: id for this construct
-- `props`
-    <br/>type: LexBotAttributes
-    <br/>description: Properties required for creating a lex bot
-
-#### **Description:**
-Custom class for creating Lex bots with provided props and service token.
-
----
-### `LexIntent`
-<br/>*extends cdk.Construct*
-
-<br/>**Methods**:
-- `constructor`
-    <br/>params: `scope: cdk.Stack, id: string, serviceToken: string, props: LexIntentAttributes`
-
-- `toCDK`
-    <br/>params: `version?: string`
-    <br/>returns: LexIntentCDK
-    <br/>description: Creates a nice format for AWS CDK to read when including in custom bot resource.
-
-<br/>**Properties**:
-- `scope`
-    <br/>type: cdk.Stack
-    <br/>description: the scope for this construct to be created in
-- `id`
-    <br/>type: string
-    <br/>description: id for this construct
-- `props`
-    <br/>type: LexIntentAttributes
-    <br/>description: Properties required for creating a lex intent
-
-#### **Description:**
-Custom class for creating Lex intents with provided props and service token.
-
----
-### `LexSlotType`
-<br/>*extends cdk.Construct*
-
-<br/>**Methods**:
-- `constructor`
-    <br/>params: `scope: cdk.Stack, id: string, serviceToken: string, props: LexSlotTypeAttributes`
-
-- `slotTypeName`
-    <br/>params: None
-    <br/>returns: string
-    <br/>description: returns the name of the slottype
-
-<br/>**Properties**:
-- `scope`
-    <br/>type: cdk.Stack
-    <br/>description: the scope for this construct to be created in
-- `id`
-    <br/>type: string
-    <br/>description: id for this construct
-- `props`
-    <br/>type: LexSlotTypeAttributes
-    <br/>description: Properties required for creating a lex slot type
-
-#### **Description:**
-Custom class for creating Lex slot types with provided props and service token.
-
----
-
-For interfaces and enums please see `lex-data-types.ts` which contains definitions for all attributes/enums used by the above classes.

@@ -1,0 +1,14 @@
+{
+  "RequestType": "Delete",
+  "ServiceToken": "arn:partition:service:region:account-id:resource-type/resource-id",
+  "ResponseURL": "https://example.com/cfn",
+  "StackId": "arn:partition:service:region:account-id:resource-type/resource-id",
+  "RequestId": "bfc9c720-70d6-48c7-94b9-9c82845cbf63",
+  "LogicalResourceId": "BotVersion",
+  "PhysicalResourceId": "BOT_VERSION_ID",
+  "ResourceType": "AWS::CloudFormation::CustomResource",
+  "ResourceProperties": {
+    "ServiceToken": "arn:partition:service:region:account-id:resource-type/resource-id",
+    "props": "{\"botId\":\"BOT_ID\",\"botVersionLocaleSpecification\":{\"BOT_LOCALE_ID\":{\"sourceBotVersion\":\"DRAFT\"}},\"description\":\"V2 Bot Locale\"}"
+  }
+}
