@@ -1,3 +1,4 @@
+import { DescribeIntentCommand } from "@aws-sdk/client-lex-models-v2";
 import {
   LexModelsV2Client,
   UpdateIntentCommand
@@ -14,10 +15,19 @@ const handler = async (event, context) => {
     logger.info(JSON.stringify(event));
     let params = JSON.parse(event.ResourceProperties.props);
 
+    const describeCommand = new DescribeIntentCommand({
+      botId: params.botId,
+      botVersion: params.botVersion || "DRAFT",
+      intentId: params.intentId,
+      localeId: params.localeId
+    });
+
+    const describeResults = await client.send(describeCommand);
+
     if (event.RequestType === "Create" || event.RequestType === "Update") {
       const updateCommand = new UpdateIntentCommand({
-        ...params,
-        botVersion: params.botVersion || "DRAFT"
+        ...describeResults,
+        slotPriorities: params.slotPriorities
       });
       const response = await client.send(updateCommand);
       logger.info(response);

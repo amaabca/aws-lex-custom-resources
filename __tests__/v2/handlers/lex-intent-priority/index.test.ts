@@ -6,17 +6,24 @@ import { handler } from '../../../../src/v2/handlers/lex-intent-priority/index.j
 describe('v2-lex-bot-handler', () => {
   describe('with a create event', () => {
     let scope: nock.Scope;
+    let getScope: nock.Scope;
     let response: { PhysicalResourceId?: string };
 
     beforeAll(async () => {
+      getScope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
+        .get('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID')
+        .reply(200, '{"botId": "BOT_ID", "intentId":"INTENT_ID", "intentName":"INTENT_NAME", "botVersion":"DRAFT", "localeId":"BOT_LOCALE_ID"}');
+
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
         .put('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID')
         .reply(200, '{"intentId": "INTENT_ID"}');
+
       response = await handler(fixtures.v2.events.intentPriority.create, {});
     });
 
     it('creates a bot via the SDK', () => {
       expect(scope.isDone()).toBe(true);
+      expect(getScope.isDone()).toBe(true);
     });
 
     it('returns the PhysicalResourceId', () => {
@@ -26,17 +33,24 @@ describe('v2-lex-bot-handler', () => {
 
   describe('with an update event', () => {
     let scope: nock.Scope;
+    let getScope: nock.Scope;
     let response: { PhysicalResourceId?: string };
 
     beforeAll(async () => {
+      getScope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
+        .get('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID')
+        .reply(200, '{"botId": "BOT_ID", "intentId":"INTENT_ID", "intentName":"INTENT_NAME", "botVersion":"DRAFT", "localeId":"BOT_LOCALE_ID"}');
+
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
         .put('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID')
         .reply(200, '{"intentId": "INTENT_ID"}');
+
       response = await handler(fixtures.v2.events.intentPriority.update, {});
     });
 
     it('updates a bot via the SDK', () => {
       expect(scope.isDone()).toBe(true);
+      expect(getScope.isDone()).toBe(true);
     });
 
     it('returns the PhysicalResourceId', () => {
@@ -51,6 +65,10 @@ describe('v2-lex-bot-handler', () => {
       nock('https://models-v2-lex.us-east-1.amazonaws.com/')
         .put('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID')
         .reply(200);
+
+      nock('https://models-v2-lex.us-east-1.amazonaws.com/')
+        .get('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID')
+        .reply(200, '{"botId": "BOT_ID", "intentId":"INTENT_ID", "intentName":"INTENT_NAME", "botVersion":"DRAFT", "localeId":"BOT_LOCALE_ID"}');
       response = await handler(fixtures.v2.events.intentPriority.unknown, {});
     });
 
