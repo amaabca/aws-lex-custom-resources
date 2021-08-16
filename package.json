@@ -1,6 +1,6 @@
 {
   "name": "@amaabca/aws-lex-custom-resources",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "AWS Lex infrastructure as code via the CDK",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
