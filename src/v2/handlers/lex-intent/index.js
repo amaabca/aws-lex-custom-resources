@@ -2,7 +2,8 @@ import {
   LexModelsV2Client,
   CreateIntentCommand,
   DeleteIntentCommand,
-  UpdateIntentCommand
+  UpdateIntentCommand,
+  DescribeIntentCommand
 } from "@aws-sdk/client-lex-models-v2";
 const logger = process.env.TEST ? { info: (c) => { } } : console;
 const client = new LexModelsV2Client({
@@ -42,7 +43,16 @@ const handler = async (event, context) => {
       };
     }
     case "Update": {
+      const describeCommand = new DescribeIntentCommand({
+        botId: params.botId,
+        botVersion: params.botVersion || "DRAFT",
+        intentId: params.intentId,
+        localeId: params.localeId
+      });
+
+      const describeResults = await client.send(describeCommand);
       const updateCommand = new UpdateIntentCommand({
+        ...describeResults,
         ...params,
         botVersion: params.botVersion || "DRAFT",
         intentId: event.PhysicalResourceId

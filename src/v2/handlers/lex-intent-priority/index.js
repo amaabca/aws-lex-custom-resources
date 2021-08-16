@@ -1,7 +1,7 @@
-import { DescribeIntentCommand } from "@aws-sdk/client-lex-models-v2";
 import {
   LexModelsV2Client,
-  UpdateIntentCommand
+  UpdateIntentCommand,
+  DescribeIntentCommand
 } from "@aws-sdk/client-lex-models-v2";
 const logger = process.env.TEST ? { info: (c) => { } } : console;
 const client = new LexModelsV2Client({
