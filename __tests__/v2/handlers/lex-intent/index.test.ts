@@ -31,6 +31,11 @@ describe('v2-lex-intent-handler', () => {
       scope = nock('https://models-v2-lex.us-east-1.amazonaws.com/')
         .put('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID')
         .reply(200, '{"intentId":"INTENT_ID"}');
+
+      nock('https://models-v2-lex.us-east-1.amazonaws.com/')
+        .get('/bots/BOT_ID/botversions/DRAFT/botlocales/BOT_LOCALE_ID/intents/INTENT_ID')
+        .reply(200, '{"botId": "BOT_ID", "intentId":"INTENT_ID", "intentName":"INTENT_NAME", "botVersion":"DRAFT", "localeId":"BOT_LOCALE_ID"}');
+
       response = await handler(fixtures.v2.events.intent.update, {});
     });
 
