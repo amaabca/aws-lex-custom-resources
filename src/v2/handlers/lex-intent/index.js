@@ -46,7 +46,7 @@ const handler = async (event, context) => {
       const describeCommand = new DescribeIntentCommand({
         botId: params.botId,
         botVersion: params.botVersion || "DRAFT",
-        intentId: params.intentId,
+        intentId: event.PhysicalResourceId,
         localeId: params.localeId
       });
 
