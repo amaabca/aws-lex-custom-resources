@@ -19,31 +19,29 @@ describe('CDK Custom Resources Stack', () => {
           region: 'us-east-1',
           account: '1234567890',
         },
-        v2: {
-          bot: {
-            enabled: true,
-          },
-          botAlias: {
-            enabled: true,
-          },
-          botVersion: {
-            enabled: true,
-          },
-          botLocale: {
-            enabled: true,
-          },
-          intent: {
-            enabled: true,
-          },
-          intentPriority: {
-            enabled: true,
-          },
-          slot: {
-            enabled: true,
-          },
-          slotType: {
-            enabled: true,
-          },
+        bot: {
+          enabled: true,
+        },
+        botAlias: {
+          enabled: true,
+        },
+        botVersion: {
+          enabled: true,
+        },
+        botLocale: {
+          enabled: true,
+        },
+        intent: {
+          enabled: true,
+        },
+        intentPriority: {
+          enabled: true,
+        },
+        slot: {
+          enabled: true,
+        },
+        slotType: {
+          enabled: true,
         },
       });
     });
