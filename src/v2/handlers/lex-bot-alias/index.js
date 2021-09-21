@@ -1,14 +1,16 @@
 import {
-    LexModelsV2Client,
-    DeleteBotAliasCommand,
-    UpdateBotAliasCommand,
-    CreateBotAliasCommand,
+  LexModelsV2Client,
+  DeleteBotAliasCommand,
+  UpdateBotAliasCommand,
+  CreateBotAliasCommand,
 } from '@aws-sdk/client-lex-models-v2';
 
-const logger = process.env.TEST ? { info: (c) => {} } : console;
+const logger = process.env.TEST ? { info: (c) => { } } : console;
 const client = new LexModelsV2Client({
   region: process.env.REGION || 'us-east-1',
-  logger: logger
+  logger,
+  maxAttempts: 10,
+  retryMode: 'adaptive',
 });
 
 const handler = async (event, context) => {
@@ -35,7 +37,7 @@ const handler = async (event, context) => {
       const response = await client.send(deleteCommand);
 
       return {
-          PhysicalResourceId: response.botAliasId
+        PhysicalResourceId: response.botAliasId
       };
     }
     case "Update": {
@@ -46,7 +48,7 @@ const handler = async (event, context) => {
       const response = await client.send(updateCommand);
 
       return {
-          PhysicalResourceId: response.botAliasId
+        PhysicalResourceId: response.botAliasId
       };
     }
     default: {
