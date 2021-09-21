@@ -1,30 +1,40 @@
-import * as cdk from '@aws-cdk/core';
-import { LexBotLocaleAttributes } from '../lex-data-types'
+import {
+  LexIntent,
+  LexSlotType,
+} from '..';
+import {
+  LexBotLocaleAttributes,
+  LexSlotTypeAttributes,
+  LexIntentAttributes,
+} from '../lex-data-types'
 
-export default class LexBotLocale extends cdk.Construct {
-  scope: cdk.Stack;
-  id: string;
+export default class {
   props: LexBotLocaleAttributes;
-  resource: cdk.CustomResource;
+  slotTypes: LexSlotType[];
+  intents: LexIntent[];
 
-  // the service token must match the exported service token by the lex-bot stack
-  constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexBotLocaleAttributes) {
-    super(scope, id);
-
-    this.scope = scope;
-    this.id = id;
+  constructor(props: LexBotLocaleAttributes) {
     this.props = props;
-    this.props.description = `${id} V2 Bot Locale`;
-
-    this.resource = new cdk.CustomResource(scope, `${id}_Custom_V2_Lex_Bot_Locale`, {
-      serviceToken: cdk.Fn.importValue(serviceToken),
-      properties: {
-        props: JSON.stringify(this.props),
-      },
-    });
+    this.intents = [];
+    this.slotTypes = [];
   }
 
-  getResource(): cdk.CustomResource {
-    return this.resource;
+  addSlotType(slotTypeProps: LexSlotTypeAttributes) {
+    const slotType = new LexSlotType(slotTypeProps);
+    this.slotTypes.push(slotType);
+    return slotType;
+  }
+
+  addIntent(intentProps: LexIntentAttributes) {
+    const intent = new LexIntent(intentProps);
+    this.intents.push(intent);
+    return intent;
+  }
+
+  definition() {
+    const configuration = { ...this.props };
+    configuration['CR.slotTypes'] = this.slotTypes.map((s) => s.definition());
+    configuration['CR.intents'] = this.intents.map((i) => i.definition());
+    return configuration;
   }
 }
