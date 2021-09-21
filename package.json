@@ -1,6 +1,6 @@
 {
   "name": "@amaabca/aws-lex-custom-resources",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "AWS Lex infrastructure as code via the CDK",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -52,5 +52,8 @@
     "@aws-cdk/core": "^1.111.0",
     "@aws-cdk/custom-resources": "^1.111.0",
     "@aws-sdk/client-lex-models-v2": "^3.17.0"
+  },
+  "resolutions": {
+    "set-value": "^4.0.1"
   }
 }

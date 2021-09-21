@@ -6,7 +6,9 @@ import {
 const logger = process.env.TEST ? { info: (c) => { } } : console;
 const client = new LexModelsV2Client({
   region: process.env.REGION || "us-east-1",
-  logger
+  logger,
+  maxAttempts: 10,
+  retryMode: 'adaptive',
 });
 
 
