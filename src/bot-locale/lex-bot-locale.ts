@@ -20,15 +20,41 @@ export default class {
   }
 
   addSlotType(slotTypeProps: LexSlotTypeAttributes): LexSlotType {
-    const slotType = new LexSlotType(slotTypeProps);
-    this.slotTypes.push(slotType);
-    return slotType;
+    // check if a slottype with this name already exists
+    let exists = false;
+    for (let i = 0; i < this.slotTypes.length; i++) {
+      if (this.slotTypes[i].props.slotTypeName === slotTypeProps.slotTypeName) {
+        exists = true;
+        break;
+      }
+    }
+
+    if (exists) {
+      throw new Error(`A slot type with the name ${slotTypeProps.slotTypeName} already exists!`);
+    } else {
+      const slotType = new LexSlotType(slotTypeProps);
+      this.slotTypes.push(slotType);
+      return slotType;
+    }
   }
 
   addIntent(intentProps: LexIntentAttributes): LexIntent {
-    const intent = new LexIntent(intentProps);
-    this.intents.push(intent);
-    return intent;
+    // check if a slottype with this name already exists
+    let exists = false;
+    for (let i = 0; i < this.intents.length; i++) {
+      if (this.intents[i].props.intentName === intentProps.intentName) {
+        exists = true;
+        break;
+      }
+    }
+
+    if (exists) {
+      throw new Error(`An intent with the name ${intentProps.intentName} already exists!`);
+    } else {
+      const intent = new LexIntent(intentProps);
+      this.intents.push(intent);
+      return intent;
+    }
   }
 
   definition(): any {

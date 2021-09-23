@@ -1,6 +1,6 @@
 import {
- App,
- Stack,
+  App,
+  Stack,
 } from '@aws-cdk/core';
 
 import {
