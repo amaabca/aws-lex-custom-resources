@@ -1,65 +1,42 @@
-import * as cdk from '@aws-cdk/core';
-import { LexSlot, LexSlotType } from '..';
-import { LexIntentAttributes, LexSlotAttributes } from '../lex-data-types';
+import {
+  LexSlot,
+} from '..';
+import {
+  LexIntentAttributes,
+  LexSlotAttributes,
+} from '../lex-data-types';
 
-export default class LexIntent extends cdk.Construct {
+export default class {
   props: LexIntentAttributes;
-  resource: cdk.CustomResource;
-  scope: cdk.Stack;
-  slots: {
-    [key: string]: LexSlot
-  }
+  slots: LexSlot[];
 
-  constructor(scope: cdk.Stack, serviceToken: string, props: LexIntentAttributes) {
-    super(scope, props.intentName);
-    this.scope = scope;
+  constructor(props: LexIntentAttributes) {
     this.props = props;
-    this.slots = {};
-
-    this.resource = new cdk.CustomResource(scope, `${props.intentName}-Resource`, {
-      serviceToken: cdk.Fn.importValue(serviceToken),
-      properties: {
-        props: JSON.stringify(this.props),
-      },
-    });
+    this.slots = [];
   }
 
-  get Resource(): cdk.CustomResource {
-    return this.resource;
-  }
+  addSlot(props: LexSlotAttributes): LexSlot {
+    let exists = false;
 
-  get Name(): string {
-    return this.props.intentName;
-  }
+    for (let i = 0; i < this.slots.length; i++) {
+      if (this.slots[i].props.slotName === props.slotName) {
+        exists = true;
+        break;
+      }
+    }
 
-  addSlot(props: LexSlotAttributes, slotType: LexSlotType | string): LexSlot {
-    if (!this.slots[props.slotName]) {
-      const slotResource = new cdk.CustomResource(this.scope, props.slotName, {
-        serviceToken: cdk.Fn.importValue(this.props.slotServiceToken),
-        properties: {
-          props: JSON.stringify({
-            ...this.props,
-            botVersion: 'DRAFT',
-            intentId: this.getResourceId(this.Resource),
-            slotTypeId: typeof slotType === 'string' ? slotType : this.getResourceId(slotType.Resource as cdk.CustomResource), // handles for built in aws types
-          }),
-        },
-      });
-
-      const slot = new LexSlot(props);
-      slot.Resource = slotResource;
-      this.slots[props.slotName] = slot;
-      return slot;
+    if (exists) {
+      throw new Error(`A slot with the name ${props.slotName} already exists!`);
     } else {
-      throw new Error(`Slot with name ${props.slotName} already exists for this intent!`);
+      const slot = new LexSlot(props);
+      this.slots.push(slot);
+      return slot;
     }
   }
 
-  getSlot(name: string): LexSlot | undefined {
-    return this.slots[name];
-  }
-
-  private getResourceId(resource: cdk.CustomResource): string {
-    return cdk.Fn.ref(this.scope.getLogicalId(resource.node.defaultChild as cdk.CfnCustomResource));
+  definition(): any {
+    const configuration = { ...this.props };
+    configuration['CR.slots'] = this.slots.map((s) => s.definition());
+    return configuration;
   }
 }

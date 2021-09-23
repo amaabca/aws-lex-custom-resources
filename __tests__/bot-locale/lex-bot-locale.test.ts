@@ -1,28 +1,90 @@
-import * as cdk from '@aws-cdk/core';
+import {
+  LexBotLocale, LexIntent, LexSlotType,
+} from '../../src/';
 
-import LexBotLocale from '../../src/bot-locale/lex-bot-locale';
+describe('LexBotLocale', () => {
+  const instance = new LexBotLocale({
+    nluIntentConfidenceThreshold: 0.8,
+    localeId: 'en_US',
+  });
 
-describe('Lex v2 Bot Locale class', () => {
-  describe('Create a new instance of the bot-locale class', () => {
-    let sampleStack: cdk.Stack;
-    let instance: LexBotLocale;
+  describe('botLocale', () => {
+    it('props contains the correct localeId', () => {
+      expect(instance.props.localeId).toBe('en_US');
+    });
 
-    beforeAll(async () => {
-      sampleStack = new cdk.Stack();
-      instance = new LexBotLocale(sampleStack, 'SampleBotLocale', 'sampleServiceToken', {
-        botId: 'SampleBotID',
-        localeId: 'en-US',
-        botVersion: 'DRAFT',
-        nluIntentConfidenceThreshold: 0.5,
+    describe('addSlotType', () => {
+      let slotType: LexSlotType;
+
+      beforeAll(() => {
+        slotType = instance.addSlotType({
+          slotTypeName: 'SampleSlotType',
+          valueSelectionSetting: {
+            resolutionStrategy: 'TOP_RESOLUTION',
+          },
+        });
+      });
+
+      it('correctly added a new slottype', () => {
+        expect(slotType).toBeInstanceOf(LexSlotType);
+        expect(instance.slotTypes[0]).toEqual(slotType);
+      });
+
+      describe('duplicate slot type name', () => {
+        it('throws error', () => {
+          expect(() => {
+            instance.addSlotType({
+              slotTypeName: 'SampleSlotType',
+              valueSelectionSetting: {
+                resolutionStrategy: 'TOP_RESOLUTION',
+              },
+            });
+          }).toThrow();
+        });
       });
     });
 
-    it('Creates a new instance of the bot-locale v2 class', () => {
-      expect(instance).not.toBeNull();
+    describe('addIntent', () => {
+      let intent: LexIntent;
+
+      beforeAll(() => {
+        intent = instance.addIntent({
+          intentName: 'SampleIntent',
+        });
+      });
+
+      it('correctly added a new intent', () => {
+        expect(intent).toBeInstanceOf(LexIntent);
+        expect(instance.intents[0]).toEqual(intent);
+      });
+
+      describe('duplicate intent name', () => {
+        it('throws error', () => {
+          expect(() => {
+            instance.addIntent({ intentName: 'SampleIntent' })
+          }).toThrow();
+        });
+      });
     });
 
-    it('Gets the cfn resource properly', () => {
-      expect(instance.getResource() instanceof cdk.CustomResource).toBe(true);
+    describe('definition', () => {
+      beforeAll(() => {
+        instance.addIntent({
+          intentName: 'SampleIntent2',
+        });
+        instance.addSlotType({
+          slotTypeName: 'SampleSlotType2',
+          valueSelectionSetting: {
+            resolutionStrategy: 'TOP_RESOLUTION',
+          },
+        });
+      });
+
+      it('creates json object containing proper fields for CR', () => {
+        const definition = instance.definition();
+        expect(definition['CR.slotTypes'].length).toBe(2);
+        expect(definition['CR.intents'].length).toBe(2);
+      });
     });
   });
 });

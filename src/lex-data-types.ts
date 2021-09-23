@@ -1,3 +1,4 @@
+import { Reference } from '@aws-cdk/core';
 import {
   InputContext,
   FulfillmentCodeHookSettings,
@@ -8,14 +9,12 @@ import {
   OutputContext,
   SampleUtterance,
   VoiceSettings,
-  BotVersionLocaleDetails,
   SlotTypeValue,
   SlotValueSelectionSetting,
   SlotValueElicitationSetting,
   ConversationLogSettings,
   BotAliasLocaleSettings,
   SentimentAnalysisSettings,
-  SlotPriority,
 } from '@aws-sdk/client-lex-models-v2';
 
 export enum ObfuscationSetting {
@@ -28,7 +27,6 @@ export enum SlotTypeType {
   BUILT_IN
 }
 
-
 export interface LexBotAttributes {
   botName?: string,
   botTags?: {
@@ -39,15 +37,11 @@ export interface LexBotAttributes {
   },
   description?: string,
   idleSessionTTLInSeconds: number,
-  roleArn: string,
+  roleArn: string | Reference,
   testBotAliasTags?: {
     [key: string]: string
   },
-  botServiceToken: string,
-  intentServiceToken: string,
-  slotServiceToken: string,
-  slotTypeServiceToken: string,
-  intentPriorityServiceToken: string
+  'CR.botLocales'?: LexBotLocaleAttributes[]
 }
 
 export interface LexIntentAttributes {
@@ -61,31 +55,33 @@ export interface LexIntentAttributes {
   intentConfirmationSetting?: IntentConfirmationSetting,
   intentName: string,
   kendraConfiguration?: KendraConfiguration,
-  localeId: string,
   outputContexts?: OutputContext[],
   parentIntentSignature?: string,
-  sampleUtterances?: SampleUtterance[]
-  slotServiceToken: string,
+  sampleUtterances?: SampleUtterance[],
+  'CR.slots'?: LexSlotAttributes[]
 }
 
 export interface LexBotLocaleAttributes {
-  botId: string,
-  botVersion: string,
+  botId?: string | Reference,
+  botVersion?: string,
   description?: string,
   localeId: string,
   nluIntentConfidenceThreshold: number,
-  voiceSettings?: VoiceSettings
+  voiceSettings?: VoiceSettings,
+  'CR.slotTypes'?: LexSlotTypeAttributes[],
+  'CR.intents'?: LexIntentAttributes[]
 }
 
 export interface LexBotVersionAttributes {
-  botId: string,
-  botVersionLocaleSpecification: { [key: string]: BotVersionLocaleDetails } | undefined,
-  description?: string
+  botId: string | Reference,
+  description?: string,
+  'CR.botLocaleIds'?: string | Reference,
+  'CR.lastUpdatedDateTime'?: string | Reference
 }
 
 export interface LexSlotTypeAttributes {
-  description?: string,
-  localeId: string,
+  description?: string | Reference,
+  localeId?: string,
   parentSlotTypeSignature?: string,
   slotTypeName: string,
   slotTypeValues?: SlotTypeValue[],
@@ -96,27 +92,18 @@ export interface LexSlotAttributes {
   intentId?: string,
   botId?: string,
   description?: string,
-  localeId: string,
   obfuscationSetting?: ObfuscationSetting,
   slotName: string,
+  slotTypeName?: string,
   valueElicitationSetting: SlotValueElicitationSetting,
-  priority: number
-}
-
-export interface LexIntentPriorityAttributes {
-  botId: string,
-  botVersion?: string,
-  intentId: string,
-  intentName: string,
-  localeId: string,
-  slotPriorities: SlotPriority[]
+  'CR.slotTypeName'?: string
 }
 
 export interface LexBotAliasAttributes {
-  botId: string,
+  botId?: string | Reference,
   botAliasName: string,
   botAliasLocaleSettings: { [key: string]: BotAliasLocaleSettings },
-  botVersion?: string,
+  botVersion?: string | Reference,
   conversationLogSettings?: ConversationLogSettings,
   description?: string,
   sentimentAnalysisSettings?: SentimentAnalysisSettings,

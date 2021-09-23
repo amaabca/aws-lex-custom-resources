@@ -1,34 +1,38 @@
-import * as cdk from '@aws-cdk/core';
+import {
+  App,
+  CfnResource,
+  Stack,
+} from '@aws-cdk/core';
 
-import LexBotAlias from '../../src/bot-alias/lex-bot-alias';
+import {
+  LexBotAlias,
+} from '../../src/';
 
-describe('Lex v2 Bot Alias class', () => {
-  describe('Create a new instance of the bot-alias class', () => {
-    let sampleStack: cdk.Stack;
-    let instance: LexBotAlias;
-
-    beforeAll(async () => {
-      sampleStack = new cdk.Stack();
-      instance = new LexBotAlias(sampleStack, 'SampleBotAlias', 'sampleServiceToken', {
-        botId: 'SampleBotID',
-        botVersion: 'DRAFT',
-        botAliasName: 'SampleBotAlias',
-        botAliasLocaleSettings: {
-          'en-US': {
-            codeHookSpecification: {
-              lambdaCodeHook: {
-                lambdaARN: 'SOMELAMBDAARN',
-                codeHookInterfaceVersion: '$LATEST',
-              },
-            },
-            enabled: true,
-          },
+describe('LexBotAlias', () => {
+  const serviceToken = 'arn:partition:service:region:account-id:resource-type:resource-id';
+  const app = new App();
+  const scope = new Stack(app, 'Stack');
+  const instance = new LexBotAlias(
+    scope,
+    'Id',
+    serviceToken,
+    {
+      botAliasName: 'Test',
+      botAliasLocaleSettings: {
+        ['en_US']: {
+          enabled: true,
         },
-      });
+      },
+    }
+  );
+
+  describe('attributes', () => {
+    it('has a cfn resource', () => {
+      expect(instance.resource).toBeInstanceOf(CfnResource);
     });
 
-    it('Creates a new instance of the bot-alias v2 class', () => {
-      expect(instance).not.toBeNull();
+    it('cfn resource has a removal policy of retain', () => {
+      expect(instance.resource.cfnOptions.deletionPolicy).toEqual('Retain');
     });
   });
 });
