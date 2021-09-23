@@ -1,5 +1,5 @@
 import * as cdk from '@aws-cdk/core';
-import { LexBot, LexBotDefinition, LexBotLocale } from '../../src';
+import { LexBot, LexBotAlias, LexBotDefinition, LexBotLocale, LexBotVersion } from '../../src';
 
 describe('Lex Bot', () => {
   describe('Bot definition', () => {
@@ -43,9 +43,22 @@ describe('Lex Bot', () => {
       });
 
       describe('Build', () => {
+        const bot: LexBot = instance.build();
+
         it('Creates a Lex Bot construct', () => {
-          const bot: LexBot = instance.build();
           expect(bot).toBeInstanceOf(LexBot);
+        });
+
+        describe('automaticVersion', () => {
+          it('Returns a lex bot version for the bot', () => {
+            expect(bot.automaticVersion()).toBeInstanceOf(LexBotVersion);
+          });
+        });
+
+        describe('addAlias', () => {
+          it('Returns a lex bot alias for the bot', () => {
+            expect(bot.addAlias({ botAliasName: 'test', botAliasLocaleSettings: { 'en_US': { enabled: true } } })).toBeInstanceOf(LexBotAlias);
+          });
         });
       });
     });
