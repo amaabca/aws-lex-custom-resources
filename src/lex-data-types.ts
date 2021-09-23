@@ -9,14 +9,12 @@ import {
   OutputContext,
   SampleUtterance,
   VoiceSettings,
-  BotVersionLocaleDetails,
   SlotTypeValue,
   SlotValueSelectionSetting,
   SlotValueElicitationSetting,
   ConversationLogSettings,
   BotAliasLocaleSettings,
   SentimentAnalysisSettings,
-  SlotPriority,
 } from '@aws-sdk/client-lex-models-v2';
 
 export enum ObfuscationSetting {

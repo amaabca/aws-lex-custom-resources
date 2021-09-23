@@ -15,13 +15,13 @@ export default class {
     this.slots = [];
   }
 
-  addSlot(props: LexSlotAttributes) {
+  addSlot(props: LexSlotAttributes): LexSlot {
     const slot = new LexSlot(props);
     this.slots.push(slot);
     return slot;
   }
 
-  definition() {
+  definition(): any {
     const configuration = { ...this.props };
     configuration['CR.slots'] = this.slots.map((s) => s.definition());
     return configuration;

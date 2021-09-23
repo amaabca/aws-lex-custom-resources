@@ -25,14 +25,14 @@ export default class extends Construct {
         properties: {
           ServiceToken: serviceToken,
           ...props,
-        }
+        },
       }
     );
     // the custom resource will take care of cleaning this up
     this.resource.applyRemovalPolicy(RemovalPolicy.RETAIN);
   }
 
-  number() {
+  number(): Reference {
     return this.resource.getAtt('botVersion');
   }
 }

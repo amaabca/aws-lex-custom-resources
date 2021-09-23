@@ -7,7 +7,7 @@ export default class {
     this.props = props;
   }
 
-  definition() {
+  definition(): any {
     const { slotTypeName, ...rest } = this.props;
     const configuration = { ...rest };
     configuration['CR.slotTypeName'] = slotTypeName;

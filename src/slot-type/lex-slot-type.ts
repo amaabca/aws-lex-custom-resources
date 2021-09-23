@@ -7,7 +7,7 @@ export default class LexSlotType {
     this.props = props;
   }
 
-  definition() {
+  definition(): any {
     return this.props;
   }
 }

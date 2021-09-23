@@ -31,19 +31,19 @@ export default class {
     this.locales = [];
   }
 
-  addLocale(localeProps: LexBotLocaleAttributes) {
+  addLocale(localeProps: LexBotLocaleAttributes): LexBotLocale {
     const locale = new LexBotLocale(localeProps);
     this.locales.push(locale);
     return locale;
   }
 
-  definition() {
+  definition(): any {
     const configuration = { ...this.props };
     configuration['CR.botLocales'] = this.locales.map((l) => l.definition());
     return configuration;
   }
 
-  build() {
+  build(): LexBot {
     return new LexBot(this.scope, this.id, this.serviceToken, this.definition());
   }
 }

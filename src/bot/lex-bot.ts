@@ -40,7 +40,7 @@ export default class extends Construct {
     );
   }
 
-  automaticVersion() {
+  automaticVersion(): LexBotVersion {
     return new LexBotVersion(
       this.scope,
       'AutomaticVersion',
@@ -53,27 +53,27 @@ export default class extends Construct {
     )
   }
 
-  addAlias(aliasProps: LexBotAliasAttributes) {
+  addAlias(aliasProps: LexBotAliasAttributes): LexBotAlias {
     return new LexBotAlias(
       this.scope,
       `BotAlias-${aliasProps.botAliasName}`,
       this.serviceToken,
       {
         botId: this.botId(),
-        ...aliasProps
+        ...aliasProps,
       }
     );
   }
 
-  lastUpdatedDateTime() {
+  lastUpdatedDateTime(): Reference {
     return this.resource.getAtt('lastUpdatedDateTime');
   }
 
-  botId() {
+  botId(): Reference {
     return this.resource.getAtt('botId');
   }
 
-  botLocaleIds() {
+  botLocaleIds(): Reference {
     return this.resource.getAtt('botLocaleIds');
   }
 }

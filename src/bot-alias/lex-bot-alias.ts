@@ -25,7 +25,7 @@ export default class extends Construct {
         properties: {
           ServiceToken: serviceToken,
           ...props,
-        }
+        },
       }
     );
     // the custom resource will take care of cleaning this up

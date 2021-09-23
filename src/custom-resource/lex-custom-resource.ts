@@ -1,6 +1,7 @@
 import {
   Construct,
   Fn,
+  Reference,
 } from '@aws-cdk/core';
 import {
   CfnApplication,
@@ -27,20 +28,20 @@ export default class extends Construct {
         },
         parameters: {
           LogLevel: props.logLevel ?? 'INFO',
-        }
+        },
       }
     );
   }
 
-  serviceToken() {
+  serviceToken(): Reference {
     return this.application.getAtt('Outputs.LexV2CfnCrFunctionArn');
   }
 
-  serviceLinkedRoleArn() {
+  serviceLinkedRoleArn(): Reference {
     return this.application.getAtt('Outputs.LexServiceLinkedRole')
   }
 
-  serviceLinkedRoleName() {
+  serviceLinkedRoleName(): string {
     return Fn.select(
       2,
       Fn.split(
