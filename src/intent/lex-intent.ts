@@ -16,9 +16,22 @@ export default class {
   }
 
   addSlot(props: LexSlotAttributes): LexSlot {
-    const slot = new LexSlot(props);
-    this.slots.push(slot);
-    return slot;
+    let exists = false;
+
+    for (let i = 0; i < this.slots.length; i++) {
+      if (this.slots[i].props.slotName === props.slotName) {
+        exists = true;
+        break;
+      }
+    }
+
+    if (exists) {
+      throw new Error(`A slot with the name ${props.slotName} already exists!`);
+    } else {
+      const slot = new LexSlot(props);
+      this.slots.push(slot);
+      return slot;
+    }
   }
 
   definition(): any {
