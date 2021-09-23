@@ -10,7 +10,6 @@ const config: Config.InitialOptions = {
   },
   errorOnDeprecated: true,
   verbose: true,
-  globalSetup: '<rootDir>/__tests__/setup.ts',
   transform: { '^.+\\.(t|j)s$': 'ts-jest' },
   testRegex: '/__tests__/*',
   testPathIgnorePatterns: ['<rootDir>/__tests__/setup.ts'],
