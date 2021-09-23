@@ -32,7 +32,7 @@ export default class extends Construct {
     this.resource.applyRemovalPolicy(RemovalPolicy.RETAIN);
   }
 
-  number(): Reference {
+  botVersion(): Reference {
     return this.resource.getAtt('botVersion');
   }
 }

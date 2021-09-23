@@ -197,7 +197,7 @@ export default class MyCdkStack extends Stack {
     // create an alias and assign it to the latest bot version
     bot.addAlias({
       botAliasName: 'live',
-      botVersion: version.number(),
+      botVersion: version.botVersion(),
       botAliasLocaleSettings: {
         en_US: {
           enabled: true

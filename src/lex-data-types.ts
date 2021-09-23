@@ -75,8 +75,8 @@ export interface LexBotLocaleAttributes {
 export interface LexBotVersionAttributes {
   botId: string | Reference,
   description?: string,
-  'CR.botLocaleIds'?: Reference,
-  'CR.lastUpdatedDateTime'?: Reference
+  'CR.botLocaleIds'?: string | Reference,
+  'CR.lastUpdatedDateTime'?: string | Reference
 }
 
 export interface LexSlotTypeAttributes {
