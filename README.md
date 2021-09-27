@@ -1,392 +1,213 @@
-# awlexs
+# AWS CDK - Lex V2
 
-## AWS Lex Custom CDK
+This package contains an [AWS CDK](https://aws.amazon.com/cdk/) wrapper to create, update and provision Lex V2 bots.
 
-### What is it?
-This is a library meant to make using AWS CDK alongside with AWS Lex alot easier. As of right now CDK does not support AWS Lex resources therefore this was made to do so using CDK Custom resources.
+## Features
 
-The resources created use lambda functions which make the AWS SDK calls to create the bots, intents and slot-types required for your Lex application. Included in this library are the custom resources (lambda functions) and custom classes that use said resources.
+* Deploy Lex V2 bots easily and reliably between environments!
+* Define your Lex bots using best practices and Infrastructure as Code!
+* Automatically build/release Lex bot versions and aliases!
 
+## Installation
 
-### How do I use it?
-You'll need to have AWS CDK installed and a valid AWS login configured on your machine. The lambda handlers that come with this library are not required and you can choose to use your own handlers as long as they work as outlined in the documentation for custom resources in AWS CDK (https://docs.aws.amazon.com/cdk/api/latest/docs/custom-resources-readme.html). The steps are generally as follows:
+Using yarn:
 
-1. Create a new CDK app using `cdk init app --language typescript`
-2. Install this library `npm i @amaabca/aws-lex-custom-resources`
-3. Deploy the CustomResourcesStack as its own stack in your new CDK app. Be sure to specify the AWS region and AWS account (this will create a stack of lambda functions and iam roles specific to the account which you deploy it in.) See `CustomResourcesStack` at the bottom of the readme under CDK resources.
-4. In a new or existing CDK project, create your own CDK stack and use the V1 or V2 constructs as you wish. (Please make sure your new CDK project is using the same version of CDK as this library (1.107.0))
-3. Deploy using `cdk deploy --profile <profile>`
-
-# Library Guide
-## Lex Version 2
-
----
-### `LexBot`
-<br/>*extends cdk.Construct*
-
-```ts
-  interface LexBotAttributes {
-    botName?: string,
-    botTags?: {
-      [key: string]: string
-    },
-    dataPrivacy: {
-      childDirected: boolean
-    },
-    description?: string,
-    idleSessionTTLInSeconds: number,
-    roleArn: string,
-    testBotAliasTags?: {
-      [key: string]: string
-    }
-  }
+```bash
+$ yarn add @amaabca/aws-lex-custom-resources
 ```
 
-<br/>**Methods**:
+Using npm:
 
-```ts
-  constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexBotAttributes);
-  validName(): boolean;
-  getName(): string;
-  getResource(): cdk.CustomResource;
+```bash
+$ npm install @amaabca/aws-lex-custom-resources
 ```
 
-#### **Description:**
-Custom class for creating v2 Lex bots with provided props and service token.
+## Usage
 
----
-
-### `LexBotAlias`
-<br/>*extends cdk.Construct*
+This example is extracted from the AWS [OrderFlowersBot](https://github.com/aws-samples/aws-lex-v2-cfn-cr/blob/01395acd4901850433d1e95f437ab7ec5bbd5f52/examples/order-flowers/template.yaml) sample.
 
 ```ts
-  interface LexBotAliasAttributes {
-    botId: string,
-    botAliasName: string,
-    botAliasLocaleSettings: { [key: string]: BotAliasLocaleSettings },
-    botVersion?: string,
-    conversationLogSettings?: ConversationLogSettings,
-    description?: string,
-    sentimentAnalysisSettings?: SentimentAnalysisSettings,
-    tags?: { [key: string]: string }
-  }
-```
+import {
+  Construct,
+  Stack,
+} from '@aws-cdk/core';
+import {
+  LexCustomResource,
+  LexBotDefinition,
+} from '@amaabca/aws-lex-custom-resources';
 
-<br/>**Methods**:
+export default class MyCdkStack extends Stack {
+  constructor(scope: Construct, id: string) {
+    super(scope, id);
 
-```ts
-  constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexBotAliasAttributes);
-```
+    // Setup our custom resource from the AWS Serverless Application Repo.
+    // Application link: https://serverlessrepo.aws.amazon.com/applications/us-east-1/777566285978/lex-v2-cfn-cr
+    const provider = new LexCustomResource(
+      this,
+      'LexV2CfnCustomResource',
+      {
+        semanticVersion: '0.3.0',
+        logLevel: 'INFO',
+      }
+    );
 
-#### **Description:**
-Custom class for creating v2 Lex bot aliases with provided props and service token.
-
----
-
-### `LexBotLocale`
-<br/>*extends cdk.Construct*
-
-```ts
-  interface LexBotLocaleAttributes {
-    botId: string,
-    botVersion: string,
-    description?: string,
-    localeId: string,
-    nluIntentConfidenceThreshold: number,
-    voiceSettings?: VoiceSettings
-  }
-```
-
-<br/>**Methods**:
-
-```ts
-    constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexBotLocaleAttributes);
-    getResource(): cdk.CustomResource;
-```
-
-#### **Description:**
-Custom class for creating v2 Lex bot locales (languages) with provided props and service token.
-
----
-
-### `LexBotVersion`
-<br/>*extends cdk.Construct*
-
-```ts
-  interface LexBotVersionAttributes {
-    botId: string,
-    botVersionLocaleSpecification: { [key: string]: BotVersionLocaleDetails } | undefined,
-    description?: string
-  }
-```
-
-<br/>**Methods**:
-
-```ts
-    constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexBotVersionAttributes);
-    getResource(): cdk.CustomResource;
-```
-
-#### **Description:**
-Custom class for creating v2 Lex bot versions with provided props and service token.
-
----
-
-### `LexIntent`
-<br/>*extends cdk.Construct*
-
-```ts
-  interface LexIntentAttributes {
-    botId: string,
-    botVersion?: string,
-    description?: string,
-    dialogCodeHook?: DialogCodeHookSettings,
-    fulfillmentCodeHook?: FulfillmentCodeHookSettings
-    inputContexts?: InputContext[],
-    intentClosingSetting?: IntentClosingSetting,
-    intentConfirmationSetting?: IntentConfirmationSetting,
-    intentName: string,
-    kendraConfiguration?: KendraConfiguration,
-    localeId: string,
-    outputContexts?: OutputContext[],
-    parentIntentSignature?: string,
-    sampleUtterances?: SampleUtterance[]
-  }
-```
-
-<br/>**Methods**:
-
-```ts
-    constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexIntentAttributes);
-    getName(): string;
-    getResource(): cdk.CustomResource;
-```
-
-#### **Description:**
-Custom class for creating v2 Lex intents with provided props and service token.
-
----
-
-### `LexIntentPriority`
-<br/>*extends cdk.Construct*
-
-```ts
-  interface LexIntentPriorityAttributes {
-    botId: string,
-    botVersion?: string,
-    intentId: string,
-    intentName: string,
-    localeId: string,
-    slotPriorities: SlotPriority[]
-  }
-```
-
-<br/>**Methods**:
-
-```ts
-    constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexIntentPriorityAttributes);
-    getResource(): cdk.CustomResource;
-```
-
-#### **Description:**
-Custom class for creating v2 Lex intent priorities (SDK call to update Intents with proper slot priorities as this cannot be done on intent creation) with provided props and service token.
-
----
-
-### `LexSlot`
-<br/>*extends cdk.Construct*
-
-```ts
-  interface LexSlotAttributes {
-    botId: string,
-    botVersion?: string,
-    description?: string,
-    localeId: string,
-    intentId: string,
-    obfuscationSetting?: ObfuscationSetting,
-    slotName: string,
-    slotTypeId: string,
-    valueElicitationSetting: SlotValueElicitationSetting,
-    priority: number
-  }
-```
-
-<br/>**Methods**:
-
-```ts
-    constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexSlotAttributes);
-    getResource(): cdk.CustomResource;
-```
-
-#### **Description:**
-Custom class for creating v2 Lex slots with provided props and service token.
-
----
-
-### `LexSlotType`
-<br/>*extends cdk.Construct*
-
-```ts
-  interface LexSlotTypeAttributes {
-    botId: string,
-    botVersion?: string,
-    description?: string,
-    localeId: string,
-    parentSlotTypeSignature?: string,
-    slotTypeName: string,
-    slotTypeValues?: SlotTypeValue[],
-    valueSelectionSetting: SlotValueSelectionSetting
-  }
-```
-
-<br/>**Methods**:
-
-```ts
-    constructor(scope: cdk.Stack, id: string, serviceToken: string, props: LexSlotAttributes);
-    getResource(): cdk.CustomResource;
-    getName(): string;
-```
-
-#### **Description:**
-Custom class for creating v2 Lex slot types with provided props and service token.
-
----
-
-For interfaces and enums please see `/v2/lex-data-types.ts` which contains definitions for all attributes/enums used by the above classes.
-
-
-
-## CDK Resources
----
-### `CustomResourcesStack`
-<br/>*extends cdk.Stack*
-
-<br/>**Methods**:
-- `constructor`
-    <br/>params: `scope: cdk.Construct, id: string, props: CustomResourcesStackProps`
-    ```ts
-      interface CustomResourceBaseStackProps {
-        enabled: boolean,
-        stackName?: string,
-        exportName?: string,
-        folder?: string,
-        handlerName?: string,
-        timeout?: number,
-        environment?: {
-          [key: string]: string
+    // The LexBotDefinition class is our main entry point to Lex bot creation.
+    // Once we're happy with our bot definition, call `botDefinition.build()` to
+    // generate the resource.
+    const botDefinition = new LexBotDefinition(
+      this,
+      'OrderFlowersBot',
+      provider.serviceToken(),
+      {
+        botName: 'OrderFlowersBot',
+        dataPrivacy: {
+          childDirected: false,
         },
-        runtime?: Runtime,
-        role?: {
-          parentResource?: string,
-          childResource?: string,
-          actions?: string[],
-          customRole?: Role
-        }
+        description: 'Bot to order flowers on the behalf of a user',
+        idleSessionTTLInSeconds: 300,
+        roleArn: provider.serviceLinkedRoleArn(),
       }
+    );
 
-      interface CustomResourcesStackProps {
-        env?: cdk.Environment,
-        v2?: {
-          roleOutput?: string,
-          bot?: CustomResourceBaseStackProps,
-          intent?: CustomResourceBaseStackProps,
-          slotType?: CustomResourceBaseStackProps,
-          slot?: CustomResourceBaseStackProps,
-          intentPriority?: CustomResourceBaseStackProps,
-          botLocale?: CustomResourceBaseStackProps,
-          botVersion?: CustomResourceBaseStackProps,
-          botAlias?: CustomResourceBaseStackProps
-        }
-      }
-    ```
-
-<br/>**Properties**: None
-
-
-#### **Description:**
-Creates custom resource lambda handler functions and provider functions for Lex V2 types and exports the providers ARNs to cloudformation with the following (default) export names:
-#### V2
-
-- v2LexBotProviderServiceToken
-- v2LexIntentProviderServiceToken
-- v2LexBotLocaleProviderServiceToken
-- v2LexBotVersionProviderServiceToken
-- v2LexSlotTypeProviderServiceToken
-- v2LexSlotProviderServiceToken
-- v2LexBotAliasProviderServiceToken
-- v2LexBotIntentPriorityProviderServiceToken
-
-The stack will use defaulted values for each resource if the CustomResourceBaseStackProps only has `enabled` set to `true`. These defaults change depending on the resource. By default the stack resources use handler code that is included in the library. The v2 handlers run esbuild and bundle up the packages automatically. This can be customized as seen in the props above.
-
-
-#### Example Usage:
-
-- Use defaults and create all Lex Custom Resource handlers:
-
-```ts
-  const app = new cdk.App();
-
-  new cdkResources.CustomResourcesStack(app, 'CustomResourceStackTest', {
-    env: {
-      region: 'us-east-1',
-      account: '12345'
-    },
-    v2: {
-      bot: {
-        enabled: true
+    // Add a language for our bot to which we can add intents/slots and slot types.
+    const locale = botDefinition.addLocale({
+      localeId: 'en_US',
+      nluIntentConfidenceThreshold: 0.40,
+      voiceSettings: {
+        voiceId: 'Ivy',
       },
-      intent: {
-        enabled: true
-      },
-      slot: {
-        enabled: true
-      },
-      intentPriority: {
-        enabled: true
-      },
-      botVersion: {
-        enabled: true
-      },
-      botAlias: {
-        enabled: true
-      },
-      botLocale: {
-        enabled: true
-      },
-      slotType: {
-        enabled: true
-      }
-    }
-  });
-```
+    });
 
-- Create using defaults for V2 Bot Slot, and SlotType aswell as customized V2 Intent (Bot, Slot, SlotType and Intent will only be created):
+    locale.addSlotType({
+      slotTypeName: 'FlowerTypes',
+      description: 'Types of flowers to pick up',
+      valueSelectionSetting: {
+        resolutionStrategy: 'OriginalValue'
+      },
+      slotTypeValues: [
+        { sampleValue: { value: 'lillies' } },
+        { sampleValue: { value: 'roses' } },
+        { sampleValue: { value: 'tulips' } },
+      ],
+    });
 
-```ts
-new cdkResources.CustomResourcesStack(app, 'CustomResourceStackTest', {
-  env: {
-    region: 'us-east-1',
-    account: '12345'
-  },
-  v2: {
-    bot: {
-      enabled: true
-    },
-    intent: {
-      enabled: true,
-      handlerName: 'main.customHandlerFunc', // Assumes we have a main.py file here
-      folder: './lib/customHandlers/intent/',
-      runtime: Runtime.PYTHON_3_8,
-      timeout: 30
-    },
-    slot: {
-      enabled: true
-    },
-    slotType: {
-      enabled: true
-    }
+    const orderFlowers = locale.addIntent({
+      intentName: 'OrderFlowers',
+      description: 'Intent to order a bouquet of flowers for pick up',
+      sampleUtterances: [
+        { utterance: 'I would like to pick up flowers' },
+        { utterance: 'I would like to order some flower' },
+      ],
+      intentConfirmationSetting: {
+        promptSpecification: {
+          messageGroups: [
+            {
+              message: {
+                plainTextMessage: {
+                  value: 'Okay, your {FlowerType} will be ready for pickup by {PickupTime} on {PickupDate}. Does this sound okay?',
+                },
+              },
+            },
+          ],
+          maxRetries: 2,
+        },
+        declinationResponse: {
+          messageGroups: [
+            {
+              message: {
+                plainTextMessage: {
+                  value: 'Okay, I will not place your order.'
+                },
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    orderFlowers.addSlot({
+      slotName: 'FlowerType',
+      slotTypeName: 'FlowerTypes',
+      description: 'The type of flowers to pick up',
+      valueElicitationSetting: {
+        slotConstraint: 'Required',
+        promptSpecification: {
+          messageGroups: [
+            {
+              message: {
+                plainTextMessage: {
+                  value: 'What type of flowers would you like to order?',
+                },
+              },
+            },
+          ],
+          maxRetries: 2,
+        },
+      },
+    });
+
+    orderFlowers.addSlot({
+      slotName: 'PickupDate',
+      slotTypeName: 'AMAZON.Date',
+      description: 'The date to pick up the flowers',
+      valueElicitationSetting: {
+        slotConstraint: 'Required',
+        promptSpecification: {
+          messageGroups: [
+            {
+              message: {
+                plainTextMessage: {
+                  value: 'What day do you want the {FlowerType} to be picked up?',
+                },
+              },
+            },
+          ],
+          maxRetries: 2,
+        },
+      },
+    });
+
+    orderFlowers.addSlot({
+      slotName: 'PickupTime',
+      slotTypeName: 'AMAZON.Time',
+      description: 'The time to pick up the flowers',
+      valueElicitationSetting: {
+        slotConstraint: 'Required',
+        promptSpecification: {
+          messageGroups: [
+            {
+              message: {
+                plainTextMessage: {
+                  value: 'At what time do you want the {FlowerType} to be picked up?',
+                },
+              },
+            },
+          ],
+          maxRetries: 2,
+        },
+      },
+    });
+
+    // create/update the bot resource
+    const bot = botDefinition.build();
+
+    // create a version that automatically is built when the bot changes
+    const version = bot.automaticVersion();
+
+    // create an alias and assign it to the latest bot version
+    bot.addAlias({
+      botAliasName: 'live',
+      botVersion: version.botVersion(),
+      botAliasLocaleSettings: {
+        en_US: {
+          enabled: true
+        },
+      },
+    });
   }
-});
+}
 ```
 
----
+## License
+
+[MIT](LICENSE)
