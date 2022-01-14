@@ -2,7 +2,7 @@ import {
   App,
   CfnResource,
   Stack,
-} from '@aws-cdk/core';
+} from 'aws-cdk-lib';
 
 import {
   LexBotAlias,

@@ -1,9 +1,9 @@
+import { Construct } from 'constructs';
 import {
   CfnResource,
-  Construct,
   Reference,
   RemovalPolicy,
-} from '@aws-cdk/core';
+} from 'aws-cdk-lib';
 import { LexBotAliasAttributes } from '../lex-data-types'
 
 export default class extends Construct {

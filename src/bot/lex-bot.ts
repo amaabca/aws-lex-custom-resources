@@ -1,8 +1,8 @@
+import { Construct } from 'constructs';
 import {
   CfnResource,
-  Construct,
   Reference,
-} from '@aws-cdk/core';
+} from 'aws-cdk-lib';
 import {
   LexBotAlias,
   LexBotVersion,

@@ -1,4 +1,4 @@
-import { Reference } from '@aws-cdk/core';
+import { Reference } from 'aws-cdk-lib';
 import {
   InputContext,
   FulfillmentCodeHookSettings,

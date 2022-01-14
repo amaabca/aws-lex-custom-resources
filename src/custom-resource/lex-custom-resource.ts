@@ -1,11 +1,9 @@
+import { Construct } from 'constructs';
 import {
-  Construct,
   Fn,
   Reference,
-} from '@aws-cdk/core';
-import {
-  CfnApplication,
-} from '@aws-cdk/aws-sam';
+} from 'aws-cdk-lib';
+import { CfnApplication } from 'aws-cdk-lib/aws-sam';
 
 interface Props {
   semanticVersion: string;

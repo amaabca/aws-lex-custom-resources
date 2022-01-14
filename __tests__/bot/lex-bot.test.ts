@@ -1,9 +1,9 @@
-import * as cdk from '@aws-cdk/core';
+import { Stack } from 'aws-cdk-lib';
 import { LexBot, LexBotAlias, LexBotDefinition, LexBotLocale, LexBotVersion } from '../../src';
 
 describe('Lex Bot', () => {
   describe('Bot definition', () => {
-    const sampleStack: cdk.Stack = new cdk.Stack();
+    const sampleStack: Stack = new Stack();
     const instance: LexBotDefinition = new LexBotDefinition(
       sampleStack,
       'BotDefinition',

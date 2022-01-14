@@ -1,7 +1,5 @@
-import {
-  Construct,
-  Reference,
-} from '@aws-cdk/core';
+import { Construct } from 'constructs';
+import { Reference } from 'aws-cdk-lib';
 import {
   LexBot,
   LexBotLocale,

@@ -1,7 +1,7 @@
 import {
   App,
   Stack,
-} from '@aws-cdk/core';
+} from 'aws-cdk-lib';
 
 import {
   LexBotVersion,
