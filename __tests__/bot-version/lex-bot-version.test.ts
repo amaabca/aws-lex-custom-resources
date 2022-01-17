@@ -1,11 +1,6 @@
-import {
-  App,
-  Stack,
-} from 'aws-cdk-lib';
+import { App, Stack } from 'aws-cdk-lib';
 
-import {
-  LexBotVersion,
-} from '../../src/';
+import { LexBotVersion } from '../../src/';
 
 describe('LexBotVersion', () => {
   const props = {
@@ -16,12 +11,7 @@ describe('LexBotVersion', () => {
   const serviceToken = 'arn:partition:service:region:account-id:resource-type:resource-id';
   const app = new App();
   const scope = new Stack(app, 'Stack');
-  const instance = new LexBotVersion(
-    scope,
-    'Id',
-    serviceToken,
-    props
-  );
+  const instance = new LexBotVersion(scope, 'Id', serviceToken, props);
 
   describe('botVersion', () => {
     it('returns the bot version token', () => {

@@ -1,4 +1,4 @@
-import { LexSlotAttributes } from '../lex-data-types'
+import { LexSlotAttributes } from '../lex-data-types';
 
 export default class {
   props: LexSlotAttributes;

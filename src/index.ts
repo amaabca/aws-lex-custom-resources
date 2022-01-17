@@ -20,4 +20,4 @@ export {
   LexSlot,
   LexSlotType,
   LexBotAlias,
-}
+};

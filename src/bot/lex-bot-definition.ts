@@ -1,13 +1,7 @@
 import { Construct } from 'constructs';
 import { Reference } from 'aws-cdk-lib';
-import {
-  LexBot,
-  LexBotLocale,
-} from '..';
-import {
-  LexBotAttributes,
-  LexBotLocaleAttributes,
-} from '../lex-data-types';
+import { LexBot, LexBotLocale } from '..';
+import { LexBotAttributes, LexBotLocaleAttributes } from '../lex-data-types';
 
 export default class {
   scope: Construct;
@@ -16,12 +10,7 @@ export default class {
   props: LexBotAttributes;
   locales: LexBotLocale[];
 
-  constructor(
-    scope: Construct,
-    id: string,
-    serviceToken: string | Reference,
-    props: LexBotAttributes
-  ) {
+  constructor(scope: Construct, id: string, serviceToken: string | Reference, props: LexBotAttributes) {
     this.scope = scope;
     this.id = id;
     this.serviceToken = serviceToken;

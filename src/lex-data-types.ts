@@ -19,93 +19,93 @@ import {
 
 export enum ObfuscationSetting {
   NONE = 'NONE',
-  DEFAULT = 'DEFAULT_OBFUSCATION'
+  DEFAULT = 'DEFAULT_OBFUSCATION',
 }
 
 export enum SlotTypeType {
   CUSTOM,
-  BUILT_IN
+  BUILT_IN,
 }
 
 export interface LexBotAttributes {
-  botName?: string,
+  botName?: string;
   botTags?: {
-    [key: string]: string
-  },
+    [key: string]: string;
+  };
   dataPrivacy: {
-    childDirected: boolean
-  },
-  description?: string,
-  idleSessionTTLInSeconds: number,
-  roleArn: string | Reference,
+    childDirected: boolean;
+  };
+  description?: string;
+  idleSessionTTLInSeconds: number;
+  roleArn: string | Reference;
   testBotAliasTags?: {
-    [key: string]: string
-  },
-  'CR.botLocales'?: LexBotLocaleAttributes[]
+    [key: string]: string;
+  };
+  'CR.botLocales'?: LexBotLocaleAttributes[];
 }
 
 export interface LexIntentAttributes {
-  botId?: string,
-  botVersion?: string,
-  description?: string,
-  dialogCodeHook?: DialogCodeHookSettings,
-  fulfillmentCodeHook?: FulfillmentCodeHookSettings
-  inputContexts?: InputContext[],
-  intentClosingSetting?: IntentClosingSetting,
-  intentConfirmationSetting?: IntentConfirmationSetting,
-  intentName: string,
-  kendraConfiguration?: KendraConfiguration,
-  outputContexts?: OutputContext[],
-  parentIntentSignature?: string,
-  sampleUtterances?: SampleUtterance[],
-  'CR.slots'?: LexSlotAttributes[]
+  botId?: string;
+  botVersion?: string;
+  description?: string;
+  dialogCodeHook?: DialogCodeHookSettings;
+  fulfillmentCodeHook?: FulfillmentCodeHookSettings;
+  inputContexts?: InputContext[];
+  intentClosingSetting?: IntentClosingSetting;
+  intentConfirmationSetting?: IntentConfirmationSetting;
+  intentName: string;
+  kendraConfiguration?: KendraConfiguration;
+  outputContexts?: OutputContext[];
+  parentIntentSignature?: string;
+  sampleUtterances?: SampleUtterance[];
+  'CR.slots'?: LexSlotAttributes[];
 }
 
 export interface LexBotLocaleAttributes {
-  botId?: string | Reference,
-  botVersion?: string,
-  description?: string,
-  localeId: string,
-  nluIntentConfidenceThreshold: number,
-  voiceSettings?: VoiceSettings,
-  'CR.slotTypes'?: LexSlotTypeAttributes[],
-  'CR.intents'?: LexIntentAttributes[]
+  botId?: string | Reference;
+  botVersion?: string;
+  description?: string;
+  localeId: string;
+  nluIntentConfidenceThreshold: number;
+  voiceSettings?: VoiceSettings;
+  'CR.slotTypes'?: LexSlotTypeAttributes[];
+  'CR.intents'?: LexIntentAttributes[];
 }
 
 export interface LexBotVersionAttributes {
-  botId: string | Reference,
-  description?: string,
-  'CR.botLocaleIds'?: string | Reference,
-  'CR.lastUpdatedDateTime'?: string | Reference
+  botId: string | Reference;
+  description?: string;
+  'CR.botLocaleIds'?: string | Reference;
+  'CR.lastUpdatedDateTime'?: string | Reference;
 }
 
 export interface LexSlotTypeAttributes {
-  description?: string | Reference,
-  localeId?: string,
-  parentSlotTypeSignature?: string,
-  slotTypeName: string,
-  slotTypeValues?: SlotTypeValue[],
-  valueSelectionSetting: SlotValueSelectionSetting
+  description?: string | Reference;
+  localeId?: string;
+  parentSlotTypeSignature?: string;
+  slotTypeName: string;
+  slotTypeValues?: SlotTypeValue[];
+  valueSelectionSetting: SlotValueSelectionSetting;
 }
 
 export interface LexSlotAttributes {
-  intentId?: string,
-  botId?: string,
-  description?: string,
-  obfuscationSetting?: ObfuscationSetting,
-  slotName: string,
-  slotTypeName?: string,
-  valueElicitationSetting: SlotValueElicitationSetting,
-  'CR.slotTypeName'?: string
+  intentId?: string;
+  botId?: string;
+  description?: string;
+  obfuscationSetting?: ObfuscationSetting;
+  slotName: string;
+  slotTypeName?: string;
+  valueElicitationSetting: SlotValueElicitationSetting;
+  'CR.slotTypeName'?: string;
 }
 
 export interface LexBotAliasAttributes {
-  botId?: string | Reference,
-  botAliasName: string,
-  botAliasLocaleSettings: { [key: string]: BotAliasLocaleSettings },
-  botVersion?: string | Reference,
-  conversationLogSettings?: ConversationLogSettings,
-  description?: string,
-  sentimentAnalysisSettings?: SentimentAnalysisSettings,
-  tags?: { [key: string]: string }
+  botId?: string | Reference;
+  botAliasName: string;
+  botAliasLocaleSettings: { [key: string]: BotAliasLocaleSettings };
+  botVersion?: string | Reference;
+  conversationLogSettings?: ConversationLogSettings;
+  description?: string;
+  sentimentAnalysisSettings?: SentimentAnalysisSettings;
+  tags?: { [key: string]: string };
 }
