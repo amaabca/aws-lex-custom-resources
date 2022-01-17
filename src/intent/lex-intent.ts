@@ -1,10 +1,5 @@
-import {
-  LexSlot,
-} from '..';
-import {
-  LexIntentAttributes,
-  LexSlotAttributes,
-} from '../lex-data-types';
+import { LexSlot } from '..';
+import { LexIntentAttributes, LexSlotAttributes } from '../lex-data-types';
 
 export default class {
   props: LexIntentAttributes;

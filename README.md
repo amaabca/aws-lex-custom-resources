@@ -27,10 +27,8 @@ $ npm install @amaabca/aws-lex-custom-resources
 This example is extracted from the AWS [OrderFlowersBot](https://github.com/aws-samples/aws-lex-v2-cfn-cr/blob/01395acd4901850433d1e95f437ab7ec5bbd5f52/examples/order-flowers/template.yaml) sample.
 
 ```ts
-import {
-  Construct,
-  Stack,
-} from '@aws-cdk/core';
+import { Construct } from 'constructs';
+import { Stack } from 'aws-cdk-lib';
 import {
   LexCustomResource,
   LexBotDefinition,

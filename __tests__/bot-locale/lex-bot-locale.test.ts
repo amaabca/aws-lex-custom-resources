@@ -1,6 +1,4 @@
-import {
-  LexBotLocale, LexIntent, LexSlotType,
-} from '../../src/';
+import { LexBotLocale, LexIntent, LexSlotType } from '../../src/';
 
 describe('LexBotLocale', () => {
   const instance = new LexBotLocale({
@@ -61,7 +59,7 @@ describe('LexBotLocale', () => {
       describe('duplicate intent name', () => {
         it('throws error', () => {
           expect(() => {
-            instance.addIntent({ intentName: 'SampleIntent' })
+            instance.addIntent({ intentName: 'SampleIntent' });
           }).toThrow();
         });
       });

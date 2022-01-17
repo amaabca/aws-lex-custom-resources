@@ -1,6 +1,4 @@
-import {
-  LexIntent, LexSlot,
-} from '../../src/';
+import { LexIntent, LexSlot } from '../../src/';
 
 describe('LexIntent', () => {
   const instance = new LexIntent({
@@ -38,7 +36,7 @@ describe('LexIntent', () => {
             valueElicitationSetting: {
               slotConstraint: 'REQUIRED',
             },
-          })
+          });
         }).toThrow();
       });
     });

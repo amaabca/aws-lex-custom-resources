@@ -1,13 +1,13 @@
 {
   "name": "@amaabca/aws-lex-custom-resources",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "AWS Lex infrastructure as code via the CDK",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "format": "prettier --write \"src/**/*.ts\"",
+    "format": "prettier --write '**/*.ts'",
     "lint": "eslint . --ext .ts --color",
     "test": "jest",
     "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand"
@@ -27,9 +27,13 @@
   ],
   "author": "Alberta Motor Association",
   "devDependencies": {
+    "@aws-sdk/client-lex-models-v2": "^3.46.0",
     "@types/jest": "^26.0.23",
+    "@types/node": "*",
     "@typescript-eslint/eslint-plugin": "^4.28.0",
     "@typescript-eslint/parser": "^4.28.0",
+    "aws-cdk-lib": "^2.0.0",
+    "constructs": "^10.0.0",
     "eslint": "^7.29.0",
     "jest": "^26.6.3",
     "prettier": "^2.3.0",
@@ -39,15 +43,13 @@
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.2.4"
   },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.0.0",
+    "constructs": "^10.0.0"
+  },
   "files": [
     "lib/**/*"
   ],
-  "dependencies": {
-    "@aws-cdk/assert": "^1.121.0",
-    "@aws-cdk/aws-sam": "^1.121.0",
-    "@aws-cdk/core": "^1.121.0",
-    "@aws-sdk/client-lex-models-v2": "^3.33.0"
-  },
   "resolutions": {
     "set-value": "^4.0.1"
   }
