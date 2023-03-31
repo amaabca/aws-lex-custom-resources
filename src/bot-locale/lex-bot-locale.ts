@@ -1,12 +1,5 @@
-import {
-  LexIntent,
-  LexSlotType,
-} from '..';
-import {
-  LexBotLocaleAttributes,
-  LexSlotTypeAttributes,
-  LexIntentAttributes,
-} from '../lex-data-types'
+import { LexIntent, LexSlotType } from '..';
+import { LexBotLocaleAttributes, LexSlotTypeAttributes, LexIntentAttributes } from '../lex-data-types';
 
 export default class {
   props: LexBotLocaleAttributes;

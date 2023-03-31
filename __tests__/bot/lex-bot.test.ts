@@ -1,21 +1,16 @@
-import * as cdk from '@aws-cdk/core';
+import { Stack } from 'aws-cdk-lib';
 import { LexBot, LexBotAlias, LexBotDefinition, LexBotLocale, LexBotVersion } from '../../src';
 
 describe('Lex Bot', () => {
   describe('Bot definition', () => {
-    const sampleStack: cdk.Stack = new cdk.Stack();
-    const instance: LexBotDefinition = new LexBotDefinition(
-      sampleStack,
-      'BotDefinition',
-      'SAM-ServiceToken',
-      {
-        dataPrivacy: {
-          childDirected: false,
-        },
-        idleSessionTTLInSeconds: 90,
-        roleArn: 'TestARN',
-      }
-    );
+    const sampleStack: Stack = new Stack();
+    const instance: LexBotDefinition = new LexBotDefinition(sampleStack, 'BotDefinition', 'SAM-ServiceToken', {
+      dataPrivacy: {
+        childDirected: false,
+      },
+      idleSessionTTLInSeconds: 90,
+      roleArn: 'TestARN',
+    });
 
     it('Creates a new definition', () => {
       expect(instance).not.toBe(null);
@@ -57,7 +52,9 @@ describe('Lex Bot', () => {
 
         describe('addAlias', () => {
           it('Returns a lex bot alias for the bot', () => {
-            expect(bot.addAlias({ botAliasName: 'test', botAliasLocaleSettings: { 'en_US': { enabled: true } } })).toBeInstanceOf(LexBotAlias);
+            expect(
+              bot.addAlias({ botAliasName: 'test', botAliasLocaleSettings: { en_US: { enabled: true } } }),
+            ).toBeInstanceOf(LexBotAlias);
           });
         });
       });

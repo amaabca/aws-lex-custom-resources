@@ -1,11 +1,6 @@
-import {
-  App,
-  Stack,
-} from '@aws-cdk/core';
+import { App, Stack } from 'aws-cdk-lib';
 
-import {
-  LexCustomResource,
-} from '../../src/';
+import { LexCustomResource } from '../../src/';
 
 describe('LexCustomResource', () => {
   const props = {
@@ -14,25 +9,17 @@ describe('LexCustomResource', () => {
   };
   const app = new App();
   const scope = new Stack(app, 'Stack');
-  const instance = new LexCustomResource(
-    scope,
-    'Id',
-    props
-  );
+  const instance = new LexCustomResource(scope, 'Id', props);
 
   describe('serviceToken', () => {
     it('returns a token reference', () => {
-      expect(instance.serviceToken().toString()).toMatch(
-        /Token\[Id\.Outputs\.LexV2CfnCrFunctionArn\.\d+\]/
-      );
+      expect(instance.serviceToken().toString()).toMatch(/Token\[Id\.Outputs\.LexV2CfnCrFunctionArn\.\d+\]/);
     });
   });
 
   describe('serviceLinkedRoleArn', () => {
     it('returns a token reference', () => {
-      expect(instance.serviceLinkedRoleArn().toString()).toMatch(
-        /Token\[Id\.Outputs\.LexServiceLinkedRole\.\d+\]/
-      );
+      expect(instance.serviceLinkedRoleArn().toString()).toMatch(/Token\[Id\.Outputs\.LexServiceLinkedRole\.\d+\]/);
     });
   });
 
