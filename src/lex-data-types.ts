@@ -15,6 +15,7 @@ import {
   ConversationLogSettings,
   BotAliasLocaleSettings,
   SentimentAnalysisSettings,
+  PostFulfillmentStatusSpecification,
 } from '@aws-sdk/client-lex-models-v2';
 
 export enum ObfuscationSetting {
@@ -57,6 +58,7 @@ export interface LexIntentAttributes {
   kendraConfiguration?: KendraConfiguration;
   outputContexts?: OutputContext[];
   parentIntentSignature?: string;
+  postFulfillmentStatusSpecification?: PostFulfillmentStatusSpecification;
   sampleUtterances?: SampleUtterance[];
   'CR.slots'?: LexSlotAttributes[];
 }
